@@ -6,6 +6,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.view.KeyEvent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.caltyfarm.caltyfarm.MainActivity
@@ -53,17 +54,12 @@ class VerificationActivity : AppCompatActivity() {
             }
         })
         tv_burner_verif.text = intent.getStringExtra(PHONE_NUMBER_CODE)
-        for(i in 29 downTo 1){
-            Handler().postDelayed({
-                tv_timer.text = "Jika dalam ${i} detik tidak menerima SMS,"
-                if(i == 29) {
-                    tv_resend.isClickable = true
-                    tv_resend.setTextColor(resources.getColor(R.color.colorAccent))
-                    tv_resend.onClick {
-                        viewModel.resendCode()
-                    }
-                }
-            }, 1000)
+
+        pin_entry.setOnKeyListener { _, keyCode, _ ->
+            if(keyCode == KeyEvent.KEYCODE_ENTER){
+                viewModel.manualSignIn(pin_entry.text.toString())
+                true
+            }else false
         }
     }
 

@@ -2,6 +2,7 @@ package com.caltyfarm.caltyfarm.viewmodel
 
 import android.app.Activity
 import android.content.Context
+import android.text.Editable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.caltyfarm.caltyfarm.R
@@ -67,5 +68,10 @@ class VerifViewModel(val context: Context, val appRepository: AppRepository, val
 
     fun resendCode() {
 
+    }
+
+    fun manualSignIn(text: String) {
+        val credential = PhoneAuthProvider.getCredential(verifId, text)
+        signInWithPhoneAuthCredential(credential)
     }
 }
