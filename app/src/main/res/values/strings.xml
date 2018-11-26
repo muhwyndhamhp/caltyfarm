@@ -9,4 +9,7 @@
     <string name="verif_failed">Gagal melakukan verifikasi</string>
     <string name="jika_dalam">Jika dalam</string>
     <string name="kirim_ulang_sms">Kirim ulang sms</string>
+    <string name="home">Beranda</string>
+    <string name="profil">Profil</string>
+    <string name="artikel">Artikel</string>
 </resources>

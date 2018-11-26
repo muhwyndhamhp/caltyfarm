@@ -5,21 +5,16 @@ import android.app.ProgressDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.view.KeyEvent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.caltyfarm.caltyfarm.MainActivity
 import com.caltyfarm.caltyfarm.R
 import com.caltyfarm.caltyfarm.utils.InjectorUtils
 import com.caltyfarm.caltyfarm.utils.PHONE_NUMBER_CODE
 import com.caltyfarm.caltyfarm.viewmodel.VerifViewModel
 import kotlinx.android.synthetic.main.activity_verification.*
 import org.jetbrains.anko.indeterminateProgressDialog
-import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.toast
-import java.util.*
-import kotlin.concurrent.schedule
 
 class VerificationActivity : AppCompatActivity() {
 

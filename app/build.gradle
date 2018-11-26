@@ -68,5 +68,7 @@ dependencies {
     implementation ('com.alimuzaffar.lib:pinentryedittext:2.0.6'){
         exclude group: 'androidx.appcompat', module:'appcompat'
     }
+
+    implementation 'com.aurelhubert:ahbottomnavigation:2.1.0'
 }
 apply plugin: 'com.google.gms.google-services'
