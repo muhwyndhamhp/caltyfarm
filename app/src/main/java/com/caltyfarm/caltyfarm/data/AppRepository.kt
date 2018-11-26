@@ -1,12 +1,38 @@
 package com.caltyfarm.caltyfarm.data
 
-import android.content.Context
 import com.caltyfarm.caltyfarm.utils.FirebaseUtils
 
-class AppRepository(val firebaseUtils: FirebaseUtils) {
+class AppRepository(private val firebaseUtils: FirebaseUtils) {
+
+
+    interface OnFirebaseUserDownload {
+
+        fun onUserDownloaded(user: User?)
+        fun onDownloadFailed(exception: Exception)
+
+    }
+
+    interface OnUserDataCallback {
+        fun onUserDataRetrieved(user: User)
+        fun onFailed(exception: Exception)
+    }
 
     fun uploadUser(userData: User) {
         firebaseUtils.uploadUser(userData)
+    }
+
+    fun getUserData(callback: OnUserDataCallback) {
+        firebaseUtils.getUserData(firebaseUtils.getFirebaseAuth().uid!!, object : OnFirebaseUserDownload {
+            override fun onUserDownloaded(user: User?) {
+                if (user != null)
+                    callback.onUserDataRetrieved(user)
+            }
+
+            override fun onDownloadFailed(exception: Exception) {
+                callback.onFailed(exception)
+            }
+
+        })
     }
 
 
