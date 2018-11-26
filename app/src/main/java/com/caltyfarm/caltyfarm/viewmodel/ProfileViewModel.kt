@@ -7,6 +7,9 @@ import com.caltyfarm.caltyfarm.data.AppRepository
 import com.caltyfarm.caltyfarm.data.User
 
 class ProfileViewModel(val context: Context, val appRepository: AppRepository): ViewModel(){
+    fun updateUser() {
+        appRepository.uploadUser(user.value!!)
+    }
 
 
     val user: MutableLiveData<User> = MutableLiveData()
