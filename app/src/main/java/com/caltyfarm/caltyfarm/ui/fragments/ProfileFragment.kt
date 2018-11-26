@@ -1,5 +1,6 @@
 package com.caltyfarm.caltyfarm.ui.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +10,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.caltyfarm.caltyfarm.R
+import com.caltyfarm.caltyfarm.ui.ProfileEditActivity
 import com.caltyfarm.caltyfarm.utils.InjectorUtils
 import com.caltyfarm.caltyfarm.viewmodel.ProfileViewModel
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile.view.*
+import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.toast
 
 class ProfileFragment(): Fragment(){
@@ -43,5 +46,11 @@ class ProfileFragment(): Fragment(){
         viewModel.errorMessage.observe(this, Observer {
             if(it != "") context!!.toast(it)
         })
+
+        cv_edit_or_add.onClick { navigateToProfileEdit() }
+    }
+
+    private fun navigateToProfileEdit() {
+        startActivity(Intent(context!!, ProfileEditActivity::class.java))
     }
 }

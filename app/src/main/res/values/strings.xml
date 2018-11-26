@@ -14,4 +14,18 @@
     <string name="artikel">Artikel</string>
     <string name="muhammad_wyndham">Muhammad Wyndham</string>
     <string name="riwayat_transaksi">Riwayat Transaksi</string>
+    <string name="nama_lengkap">Nama Lengkap</string>
+    <string name="tanggal_lahir">Tanggal Lahir</string>
+    <string name="email">Email</string>
+    <string name="nomor_telepon">Nomor Telepon</string>
+    <string name="simpan">Simpan</string>
+    <string name="gender_idon">gender idon</string>
+    <string name="male">Laki-laki</string>
+    <string name="female">Perempuan</string>
+
+    <string-array name="gender">
+        <item>Pilih Jenis Kelamin</item>
+        <item>Laki-laki</item>
+        <item>Perempuan</item>
+    </string-array>
 </resources>
