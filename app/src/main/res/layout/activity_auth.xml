@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".ui.AuthActivity"
+        android:background="@color/backgroundColor">
+
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_auth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+            <ImageView
+                    android:id="@+id/iv_back_arrow"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
+                    android:tint="@color/colorPrimaryDark"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mulai"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="18sp"
+                    android:layout_marginStart="20dp"
+                    android:textStyle="bold"/>
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+            android:id="@+id/tv_burner_auth"
+            android:layout_width="0dp"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_auth"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:text="@string/auth_text"/>
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/tv_burner_auth"
+            android:layout_marginTop="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp">
+        <com.hbb20.CountryCodePicker
+                android:id="@+id/ccp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:ccp_defaultPhoneCode="62"
+                android:gravity="center"/>
+        <EditText
+                android:id="@+id/et_phone"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:autofillHints="tel"
+                tools:targetApi="o"
+                android:inputType="phone"
+                android:hint="@string/nomer_telepon"/>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

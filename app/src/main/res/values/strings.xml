@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Calty Farm</string>
+    <string name="mulai">Mulai</string>
+    <string name="auth_text">Verifikasi nomer ponsel kamu untuk menikmati layanan dari Calty Farm</string>
+    <string name="nomer_telepon">Nomer Telepon</string>
+    <string name="verifikasi">Verifikasi</string>
+    <string name="_62xxx_xxxx_xxxx">+62xxx-xxxx-xxxx</string>
+    <string name="verif_burner">Masukkan 6 angka kode yang telah dikirim via sms ke:</string>
+    <string name="verif_failed">Gagal melakukan verifikasi</string>
+    <string name="jika_dalam">Jika dalam</string>
+    <string name="kirim_ulang_sms">Kirim ulang sms</string>
+</resources>
