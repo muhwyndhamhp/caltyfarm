@@ -5,6 +5,10 @@ import com.caltyfarm.caltyfarm.utils.FirebaseUtils
 
 class AppRepository(val firebaseUtils: FirebaseUtils) {
 
+    fun uploadUser(userData: User) {
+        firebaseUtils.uploadUser(userData)
+    }
+
 
     companion object {
         private const val TAG = "REPO"

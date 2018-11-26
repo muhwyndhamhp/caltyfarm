@@ -3,16 +3,19 @@ package com.caltyfarm.caltyfarm.viewmodel
 import android.app.Activity
 import android.content.Context
 import android.text.Editable
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.caltyfarm.caltyfarm.R
 import com.caltyfarm.caltyfarm.data.AppRepository
+import com.caltyfarm.caltyfarm.data.User
 import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.*
+import com.google.firebase.database.FirebaseDatabase
 import java.util.concurrent.TimeUnit
 
-class VerifViewModel(val context: Context, val appRepository: AppRepository, val initialPhoneNumber: String) :
+class VerifViewModel(val context: Context, val appRepository: AppRepository, private val initialPhoneNumber: String) :
     ViewModel() {
 
     val isLoading: MutableLiveData<Boolean> = MutableLiveData()
@@ -36,6 +39,7 @@ class VerifViewModel(val context: Context, val appRepository: AppRepository, val
             override fun onVerificationFailed(p0: FirebaseException?) {
                 isLoading.value = false
                 errorMessage.value = context.getString(R.string.verif_failed)
+                Log.e("ERROR", p0!!.message)
             }
 
             override fun onCodeSent(p0: String, p1: PhoneAuthProvider.ForceResendingToken) {
@@ -59,15 +63,26 @@ class VerifViewModel(val context: Context, val appRepository: AppRepository, val
             .addOnCompleteListener {
                 if(it.isSuccessful){
                     user.value = it.result!!.user
+                    initiateUser()
 
                 } else {
                     errorMessage.value = context.getString(R.string.verif_failed)
+                    Log.e("ERROR", it.exception!!.message)
                 }
             }
     }
 
-    fun resendCode() {
+    private fun initiateUser() {
+        val userData = User(
+            user.value!!.uid,
+            "",
+            0,
+            0,
+            initialPhoneNumber,
+            ""
+        )
 
+        appRepository.uploadUser(userData)
     }
 
     fun manualSignIn(text: String) {
