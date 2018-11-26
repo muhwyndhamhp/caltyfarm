@@ -28,9 +28,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.VerificationActivity"
-                  android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        <activity
+                android:name=".ui.VerificationActivity"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar"
                 >
+        </activity>
+        <activity android:name=".ui.Splash">
         </activity>
     </application>
 

@@ -65,8 +65,8 @@ dependencies {
 
     implementation 'com.hbb20:ccp:2.2.3'
 
-    implementation ('com.alimuzaffar.lib:pinentryedittext:2.0.6'){
-        exclude group: 'androidx.appcompat', module:'appcompat'
+    implementation('com.alimuzaffar.lib:pinentryedittext:2.0.6') {
+        exclude group: 'androidx.appcompat', module: 'appcompat'
     }
 
     implementation 'com.aurelhubert:ahbottomnavigation:2.1.0'
