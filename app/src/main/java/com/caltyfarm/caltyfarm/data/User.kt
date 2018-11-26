@@ -6,5 +6,6 @@ class User(
     var birthdate: Long?,
     var gender: Int?,
     val phone: String,
-    var email: String?
+    var email: String?,
+    var profileUrl: String?
 )

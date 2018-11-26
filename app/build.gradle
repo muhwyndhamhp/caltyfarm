@@ -71,5 +71,7 @@ dependencies {
     }
 
     implementation 'com.aurelhubert:ahbottomnavigation:2.1.0'
+
+    implementation 'com.mikhaellopez:circularimageview:3.2.0'
 }
 apply plugin: 'com.google.gms.google-services'

@@ -79,6 +79,7 @@ class VerifViewModel(val context: Context, val appRepository: AppRepository, pri
             0,
             0,
             initialPhoneNumber,
+            "",
             ""
         )
 
