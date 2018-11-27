@@ -2,12 +2,10 @@ package com.caltyfarm.caltyfarm.utils
 
 import android.content.Context
 import com.caltyfarm.caltyfarm.data.AppRepository
-import com.caltyfarm.caltyfarm.data.User
+import com.caltyfarm.caltyfarm.data.model.Article
+import com.caltyfarm.caltyfarm.data.model.User
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import java.lang.Exception
 
 class FirebaseUtils(val context: Context) {
@@ -15,14 +13,14 @@ class FirebaseUtils(val context: Context) {
     fun getFirebaseAuth() = FirebaseAuth.getInstance()
 
     fun getFirebaseDatabase() =
-        FirebaseDatabase.getInstance().reference.child("caltyApp").child("users")
+        FirebaseDatabase.getInstance().reference.child("caltyApp")
 
     fun uploadUser(userData: User) {
-        getFirebaseDatabase().child(userData.uid).setValue(userData)
+        getFirebaseDatabase().child("users").child(userData.uid).setValue(userData)
     }
 
     fun getUserData(uid: String, onFirebaseUserDownload: AppRepository.OnFirebaseUserDownload){
-        getFirebaseDatabase().child(uid)
+        getFirebaseDatabase().child("users").child(uid)
             .addValueEventListener(object: ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
                 onFirebaseUserDownload.onDownloadFailed(Exception("Failed to Download"))
@@ -36,5 +34,40 @@ class FirebaseUtils(val context: Context) {
             }
 
         })
+    }
+
+    fun getArticles(category: Int, onArticleDataCallback: AppRepository.OnArticleDataCallback) {
+        getFirebaseDatabase().child("articles")
+            .addChildEventListener(object : ChildEventListener{
+                override fun onCancelled(p0: DatabaseError) {
+                    onArticleDataCallback.onFailed(p0.toException())
+                }
+
+                override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+
+                }
+
+                override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                    if(p0.exists()){
+                        val article = p0.getValue(Article::class.java)
+                        onArticleDataCallback.onChildChanged(article)
+                    }
+                }
+
+                override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                    if(p0.exists()){
+                        val article = p0.getValue(Article::class.java)
+                        onArticleDataCallback.onChildAdded(article)
+                    }
+                }
+
+                override fun onChildRemoved(p0: DataSnapshot) {
+                    if(p0.exists()){
+                        val article = p0.getValue(Article::class.java)
+                        onArticleDataCallback.onChildDeleted(article)
+                    }
+                }
+
+            })
     }
 }

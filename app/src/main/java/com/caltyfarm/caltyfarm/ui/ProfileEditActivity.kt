@@ -65,6 +65,11 @@ class ProfileEditActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
         }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        isInitiated = false
+    }
+
     @SuppressLint("SimpleDateFormat")
     private fun convertDate(birthdate: String): Long {
         val date = SimpleDateFormat("dd/MM/yyyy").parse(birthdate)

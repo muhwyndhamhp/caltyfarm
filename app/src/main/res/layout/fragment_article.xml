@@ -4,4 +4,20 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+    <Spinner
+            android:id="@+id/spinner_article_categories"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout_article"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_article"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 </LinearLayout>

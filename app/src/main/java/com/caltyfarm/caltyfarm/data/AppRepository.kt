@@ -1,5 +1,7 @@
 package com.caltyfarm.caltyfarm.data
 
+import com.caltyfarm.caltyfarm.data.model.Article
+import com.caltyfarm.caltyfarm.data.model.User
 import com.caltyfarm.caltyfarm.utils.FirebaseUtils
 
 class AppRepository(private val firebaseUtils: FirebaseUtils) {
@@ -17,6 +19,13 @@ class AppRepository(private val firebaseUtils: FirebaseUtils) {
         fun onFailed(exception: Exception)
     }
 
+    interface OnArticleDataCallback {
+        fun onChildAdded(article: Article?)
+        fun onChildChanged(article: Article?)
+        fun onChildDeleted(article: Article?)
+        fun onFailed(exception: Exception)
+    }
+
     fun uploadUser(userData: User) {
         firebaseUtils.uploadUser(userData)
     }
@@ -29,6 +38,27 @@ class AppRepository(private val firebaseUtils: FirebaseUtils) {
             }
 
             override fun onDownloadFailed(exception: Exception) {
+                callback.onFailed(exception)
+            }
+
+        })
+    }
+
+    fun getArticles(category: Int, callback: OnArticleDataCallback) {
+        firebaseUtils.getArticles(category, object: OnArticleDataCallback{
+            override fun onChildAdded(article: Article?) {
+                if(article!= null) callback.onChildAdded(article)
+            }
+
+            override fun onChildChanged(article: Article?) {
+                if(article!= null) callback.onChildChanged(article)
+            }
+
+            override fun onChildDeleted(article: Article?) {
+                if(article!= null) callback.onChildDeleted(article)
+            }
+
+            override fun onFailed(exception: Exception) {
                 callback.onFailed(exception)
             }
 

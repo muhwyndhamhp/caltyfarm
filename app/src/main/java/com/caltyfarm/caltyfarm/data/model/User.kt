@@ -1,4 +1,4 @@
-package com.caltyfarm.caltyfarm.data
+package com.caltyfarm.caltyfarm.data.model
 
 class User(
     val uid: String = "",
