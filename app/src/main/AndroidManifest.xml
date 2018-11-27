@@ -41,6 +41,8 @@
         </activity>
         <activity android:name=".ui.ProfileEditActivity">
         </activity>
+        <activity android:name=".ui.ArticleReadActivity">
+        </activity>
     </application>
 
 </manifest>

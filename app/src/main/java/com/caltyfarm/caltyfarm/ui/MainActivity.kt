@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         val ahBottomNavigationAdapter = AHBottomNavigationAdapter(this, R.menu.menu_main)
         ahBottomNavigationAdapter.setupWithBottomNavigation(bottomNavigationView)
         bottomNavigationView.apply {
-            //            titleState = AHBottomNavigation.TitleState.ALWAYS_HIDE
+            titleState = AHBottomNavigation.TitleState.ALWAYS_HIDE
             accentColor = ContextCompat.getColor(context, R.color.colorAccent)
             inactiveColor = ContextCompat.getColor(context, R.color.defaultUnselected)
             defaultBackgroundColor = ContextCompat.getColor(context, R.color.white)

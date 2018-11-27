@@ -70,4 +70,20 @@ class FirebaseUtils(val context: Context) {
 
             })
     }
+
+    fun getArticle(articleId: String, onDataRetrieveCallback: AppRepository.OnDataRetrieveCallback) {
+        getFirebaseDatabase().child("articles").child(articleId).addValueEventListener(object : ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                onDataRetrieveCallback.onFailed(p0.toException())
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if(p0.exists()){
+                    val article = p0.getValue(Article::class.java)
+                    onDataRetrieveCallback.onDataRetrieved(article!!)
+                }
+            }
+
+        })
+    }
 }

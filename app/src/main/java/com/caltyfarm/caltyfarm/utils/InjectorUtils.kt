@@ -31,4 +31,8 @@ object InjectorUtils {
     fun provideArticleViewModelFactory(context: Context): ArticleViewModelFactory {
         return ArticleViewModelFactory(context, getAppRepository(context))
     }
+
+    fun provideArticleViewModelFactory(context: Context, isActivity: Boolean, articleId: String): ArticleViewModelFactory {
+        return ArticleViewModelFactory(context, getAppRepository(context), isActivity, articleId)
+    }
 }

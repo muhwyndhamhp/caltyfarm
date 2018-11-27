@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.caltyfarm.caltyfarm.data.AppRepository
 import com.caltyfarm.caltyfarm.viewmodel.ArticleViewModel
 
-class ArticleViewModelFactory(val context: Context, val appRepository: AppRepository): ViewModelProvider.NewInstanceFactory(){
+class ArticleViewModelFactory(val context: Context, val appRepository: AppRepository, val isActivity : Boolean = false, val articleId: String = ""): ViewModelProvider.NewInstanceFactory(){
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return ArticleViewModel(context, appRepository) as T
+        return ArticleViewModel(context, appRepository, isActivity, articleId) as T
     }
 }

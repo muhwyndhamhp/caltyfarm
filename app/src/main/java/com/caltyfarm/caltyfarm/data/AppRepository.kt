@@ -14,10 +14,13 @@ class AppRepository(private val firebaseUtils: FirebaseUtils) {
 
     }
 
-    interface OnUserDataCallback {
-        fun onUserDataRetrieved(user: User)
+    interface OnDataRetrieveCallback {
+        fun onDataRetrieved(user: User)
+        fun onDataRetrieved(article: Article)
         fun onFailed(exception: Exception)
     }
+
+
 
     interface OnArticleDataCallback {
         fun onChildAdded(article: Article?)
@@ -30,15 +33,15 @@ class AppRepository(private val firebaseUtils: FirebaseUtils) {
         firebaseUtils.uploadUser(userData)
     }
 
-    fun getUserData(callback: OnUserDataCallback) {
+    fun getUserData(retrieveCallback: OnDataRetrieveCallback) {
         firebaseUtils.getUserData(firebaseUtils.getFirebaseAuth().uid!!, object : OnFirebaseUserDownload {
             override fun onUserDownloaded(user: User?) {
                 if (user != null)
-                    callback.onUserDataRetrieved(user)
+                    retrieveCallback.onDataRetrieved(user)
             }
 
             override fun onDownloadFailed(exception: Exception) {
-                callback.onFailed(exception)
+                retrieveCallback.onFailed(exception)
             }
 
         })
@@ -56,6 +59,22 @@ class AppRepository(private val firebaseUtils: FirebaseUtils) {
 
             override fun onChildDeleted(article: Article?) {
                 if(article!= null) callback.onChildDeleted(article)
+            }
+
+            override fun onFailed(exception: Exception) {
+                callback.onFailed(exception)
+            }
+
+        })
+    }
+
+    fun getSingleArticle(articleId: String, callback: OnDataRetrieveCallback) {
+        firebaseUtils.getArticle(articleId, object: OnDataRetrieveCallback{
+            override fun onDataRetrieved(user: User) {
+            }
+
+            override fun onDataRetrieved(article: Article) {
+                callback.onDataRetrieved(article)
             }
 
             override fun onFailed(exception: Exception) {

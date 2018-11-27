@@ -8,6 +8,7 @@
         android:background="@color/white">
     <ImageView
             android:id="@+id/iv_article"
+            android:src="@drawable/images"
             android:layout_width="80dp"
             android:layout_height="match_parent"
             android:layout_margin="10dp"/>

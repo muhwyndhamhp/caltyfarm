@@ -5,18 +5,39 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.caltyfarm.caltyfarm.data.AppRepository
 import com.caltyfarm.caltyfarm.data.model.Article
+import com.caltyfarm.caltyfarm.data.model.User
 
-class ArticleViewModel(val context: Context, val appRepository: AppRepository): ViewModel(){
+class ArticleViewModel(val context: Context, val appRepository: AppRepository, val isActivity : Boolean = false, val articleId: String = ""): ViewModel(){
 
     val articleList : MutableLiveData<MutableList<Article>> = MutableLiveData()
+    val singleArticle: MutableLiveData<Article> = MutableLiveData()
     val errorMessage: MutableLiveData<String> = MutableLiveData()
     val updatePosition: MutableLiveData<Int> = MutableLiveData()
     val deletePosition: MutableLiveData<Int> = MutableLiveData()
     val addPosition: MutableLiveData<Int> = MutableLiveData()
     var category: Int = 0
+
     init {
-        articleList.value = mutableListOf()
-        getArticle(category)
+        if(isActivity){
+            appRepository.getSingleArticle(articleId, object : AppRepository.OnDataRetrieveCallback{
+                override fun onDataRetrieved(user: User) {
+
+                }
+
+                override fun onDataRetrieved(article: Article) {
+                    singleArticle.value = article
+                }
+
+                override fun onFailed(exception: Exception) {
+                    errorMessage.value = exception.message
+                }
+
+            })
+        }
+        else{
+            articleList.value = mutableListOf()
+            getArticle(category)
+        }
     }
 
     private fun getArticle(category: Int) {
