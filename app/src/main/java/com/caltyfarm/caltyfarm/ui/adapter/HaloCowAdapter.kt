@@ -32,7 +32,9 @@ class HaloCowAdapter(val context: Context, lifecycleOwner: LifecycleOwner, val v
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
-        fun bindView(position: Int, workerVet: WorkerVet, context: Context, viewModel: HaloCowsViewModel) {
+        fun bindView(
+            workerVet: WorkerVet,
+            context: Context) {
             itemView.apply {
                 tv_vet_name.text = workerVet.name
                 tv_vet_job.text = workerVet.job
@@ -107,7 +109,7 @@ class HaloCowAdapter(val context: Context, lifecycleOwner: LifecycleOwner, val v
     override fun getItemCount() = if (::vetList.isInitialized) vetList.size else 0
 
     override fun onBindViewHolder(holder: HaloCowAdapter.ViewHolder, position: Int) {
-        holder.bindView(position, vetList[position], context, viewModel)
+        holder.bindView(vetList[position], context)
     }
 }
 
