@@ -46,6 +46,8 @@
         </activity>
         <activity android:name=".ui.HaloCowsActivity">
         </activity>
+        <activity android:name=".ui.CaltyShopActivity">
+        </activity>
     </application>
 
 </manifest>

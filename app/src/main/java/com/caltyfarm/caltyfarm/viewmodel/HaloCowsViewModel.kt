@@ -4,11 +4,11 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.caltyfarm.caltyfarm.data.AppRepository
-import com.caltyfarm.caltyfarm.data.model.WorkerVet
+import com.caltyfarm.caltyfarm.data.model.Vet
 
 class HaloCowsViewModel(val context: Context, val appRepository: AppRepository): ViewModel(){
 
-    val vetList: MutableLiveData<MutableList<WorkerVet>> = MutableLiveData()
+    val vetList: MutableLiveData<MutableList<Vet>> = MutableLiveData()
     val updatePosition: MutableLiveData<Int> = MutableLiveData()
     val deletePosition: MutableLiveData<Int> = MutableLiveData()
     val addPosition: MutableLiveData<Int> = MutableLiveData()
@@ -21,15 +21,15 @@ class HaloCowsViewModel(val context: Context, val appRepository: AppRepository):
 
     private fun initiateVetList() {
         appRepository.getVetList(object: AppRepository.OnVetRetrievedCallback{
-            override fun onChildAdded(article: WorkerVet?) {
+            override fun onChildAdded(article: Vet?) {
                 addChild(article!!)
             }
 
-            override fun onChildChanged(article: WorkerVet?) {
+            override fun onChildChanged(article: Vet?) {
                 changeChild(article!!)
             }
 
-            override fun onChildDeleted(article: WorkerVet?) {
+            override fun onChildDeleted(article: Vet?) {
                 deleteChild(article!!)
             }
 
@@ -40,18 +40,18 @@ class HaloCowsViewModel(val context: Context, val appRepository: AppRepository):
         })
     }
 
-    private fun deleteChild(workerVet: WorkerVet) {
-        val position = searchArticlePosition(workerVet.id)
+    private fun deleteChild(vet: Vet) {
+        val position = searchArticlePosition(vet.id)
         if (position != -1){
             vetList.value!!.removeAt(position)
             deletePosition.value = position
         }
     }
 
-    private fun changeChild(workerVet: WorkerVet) {
-        val position = searchArticlePosition(workerVet.id)
+    private fun changeChild(vet: Vet) {
+        val position = searchArticlePosition(vet.id)
         if(position != -1){
-            vetList.value!![position] = workerVet
+            vetList.value!![position] = vet
             updatePosition.value = position
         }
     }
@@ -63,8 +63,8 @@ class HaloCowsViewModel(val context: Context, val appRepository: AppRepository):
         return -1
     }
 
-    private fun addChild(workerVet: WorkerVet) {
-        vetList.value!!.add(workerVet)
+    private fun addChild(vet: Vet) {
+        vetList.value!!.add(vet)
         addPosition.value = vetList.value!!.size-1
     }
 }

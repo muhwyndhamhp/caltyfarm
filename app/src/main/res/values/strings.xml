@@ -22,6 +22,7 @@
     <string name="gender_idon">gender idon</string>
     <string name="male">Laki-laki</string>
     <string name="female">Perempuan</string>
+    <string name="shopicon">shopIcon</string>
 
     <string-array name="gender">
         <item>Pilih Jenis Kelamin</item>

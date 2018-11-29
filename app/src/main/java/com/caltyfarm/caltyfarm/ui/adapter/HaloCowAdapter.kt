@@ -17,7 +17,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.caltyfarm.caltyfarm.R
-import com.caltyfarm.caltyfarm.data.model.WorkerVet
+import com.caltyfarm.caltyfarm.data.model.Vet
 import com.caltyfarm.caltyfarm.ui.HaloCowsActivity
 import com.caltyfarm.caltyfarm.utils.LoggingListener
 import com.caltyfarm.caltyfarm.utils.REQUEST_PHONE_CODE
@@ -33,20 +33,20 @@ class HaloCowAdapter(val context: Context, lifecycleOwner: LifecycleOwner, val v
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
         fun bindView(
-            workerVet: WorkerVet,
+            vet: Vet,
             context: Context) {
             itemView.apply {
-                tv_vet_name.text = workerVet.name
-                tv_vet_job.text = workerVet.job
-                tv_vet_exp.text = "Pengalaman ${workerVet.exp} Tahun"
+                tv_vet_name.text = vet.name
+                tv_vet_job.text = vet.job
+                tv_vet_exp.text = "Pengalaman ${vet.exp} Tahun"
                 tv_vet_cost.text = NumberFormat
                     .getCurrencyInstance(Locale("in", "ID"))
-                    .format(workerVet.price)
-                tv_vet_time.text = "Tersedia pukul ${workerVet.startTime} - ${workerVet.endTime} WIB"
-                tv_vet_school.text = workerVet.school
-                tv_vet_affiliate.text = workerVet.hospital
+                    .format(vet.price)
+                tv_vet_time.text = "Tersedia pukul ${vet.startTime} - ${vet.endTime} WIB"
+                tv_vet_school.text = vet.school
+                tv_vet_affiliate.text = vet.hospital
             }
-            if (workerVet.profileUrl != "") Glide.with(context).load(workerVet.profileUrl).listener(LoggingListener<Drawable>()).into(
+            if (vet.profileUrl != "") Glide.with(context).load(vet.profileUrl).listener(LoggingListener<Drawable>()).into(
                 itemView.iv_vet_profile
             )
             itemView.bt_halo_cow_request.onClick {
@@ -87,7 +87,7 @@ class HaloCowAdapter(val context: Context, lifecycleOwner: LifecycleOwner, val v
 
     }
 
-    lateinit var vetList: MutableList<WorkerVet>
+    lateinit var vetList: MutableList<Vet>
 
     init {
         viewModel.vetList.observe(lifecycleOwner, Observer {

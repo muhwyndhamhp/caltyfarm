@@ -1,6 +1,6 @@
 package com.caltyfarm.caltyfarm.data.model
 
-class WorkerVet(
+class Vet(
     val id: String = "",
     var profileUrl: String = "",
     val name: String = "",

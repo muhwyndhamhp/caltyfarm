@@ -1,18 +1,17 @@
 package com.caltyfarm.caltyfarm.data
 
 import com.caltyfarm.caltyfarm.data.model.Article
+import com.caltyfarm.caltyfarm.data.model.Shop
 import com.caltyfarm.caltyfarm.data.model.User
-import com.caltyfarm.caltyfarm.data.model.WorkerVet
+import com.caltyfarm.caltyfarm.data.model.Vet
 import com.caltyfarm.caltyfarm.utils.FirebaseUtils
 
 class AppRepository(private val firebaseUtils: FirebaseUtils) {
 
 
     interface OnFirebaseUserDownload {
-
         fun onUserDownloaded(user: User?)
         fun onDownloadFailed(exception: Exception)
-
     }
 
     interface OnDataRetrieveCallback {
@@ -21,19 +20,24 @@ class AppRepository(private val firebaseUtils: FirebaseUtils) {
         fun onFailed(exception: Exception)
     }
 
-    interface OnVetRetrievedCallback{
-        fun onChildAdded(article: WorkerVet?)
-        fun onChildChanged(article: WorkerVet?)
-        fun onChildDeleted(article: WorkerVet?)
+    interface OnVetRetrievedCallback {
+        fun onChildAdded(article: Vet?)
+        fun onChildChanged(article: Vet?)
+        fun onChildDeleted(article: Vet?)
         fun onFailed(exception: Exception)
     }
-
-
 
     interface OnArticleDataCallback {
         fun onChildAdded(article: Article?)
         fun onChildChanged(article: Article?)
         fun onChildDeleted(article: Article?)
+        fun onFailed(exception: Exception)
+    }
+
+    interface OnShopRetireveCallback {
+        fun onChildAdded(shop: Shop?)
+        fun onChildChanged(shop: Shop?)
+        fun onChildDeleted(shop: Shop?)
         fun onFailed(exception: Exception)
     }
 
@@ -56,17 +60,17 @@ class AppRepository(private val firebaseUtils: FirebaseUtils) {
     }
 
     fun getArticles(category: Int, callback: OnArticleDataCallback) {
-        firebaseUtils.getArticles(category, object: OnArticleDataCallback{
+        firebaseUtils.getArticles(object : OnArticleDataCallback {
             override fun onChildAdded(article: Article?) {
-                if(article!= null) callback.onChildAdded(article)
+                if (article != null) callback.onChildAdded(article)
             }
 
             override fun onChildChanged(article: Article?) {
-                if(article!= null) callback.onChildChanged(article)
+                if (article != null) callback.onChildChanged(article)
             }
 
             override fun onChildDeleted(article: Article?) {
-                if(article!= null) callback.onChildDeleted(article)
+                if (article != null) callback.onChildDeleted(article)
             }
 
             override fun onFailed(exception: Exception) {
@@ -77,7 +81,7 @@ class AppRepository(private val firebaseUtils: FirebaseUtils) {
     }
 
     fun getSingleArticle(articleId: String, callback: OnDataRetrieveCallback) {
-        firebaseUtils.getArticle(articleId, object: OnDataRetrieveCallback{
+        firebaseUtils.getArticle(articleId, object : OnDataRetrieveCallback {
             override fun onDataRetrieved(user: User) {
             }
 
@@ -92,28 +96,49 @@ class AppRepository(private val firebaseUtils: FirebaseUtils) {
         })
     }
 
-    fun postVet(value: MutableList<WorkerVet>) {
-        for(i in value.indices){
+    fun postVet(value: MutableList<Vet>) {
+        for (i in value.indices) {
             firebaseUtils.postVet(value[i])
         }
     }
 
     fun getVetList(callback: OnVetRetrievedCallback) {
-        firebaseUtils.getVetList(object : OnVetRetrievedCallback{
-            override fun onChildAdded(article: WorkerVet?) {
-                if(article!= null) callback.onChildAdded(article)
+        firebaseUtils.getVetList(object : OnVetRetrievedCallback {
+            override fun onChildAdded(article: Vet?) {
+                if (article != null) callback.onChildAdded(article)
             }
 
-            override fun onChildChanged(article: WorkerVet?) {
-                if(article != null) callback.onChildChanged(article)
+            override fun onChildChanged(article: Vet?) {
+                if (article != null) callback.onChildChanged(article)
             }
 
-            override fun onChildDeleted(article: WorkerVet?) {
-                if(article!= null) callback.onChildDeleted(article)
+            override fun onChildDeleted(article: Vet?) {
+                if (article != null) callback.onChildDeleted(article)
             }
 
             override fun onFailed(exception: Exception) {
                 callback.onFailed(exception)
+            }
+
+        })
+    }
+
+    fun getShops(onShopRetireveCallback: OnShopRetireveCallback) {
+        firebaseUtils.getShopList(object : OnShopRetireveCallback{
+            override fun onChildAdded(shop: Shop?) {
+                if(shop != null) onShopRetireveCallback.onChildAdded(shop)
+            }
+
+            override fun onChildChanged(shop: Shop?) {
+                if(shop != null) onShopRetireveCallback.onChildChanged(shop)
+            }
+
+            override fun onChildDeleted(shop: Shop?) {
+                if(shop != null) onShopRetireveCallback.onChildDeleted(shop)
+            }
+
+            override fun onFailed(exception: Exception) {
+                onShopRetireveCallback.onFailed(exception)
             }
 
         })
