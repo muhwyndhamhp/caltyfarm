@@ -4,6 +4,7 @@ import android.content.Context
 import com.caltyfarm.caltyfarm.data.AppRepository
 import com.caltyfarm.caltyfarm.data.model.Article
 import com.caltyfarm.caltyfarm.data.model.User
+import com.caltyfarm.caltyfarm.data.model.WorkerVet
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import java.lang.Exception
@@ -85,5 +86,44 @@ class FirebaseUtils(val context: Context) {
             }
 
         })
+    }
+
+    fun postVet(workerVet: WorkerVet) {
+        getFirebaseDatabase().child("workerVet").child(workerVet.id).setValue(workerVet)
+    }
+
+    fun getVetList(onVetRetrievedCallback: AppRepository.OnVetRetrievedCallback) {
+        getFirebaseDatabase().child("workerVet")
+            .addChildEventListener(object : ChildEventListener{
+                override fun onCancelled(p0: DatabaseError) {
+                    onVetRetrievedCallback.onFailed(p0.toException())
+                }
+
+                override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+
+                }
+
+                override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                    if(p0.exists()){
+                        val article = p0.getValue(WorkerVet::class.java)
+                        onVetRetrievedCallback.onChildChanged(article)
+                    }
+                }
+
+                override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                    if(p0.exists()){
+                        val article = p0.getValue(WorkerVet::class.java)
+                        onVetRetrievedCallback.onChildAdded(article)
+                    }
+                }
+
+                override fun onChildRemoved(p0: DataSnapshot) {
+                    if(p0.exists()){
+                        val article = p0.getValue(WorkerVet::class.java)
+                        onVetRetrievedCallback.onChildDeleted(article)
+                    }
+                }
+
+            })
     }
 }

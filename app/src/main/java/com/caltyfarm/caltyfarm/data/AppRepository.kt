@@ -2,6 +2,7 @@ package com.caltyfarm.caltyfarm.data
 
 import com.caltyfarm.caltyfarm.data.model.Article
 import com.caltyfarm.caltyfarm.data.model.User
+import com.caltyfarm.caltyfarm.data.model.WorkerVet
 import com.caltyfarm.caltyfarm.utils.FirebaseUtils
 
 class AppRepository(private val firebaseUtils: FirebaseUtils) {
@@ -17,6 +18,13 @@ class AppRepository(private val firebaseUtils: FirebaseUtils) {
     interface OnDataRetrieveCallback {
         fun onDataRetrieved(user: User)
         fun onDataRetrieved(article: Article)
+        fun onFailed(exception: Exception)
+    }
+
+    interface OnVetRetrievedCallback{
+        fun onChildAdded(article: WorkerVet?)
+        fun onChildChanged(article: WorkerVet?)
+        fun onChildDeleted(article: WorkerVet?)
         fun onFailed(exception: Exception)
     }
 
@@ -75,6 +83,33 @@ class AppRepository(private val firebaseUtils: FirebaseUtils) {
 
             override fun onDataRetrieved(article: Article) {
                 callback.onDataRetrieved(article)
+            }
+
+            override fun onFailed(exception: Exception) {
+                callback.onFailed(exception)
+            }
+
+        })
+    }
+
+    fun postVet(value: MutableList<WorkerVet>) {
+        for(i in value.indices){
+            firebaseUtils.postVet(value[i])
+        }
+    }
+
+    fun getVetList(callback: OnVetRetrievedCallback) {
+        firebaseUtils.getVetList(object : OnVetRetrievedCallback{
+            override fun onChildAdded(article: WorkerVet?) {
+                if(article!= null) callback.onChildAdded(article)
+            }
+
+            override fun onChildChanged(article: WorkerVet?) {
+                if(article != null) callback.onChildChanged(article)
+            }
+
+            override fun onChildDeleted(article: WorkerVet?) {
+                if(article!= null) callback.onChildDeleted(article)
             }
 
             override fun onFailed(exception: Exception) {
