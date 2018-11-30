@@ -40,4 +40,8 @@ object InjectorUtils {
     fun provideCaltyShopViewModelFactory(context: Context): CaltyShopViewModelFactory{
         return CaltyShopViewModelFactory(context, getAppRepository())
     }
+
+    fun provideShopCatalogViewModelFactory(context: Context, shopId: String): ShopCatalogViewModelFactory{
+        return ShopCatalogViewModelFactory(context, getAppRepository(),shopId)
+    }
 }

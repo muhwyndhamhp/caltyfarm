@@ -1,9 +1,6 @@
 package com.caltyfarm.caltyfarm.data
 
-import com.caltyfarm.caltyfarm.data.model.Article
-import com.caltyfarm.caltyfarm.data.model.Shop
-import com.caltyfarm.caltyfarm.data.model.User
-import com.caltyfarm.caltyfarm.data.model.Vet
+import com.caltyfarm.caltyfarm.data.model.*
 import com.caltyfarm.caltyfarm.utils.FirebaseUtils
 
 class AppRepository(private val firebaseUtils: FirebaseUtils) {
@@ -38,6 +35,13 @@ class AppRepository(private val firebaseUtils: FirebaseUtils) {
         fun onChildAdded(shop: Shop?)
         fun onChildChanged(shop: Shop?)
         fun onChildDeleted(shop: Shop?)
+        fun onFailed(exception: Exception)
+    }
+
+    interface OnItemRetreiveCallback{
+        fun onChildAdded(shopItem: ShopItem?)
+        fun onChildChanged(shopItem: ShopItem?)
+        fun onChildDeleted(shopItem: ShopItem?)
         fun onFailed(exception: Exception)
     }
 
@@ -142,6 +146,10 @@ class AppRepository(private val firebaseUtils: FirebaseUtils) {
             }
 
         })
+    }
+
+    fun getItems(shopId: String, callback: OnItemRetreiveCallback) {
+        firebaseUtils.getItems(shopId, callback)
     }
 
 

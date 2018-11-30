@@ -1,10 +1,7 @@
 package com.caltyfarm.caltyfarm.utils
 
 import com.caltyfarm.caltyfarm.data.AppRepository
-import com.caltyfarm.caltyfarm.data.model.Article
-import com.caltyfarm.caltyfarm.data.model.Shop
-import com.caltyfarm.caltyfarm.data.model.User
-import com.caltyfarm.caltyfarm.data.model.Vet
+import com.caltyfarm.caltyfarm.data.model.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
@@ -156,6 +153,35 @@ object FirebaseUtils {
                         val article = p0.getValue(Shop::class.java)
                         onShopRetireveCallback.onChildDeleted(article)
                     }
+                }
+
+            })
+    }
+
+    fun getItems(shopId: String, callback: AppRepository.OnItemRetreiveCallback) {
+        getFirebaseDatabase().child("itemShop").child(shopId)
+            .addChildEventListener(object: ChildEventListener{
+                override fun onCancelled(p0: DatabaseError) {
+                    callback.onFailed(p0.toException())
+                }
+
+                override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+
+                }
+
+                override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                    val item = p0.getValue(ShopItem::class.java)
+                    callback.onChildChanged(item!!)
+                }
+
+                override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                    val item = p0.getValue(ShopItem::class.java)
+                    callback.onChildAdded(item!!)
+                }
+
+                override fun onChildRemoved(p0: DataSnapshot) {
+                    val item = p0.getValue(ShopItem::class.java)
+                    callback.onChildDeleted(item!!)
                 }
 
             })

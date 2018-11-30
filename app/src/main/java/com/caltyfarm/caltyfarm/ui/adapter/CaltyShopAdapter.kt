@@ -1,6 +1,8 @@
 package com.caltyfarm.caltyfarm.ui.adapter
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,14 +11,22 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.caltyfarm.caltyfarm.R
 import com.caltyfarm.caltyfarm.data.model.Shop
+import com.caltyfarm.caltyfarm.ui.ShopCatalogActivity
+import com.caltyfarm.caltyfarm.utils.SHOP_CODE
 import com.caltyfarm.caltyfarm.viewmodel.CaltyShopViewModel
 import kotlinx.android.synthetic.main.item_calty_shop.view.*
+import org.jetbrains.anko.sdk27.coroutines.onClick
 
 class CaltyShopAdapter(val context: Context, val lifecycleOwner: LifecycleOwner, val viewModel: CaltyShopViewModel): RecyclerView.Adapter<CaltyShopAdapter.ViewHolder>(){
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         fun bindView(shop: Shop, context: Context) {
             itemView.tv_shop_name.text = shop.name
             itemView.tv_location_literal.text = shop.location
+            itemView.onClick {
+                val intent = Intent(context, ShopCatalogActivity::class.java)
+                intent.putExtra(SHOP_CODE, shop)
+                (context as Activity).startActivity(intent)
+            }
         }
 
     }
