@@ -49,8 +49,12 @@
         </activity>
         <activity android:name=".ui.CaltyShopActivity">
         </activity>
-        <activity android:name=".ui.ShopCatalogActivity"
-                android:theme="@style/AppTheme.NoActionBar">
+        <activity
+                android:name=".ui.ShopCatalogActivity"
+                android:theme="@style/AppTheme.NoActionBar"
+                >
+        </activity>
+        <activity android:name=".ui.ShopOrderActivity">
         </activity>
     </application>
 

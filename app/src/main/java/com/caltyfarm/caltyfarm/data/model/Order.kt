@@ -1,5 +1,7 @@
 package com.caltyfarm.caltyfarm.data.model
 
+import java.io.Serializable
+
 class Order(
     val id: String = "",
     val orderDate: Long = 0,
@@ -16,5 +18,6 @@ class Order(
     var sourceLong: String = "",
     var sourceAddress: String = "",
     var courierLat: String = "",
-    var courierLong: String = ""
-)
+    var courierLong: String = "",
+    var isFinished: Boolean = false
+): Serializable

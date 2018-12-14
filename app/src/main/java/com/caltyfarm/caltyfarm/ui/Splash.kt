@@ -5,13 +5,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.caltyfarm.caltyfarm.R
 import com.google.firebase.auth.FirebaseAuth
+import java.util.*
+import kotlin.concurrent.schedule
 
 class Splash : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-        checkUserLogin()
+        Timer().schedule(2000){
+            checkUserLogin()
+        }
     }
 
     private fun checkUserLogin() {

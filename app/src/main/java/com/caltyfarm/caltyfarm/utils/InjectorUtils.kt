@@ -2,6 +2,7 @@ package com.caltyfarm.caltyfarm.utils
 
 import android.content.Context
 import com.caltyfarm.caltyfarm.data.AppRepository
+import com.caltyfarm.caltyfarm.data.model.Order
 import com.caltyfarm.caltyfarm.viewmodel.VerifViewModelFactory
 import com.caltyfarm.caltyfarm.viewmodel.factory.*
 
@@ -29,19 +30,31 @@ object InjectorUtils {
         return ArticleViewModelFactory(context, getAppRepository())
     }
 
-    fun provideArticleViewModelFactory(context: Context, isActivity: Boolean, articleId: String): ArticleViewModelFactory {
+    fun provideArticleViewModelFactory(
+        context: Context,
+        isActivity: Boolean,
+        articleId: String
+    ): ArticleViewModelFactory {
         return ArticleViewModelFactory(context, getAppRepository(), isActivity, articleId)
     }
 
-    fun provideHaloCowsViewModelFactory(context: Context): HaloCowsViewModelFactory{
+    fun provideHaloCowsViewModelFactory(context: Context): HaloCowsViewModelFactory {
         return HaloCowsViewModelFactory(context, getAppRepository())
     }
 
-    fun provideCaltyShopViewModelFactory(context: Context): CaltyShopViewModelFactory{
+    fun provideCaltyShopViewModelFactory(context: Context): CaltyShopViewModelFactory {
         return CaltyShopViewModelFactory(context, getAppRepository())
     }
 
-    fun provideShopCatalogViewModelFactory(context: Context, shopId: String): ShopCatalogViewModelFactory{
-        return ShopCatalogViewModelFactory(context, getAppRepository(),shopId)
+    fun provideShopCatalogViewModelFactory(context: Context, shopId: String): ShopCatalogViewModelFactory {
+        return ShopCatalogViewModelFactory(context, getAppRepository(), shopId)
+    }
+
+    fun provideShopOrderViewModelFactory(
+        context: Context,
+        order: Order,
+        list: List<*>
+    ): ShopOrderViewModelFactory {
+        return ShopOrderViewModelFactory(context, getAppRepository(), order, list)
     }
 }

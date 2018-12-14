@@ -14,10 +14,7 @@ import com.caltyfarm.caltyfarm.R
 import com.caltyfarm.caltyfarm.data.model.Shop
 import com.caltyfarm.caltyfarm.ui.adapter.CaltyShopAdapter
 import com.caltyfarm.caltyfarm.ui.adapter.ShopCatalogAdapter
-import com.caltyfarm.caltyfarm.utils.InjectorUtils
-import com.caltyfarm.caltyfarm.utils.PHONE_NUMBER_CODE
-import com.caltyfarm.caltyfarm.utils.REQUEST_FINE_LOCATION
-import com.caltyfarm.caltyfarm.utils.SHOP_CODE
+import com.caltyfarm.caltyfarm.utils.*
 import com.caltyfarm.caltyfarm.viewmodel.ShopCatalogViewModel
 import kotlinx.android.synthetic.main.activity_calty_shop.*
 import kotlinx.android.synthetic.main.activity_shop_catalog.*
@@ -25,6 +22,7 @@ import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.toast
 import java.text.NumberFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class ShopCatalogActivity : AppCompatActivity() {
 
@@ -108,7 +106,10 @@ class ShopCatalogActivity : AppCompatActivity() {
     }
 
     private fun navigateToOrderCheck() {
-
+        val intent = Intent(this@ShopCatalogActivity, ShopOrderActivity::class.java)
+        intent.putExtra(ORDER_CODE, viewModel.currentOrder.value!!)
+        intent.putExtra(SELECTED_ITEM_CODE, viewModel.selectedItemList.value!! as ArrayList)
+        startActivity(intent)
     }
 
     private fun setupPermission(): Boolean {
