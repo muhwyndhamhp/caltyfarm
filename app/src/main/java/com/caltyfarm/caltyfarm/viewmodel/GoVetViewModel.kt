@@ -14,10 +14,9 @@ import com.google.android.gms.maps.model.LatLng
 
 class GoVetViewModel(val appRepository: AppRepository) : ViewModel() {
 
-    var locationPermissionGranted = false
-
-    val lastKnownLocation : MutableLiveData<Location> = MutableLiveData()
+    private val lastKnownLocation: MutableLiveData<Location> = MutableLiveData()
     val isAskingPermissionLocation: MutableLiveData<Boolean> = MutableLiveData()
+    var locationPermissionGranted = false
 
     init {
         isAskingPermissionLocation.value = false

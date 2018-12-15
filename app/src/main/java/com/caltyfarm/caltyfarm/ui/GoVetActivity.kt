@@ -1,9 +1,7 @@
 package com.caltyfarm.caltyfarm.ui
 
 import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -13,11 +11,7 @@ import com.caltyfarm.caltyfarm.R
 import com.caltyfarm.caltyfarm.utils.InjectorUtils
 import com.caltyfarm.caltyfarm.utils.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
 import com.caltyfarm.caltyfarm.viewmodel.GoVetViewModel
-import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.location.places.GeoDataClient
-import com.google.android.gms.location.places.PlaceDetectionClient
-import com.google.android.gms.location.places.Places
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -25,15 +19,7 @@ import com.google.android.gms.maps.SupportMapFragment
 
 @Suppress("DEPRECATION")
 class GoVetActivity : AppCompatActivity(), OnMapReadyCallback {
-    override fun onMapReady(googleMap: GoogleMap) {
-        map = googleMap
 
-        viewModel.updateLocationUI(map)
-
-        viewModel.getDeviceLocation(map, fusedLocationProviderClient, this)
-    }
-    
-    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var map: GoogleMap
 
     lateinit var viewModel: GoVetViewModel
@@ -46,15 +32,17 @@ class GoVetActivity : AppCompatActivity(), OnMapReadyCallback {
         viewModel = ViewModelProviders.of(this, factory).get(GoVetViewModel::class.java)
 
         viewModel.isAskingPermissionLocation.observe(this, Observer {
-            if(it) getLocationPermission()
+            if (it) getLocationPermission()
         })
 
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment?
-        mapFragment!!.getMapAsync(this)
-        
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+    }
 
+    override fun onMapReady(googleMap: GoogleMap) {
+        map = googleMap
+        viewModel.updateLocationUI(map)
+        viewModel.getDeviceLocation(map, LocationServices.getFusedLocationProviderClient(this), this)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -69,7 +57,7 @@ class GoVetActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             }
         }
-        if(::map.isInitialized) viewModel.updateLocationUI(map)
+        if (::map.isInitialized) viewModel.updateLocationUI(map)
     }
 
     private fun getLocationPermission() {
@@ -80,7 +68,7 @@ class GoVetActivity : AppCompatActivity(), OnMapReadyCallback {
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             viewModel.locationPermissionGranted = true
-            if(::map.isInitialized) viewModel.updateLocationUI(map)
+            if (::map.isInitialized) viewModel.updateLocationUI(map)
         } else {
             ActivityCompat.requestPermissions(
                 this,
