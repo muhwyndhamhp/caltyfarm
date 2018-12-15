@@ -7,20 +7,20 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.caltyfarm.caltyfarm.R
-import com.caltyfarm.caltyfarm.utils.DEFAULT_ZOOM
+import com.caltyfarm.caltyfarm.utils.InjectorUtils
 import com.caltyfarm.caltyfarm.utils.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
+import com.caltyfarm.caltyfarm.viewmodel.GoVetViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.places.GeoDataClient
 import com.google.android.gms.location.places.PlaceDetectionClient
 import com.google.android.gms.location.places.Places
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 
 
 @Suppress("DEPRECATION")
@@ -28,48 +28,48 @@ class GoVetActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
 
-        updateLocationUI()
+        viewModel.updateLocationUI(map)
 
-        getDeviceLocation()
+        viewModel.getDeviceLocation(map, fusedLocationProviderClient, this)
     }
-
-
-    lateinit var geoDataClient: GeoDataClient
-    lateinit var placeDetectionClient: PlaceDetectionClient
-    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var map: GoogleMap
 
-    var mLastKnownLocation: Location? = null
-
-    var mLocationPermissionGranted = false
+    lateinit var viewModel: GoVetViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_set_user_location)
 
+        val factory = InjectorUtils.provideGovetViewModelFactory(this)
+        viewModel = ViewModelProviders.of(this, factory).get(GoVetViewModel::class.java)
+
+        viewModel.isAskingPermissionLocation.observe(this, Observer {
+            if(it) getLocationPermission()
+        })
+
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment!!.getMapAsync(this)
-
-        geoDataClient = Places.getGeoDataClient(this)
-        placeDetectionClient = Places.getPlaceDetectionClient(this, null)
+        
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        mLocationPermissionGranted = false
+        viewModel.locationPermissionGranted = false
         when (requestCode) {
             PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION -> {
                 // If request is cancelled, the result arrays are empty.
                 @Suppress("DEPRECATED_IDENTITY_EQUALS")
                 if (grantResults.isNotEmpty() && grantResults[0] === PackageManager.PERMISSION_GRANTED) {
-                    mLocationPermissionGranted = true
+                    viewModel.locationPermissionGranted = true
                 }
             }
         }
-        updateLocationUI()
+        if(::map.isInitialized) viewModel.updateLocationUI(map)
     }
 
     private fun getLocationPermission() {
@@ -79,7 +79,8 @@ class GoVetActivity : AppCompatActivity(), OnMapReadyCallback {
                 android.Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
-            mLocationPermissionGranted = true
+            viewModel.locationPermissionGranted = true
+            if(::map.isInitialized) viewModel.updateLocationUI(map)
         } else {
             ActivityCompat.requestPermissions(
                 this,
@@ -89,54 +90,4 @@ class GoVetActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun updateLocationUI() {
-        if (!::map.isInitialized) {
-            return
-        }
-        try {
-            if (mLocationPermissionGranted) {
-                map.isMyLocationEnabled = true
-                map.uiSettings.isMyLocationButtonEnabled = true
-            } else {
-                map.isMyLocationEnabled = false
-                map.uiSettings.isMyLocationButtonEnabled = false
-                mLastKnownLocation = null
-                getLocationPermission()
-            }
-        } catch (e: SecurityException) {
-            Log.e("Exception: %s", e.message)
-        }
-
-
-    }
-
-    private fun getDeviceLocation() {
-        try {
-            if (mLocationPermissionGranted) {
-                val locationResult = fusedLocationProviderClient.lastLocation
-                locationResult.addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        // Set the map's camera position to the current location of the device.
-                        mLastKnownLocation = task.result
-                        map.moveCamera(
-                            CameraUpdateFactory.newLatLngZoom(
-                                LatLng(
-                                    mLastKnownLocation!!.latitude,
-                                    mLastKnownLocation!!.longitude
-                                ), DEFAULT_ZOOM
-                            )
-                        )
-                    } else {
-                        Log.d("GOVET", "Current location is null. Using defaults.")
-                        Log.e("GOVET", "Exception: %s", task.exception)
-                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(-7.797068, 110.370529), DEFAULT_ZOOM))
-                        map.uiSettings.isMyLocationButtonEnabled = false
-                    }
-                }
-            }
-        } catch (e: SecurityException) {
-            Log.e("Exception: %s", e.message)
-        }
-
-    }
 }

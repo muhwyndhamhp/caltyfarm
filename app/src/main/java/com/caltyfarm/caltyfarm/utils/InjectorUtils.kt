@@ -57,4 +57,8 @@ object InjectorUtils {
     ): ShopOrderViewModelFactory {
         return ShopOrderViewModelFactory(context, getAppRepository(), order, list)
     }
+
+    fun provideGovetViewModelFactory(context: Context): GoVetViewModelFactory {
+        return GoVetViewModelFactory(getAppRepository())
+    }
 }
