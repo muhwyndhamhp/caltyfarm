@@ -59,6 +59,6 @@ object InjectorUtils {
     }
 
     fun provideGovetViewModelFactory(context: Context): GoVetViewModelFactory {
-        return GoVetViewModelFactory(getAppRepository())
+        return GoVetViewModelFactory(getAppRepository(), context)
     }
 }

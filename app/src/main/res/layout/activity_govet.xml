@@ -17,14 +17,12 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/bottom_sheet"
             android:layout_width="match_parent"
-            android:layout_height="340dp"
+            android:layout_height="wrap_content"
             android:background="@android:color/darker_gray"
             android:orientation="vertical"
-            app:behavior_hideable="true"
+            app:behavior_hideable="false"
             app:behavior_peekHeight="80dp"
-            app:cardCornerRadius="20dp"
-            android:layout_marginBottom="-20dp"
-            app:layout_behavior="@string/bottom_sheet_behavior">
+            app:layout_behavior="@string/custom_bottom_sheet_behavior">
 
         <LinearLayout
                 android:layout_width="match_parent"
@@ -32,19 +30,19 @@
                 android:orientation="vertical">
 
             <TextView
+                    android:id="@+id/tv_title"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:background="@color/colorAccent"
                     android:gravity="center"
-                    android:text="Sheet title"
+                    android:text="@string/pilih_dokter_hewan_yang_anda_inginkan"
                     android:textColor="@android:color/white"/>
-
-            <TextView
+            <FrameLayout
+                    android:id="@+id/frame_govet"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="Sheet body"
-                    android:textColor="@android:color/white"/>
+                    android:layout_height="wrap_content">
+
+            </FrameLayout>
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

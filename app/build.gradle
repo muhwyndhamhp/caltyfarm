@@ -84,5 +84,7 @@ dependencies {
     implementation 'ru.noties:markwon-image-loader:2.0.0'
     implementation 'ru.noties:markwon-syntax-highlight:2.0.0'
     implementation 'ru.noties:markwon-view:2.0.0'
+
+    implementation 'com.akexorcist:googledirectionlibrary:1.1.1'
 }
 apply plugin: 'com.google.gms.google-services'

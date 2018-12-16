@@ -10,7 +10,7 @@ class Vet(
     var endTime: String = "",
     var school : String = "",
     var hospital: String = "",
-    var lati :String = "",
-    var longi :String = "",
+    var lati :Double = 0.0,
+    var longi :Double = 0.0,
     var job: String = "Dokter Hewan"
 )
