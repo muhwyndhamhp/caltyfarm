@@ -14,7 +14,7 @@ import com.caltyfarm.caltyfarm.data.model.Vet
 import com.caltyfarm.caltyfarm.ui.fragments.GovetDataVetFragment
 import com.caltyfarm.caltyfarm.ui.fragments.GovetOrderSummary
 import com.caltyfarm.caltyfarm.utils.InjectorUtils
-import com.caltyfarm.caltyfarm.utils.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
+import com.caltyfarm.caltyfarm.utils.REQUEST_ACCESS_FINE_LOCATION
 import com.caltyfarm.caltyfarm.viewmodel.GoVetViewModel
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.GoogleMap
@@ -108,7 +108,7 @@ class GoVetActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         viewModel.locationPermissionGranted = false
         when (requestCode) {
-            PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION -> {
+            REQUEST_ACCESS_FINE_LOCATION -> {
                 // If request is cancelled, the result arrays are empty.
                 @Suppress("DEPRECATED_IDENTITY_EQUALS")
                 if (grantResults.isNotEmpty() && grantResults[0] === PackageManager.PERMISSION_GRANTED) {
@@ -132,7 +132,7 @@ class GoVetActivity : AppCompatActivity(), OnMapReadyCallback {
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
-                PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
+                REQUEST_ACCESS_FINE_LOCATION
             )
         }
     }

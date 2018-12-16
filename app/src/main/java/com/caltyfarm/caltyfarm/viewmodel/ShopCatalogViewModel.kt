@@ -25,7 +25,7 @@ class ShopCatalogViewModel(val context: Context, val appRepository: AppRepositor
             "${FirebaseAuth.getInstance().currentUser!!.uid}-cs-1",
             System.currentTimeMillis()/1000,
             FirebaseAuth.getInstance().currentUser!!.uid,
-            "CaltyShop",
+            1,
             shopId,
             mutableListOf(),
             0
