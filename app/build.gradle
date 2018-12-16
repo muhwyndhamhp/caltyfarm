@@ -17,9 +17,15 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            buildConfigField 'String', "MapsApiKey", Maps_API_Key
+            resValue 'string', "maps_api_key", Maps_API_Key
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', "MapsApiKey", Maps_API_Key
+            resValue 'string', "maps_api_key", Maps_API_Key
         }
     }
 }

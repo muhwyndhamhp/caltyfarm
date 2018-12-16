@@ -13,6 +13,7 @@ import com.akexorcist.googledirection.constant.AvoidType
 import com.akexorcist.googledirection.model.Direction
 import com.akexorcist.googledirection.model.Route
 import com.akexorcist.googledirection.util.DirectionConverter
+import com.caltyfarm.caltyfarm.BuildConfig
 import com.caltyfarm.caltyfarm.R
 import com.caltyfarm.caltyfarm.data.AppRepository
 import com.caltyfarm.caltyfarm.data.model.Vet
@@ -185,7 +186,7 @@ class GoVetViewModel(val appRepository: AppRepository, val context: Context) : V
 
     fun drawRoute(location: LatLng) {
         vetPosition = location
-        GoogleDirection.withServerKey(context.resources.getString(R.string.google_maps_key))
+        GoogleDirection.withServerKey(BuildConfig.MapsApiKey)
             .from(userPosition)
             .to(vetPosition)
             .avoid(AvoidType.FERRIES)
