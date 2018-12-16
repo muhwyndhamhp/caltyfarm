@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.caltyfarm.caltyfarm.R
 import com.caltyfarm.caltyfarm.data.model.Vet
+import com.caltyfarm.caltyfarm.ui.GoVetActivity
 import com.caltyfarm.caltyfarm.ui.HaloCowsActivity
 import com.caltyfarm.caltyfarm.utils.LoggingListener
 import kotlinx.android.synthetic.main.fragment_govetdatavet.*
@@ -57,15 +58,7 @@ class GovetDataVetFragment(): Fragment(){
             view.iv_vet_profile
         )
         view.bt_halo_cow_request.onClick {
-            view.tv_vet_phone.visibility = View.VISIBLE
-            setPhoneClickListener(context!!)
-        }
-    }
-
-    private fun setPhoneClickListener(context: Context) {
-        (context as HaloCowsActivity).phoneNumber = view!!.tv_vet_phone.text as String
-        view!!.tv_vet_phone.onClick {
-            activity!!.toast("Clicked!")
+            (context as GoVetActivity).inflateOrderSummaryFragment(vetData, polyDistance, polyDuration)
         }
     }
 }

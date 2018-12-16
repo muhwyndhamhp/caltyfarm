@@ -2,6 +2,7 @@ package com.caltyfarm.caltyfarm.viewmodel
 
 import android.app.Activity
 import android.content.Context
+import android.location.Geocoder
 import android.location.Location
 import android.os.Build
 import android.util.Log
@@ -23,9 +24,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
-import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.gms.maps.model.LatLng
-import org.jetbrains.anko.toast
+import java.util.*
 
 
 class GoVetViewModel(val appRepository: AppRepository, val context: Context) : ViewModel() {
@@ -33,7 +32,7 @@ class GoVetViewModel(val appRepository: AppRepository, val context: Context) : V
     private val lastKnownLocation: MutableLiveData<Location> = MutableLiveData()
     val isAskingPermissionLocation: MutableLiveData<Boolean> = MutableLiveData()
     val vetList: MutableLiveData<MutableList<Vet>> = MutableLiveData()
-    private val markerList : MutableList<Marker> = mutableListOf()
+    private val markerList: MutableList<Marker> = mutableListOf()
     val map: MutableLiveData<GoogleMap> = MutableLiveData()
     var locationPermissionGranted = false
     lateinit var userPosition: LatLng
@@ -87,9 +86,9 @@ class GoVetViewModel(val appRepository: AppRepository, val context: Context) : V
                         )
                         userPosition =
                                 LatLng(
-                            lastKnownLocation.latitude,
-                            lastKnownLocation.longitude
-                        )
+                                    lastKnownLocation.latitude,
+                                    lastKnownLocation.longitude
+                                )
                         putVetDataOnMap(
                             LatLng(
                                 lastKnownLocation.latitude,
@@ -156,15 +155,15 @@ class GoVetViewModel(val appRepository: AppRepository, val context: Context) : V
     private fun deleteMarker(article: Vet) {
         val position = searchMarkerPosition(article.id)
 
-        if(position != -1){
+        if (position != -1) {
             vetList.value!!.removeAt(position)
             markerList[position].remove()
         }
     }
 
     private fun searchMarkerPosition(id: String): Int {
-        for (i in vetList.value!!.indices){
-            if(vetList.value!![i].id == id) return i
+        for (i in vetList.value!!.indices) {
+            if (vetList.value!![i].id == id) return i
         }
         return -1
     }
@@ -173,9 +172,10 @@ class GoVetViewModel(val appRepository: AppRepository, val context: Context) : V
         val position = searchMarkerPosition(name, false)
         return vetList.value!![position]
     }
+
     private fun searchMarkerPosition(name: String, isMarker: Boolean): Int {
-        for (i in vetList.value!!.indices){
-            if(vetList.value!![i].name == name) return i
+        for (i in vetList.value!!.indices) {
+            if (vetList.value!![i].name == name) return i
         }
         return -1
     }
@@ -240,4 +240,18 @@ class GoVetViewModel(val appRepository: AppRepository, val context: Context) : V
     fun removeRoute() {
         if (polyDirection != null) polyDirection!!.remove()
     }
+
+    fun getVetAddress() =
+        Geocoder(context, Locale.getDefault()).getFromLocation(
+            vetPosition.latitude,
+            vetPosition.longitude,
+            1
+        )[0].getAddressLine(0)!!
+
+    fun getUserAddress() =
+        Geocoder(context, Locale.getDefault()).getFromLocation(
+            userPosition.latitude,
+            userPosition.longitude,
+            1
+        )[0].getAddressLine(0)!!
 }

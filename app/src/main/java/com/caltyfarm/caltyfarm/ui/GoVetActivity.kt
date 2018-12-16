@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.caltyfarm.caltyfarm.R
 import com.caltyfarm.caltyfarm.data.model.Vet
 import com.caltyfarm.caltyfarm.ui.fragments.GovetDataVetFragment
+import com.caltyfarm.caltyfarm.ui.fragments.GovetOrderSummary
 import com.caltyfarm.caltyfarm.utils.InjectorUtils
 import com.caltyfarm.caltyfarm.utils.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
 import com.caltyfarm.caltyfarm.viewmodel.GoVetViewModel
@@ -64,7 +65,7 @@ class GoVetActivity : AppCompatActivity(), OnMapReadyCallback {
 
         showLoadingDialog()
         viewModel.polyDistance.observe(this, Observer {
-            if(it != "") inflateFragment(vetData, it, viewModel.polyDuration)
+            if(it != "") inflateVetDataFragment(vetData, it, viewModel.polyDuration)
             dismissProgressDialog()
         })
     }
@@ -75,17 +76,29 @@ class GoVetActivity : AppCompatActivity(), OnMapReadyCallback {
         progressDialog.show()
     }
 
-    fun dismissProgressDialog(){
+    private fun dismissProgressDialog(){
         if(::progressDialog.isInitialized && progressDialog.isShowing) progressDialog.dismiss()
     }
 
-    private fun inflateFragment(
+    private fun inflateVetDataFragment(
         vetData: Vet,
         it: String,
         polyDuration: String?
     ) {
         val ft = supportFragmentManager.beginTransaction()
         ft.replace(R.id.frame_govet, GovetDataVetFragment.newInstance(vetData, it, polyDuration))
+        ft.commit()
+        tv_title.visibility = View.GONE
+        BottomSheetBehavior.from(bottom_sheet).state = BottomSheetBehavior.STATE_EXPANDED
+    }
+
+    fun inflateOrderSummaryFragment(
+        vetData: Vet,
+        polyDistance: String,
+        polyDuration: String
+    ) {
+        val ft = supportFragmentManager.beginTransaction()
+        ft.replace(R.id.frame_govet, GovetOrderSummary.newInstance(vetData, polyDistance, polyDuration))
         ft.commit()
         tv_title.visibility = View.GONE
         BottomSheetBehavior.from(bottom_sheet).state = BottomSheetBehavior.STATE_EXPANDED
