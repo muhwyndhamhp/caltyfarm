@@ -2,6 +2,7 @@ package com.caltyfarm.caltyfarm.ui
 
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
@@ -12,11 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.caltyfarm.caltyfarm.R
 import com.caltyfarm.caltyfarm.data.model.Shop
-import com.caltyfarm.caltyfarm.ui.adapter.CaltyShopAdapter
 import com.caltyfarm.caltyfarm.ui.adapter.ShopCatalogAdapter
 import com.caltyfarm.caltyfarm.utils.*
 import com.caltyfarm.caltyfarm.viewmodel.ShopCatalogViewModel
-import kotlinx.android.synthetic.main.activity_calty_shop.*
 import kotlinx.android.synthetic.main.activity_shop_catalog.*
 import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.toast
@@ -36,7 +35,7 @@ class ShopCatalogActivity : AppCompatActivity() {
         val shop = intent.getSerializableExtra(SHOP_CODE) as Shop
 
         collapsingToolbar.title = shop.name
-        val factory = InjectorUtils.provideShopCatalogViewModelFactory(this, shop.id)
+        val factory = InjectorUtils.provideShopCatalogViewModelFactory(this, shop)
         viewModel = ViewModelProviders.of(this, factory).get(ShopCatalogViewModel::class.java)
 
         viewModel.errorMessage.observe(this, Observer {
@@ -66,6 +65,12 @@ class ShopCatalogActivity : AppCompatActivity() {
         viewModel.selectedItemList.observe(this, Observer {
             itemCount.text = "Jumlah item: ${it.size}"
         })
+
+        bt_show_location_on_map.onClick {
+            val uri = "https://maps.google.com/maps?q=${viewModel.getShopAddress()}"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+            startActivity(intent)
+        }
 
         layout_shop_order.onClick {
             if(viewModel.selectedItemList.value!!.size != 0){

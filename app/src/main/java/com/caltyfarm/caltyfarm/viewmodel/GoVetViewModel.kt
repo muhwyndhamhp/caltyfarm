@@ -17,7 +17,9 @@ import com.akexorcist.googledirection.util.DirectionConverter
 import com.caltyfarm.caltyfarm.BuildConfig
 import com.caltyfarm.caltyfarm.R
 import com.caltyfarm.caltyfarm.data.AppRepository
+import com.caltyfarm.caltyfarm.data.model.Order
 import com.caltyfarm.caltyfarm.data.model.Vet
+import com.caltyfarm.caltyfarm.utils.BASE_PRICE_PER_KM
 import com.caltyfarm.caltyfarm.utils.DEFAULT_ZOOM
 import com.caltyfarm.caltyfarm.utils.DistanceCounter
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -187,8 +189,8 @@ class GoVetViewModel(val appRepository: AppRepository, val context: Context) : V
     fun drawRoute(location: LatLng) {
         vetPosition = location
         GoogleDirection.withServerKey(BuildConfig.MapsApiKey)
-            .from(userPosition)
-            .to(vetPosition)
+            .from(vetPosition)
+            .to(userPosition)
             .avoid(AvoidType.FERRIES)
             .execute(object : DirectionCallback {
                 override fun onDirectionSuccess(direction: Direction?, rawBody: String?) {
@@ -254,4 +256,14 @@ class GoVetViewModel(val appRepository: AppRepository, val context: Context) : V
             userPosition.longitude,
             1
         )[0].getAddressLine(0)!!
+
+    fun calculateDelivCost(): Int {
+        return (polyDistance.value!!.toInt() /  1000 * BASE_PRICE_PER_KM)
+    }
+
+    fun buildOrder() {
+        val order = Order(
+
+        )
+    }
 }

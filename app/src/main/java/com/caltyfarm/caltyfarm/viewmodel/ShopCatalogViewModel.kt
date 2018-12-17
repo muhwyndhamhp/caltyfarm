@@ -1,14 +1,17 @@
 package com.caltyfarm.caltyfarm.viewmodel
 
 import android.content.Context
+import android.location.Geocoder
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.caltyfarm.caltyfarm.data.AppRepository
 import com.caltyfarm.caltyfarm.data.model.Order
+import com.caltyfarm.caltyfarm.data.model.Shop
 import com.caltyfarm.caltyfarm.data.model.ShopItem
 import com.google.firebase.auth.FirebaseAuth
+import java.util.*
 
-class ShopCatalogViewModel(val context: Context, val appRepository: AppRepository, val shopId: String) : ViewModel() {
+class ShopCatalogViewModel(val context: Context, val appRepository: AppRepository, val shopId: Shop) : ViewModel() {
 
     val itemList: MutableLiveData<MutableList<ShopItem>> = MutableLiveData()
     val selectedItemList: MutableLiveData<MutableList<ShopItem>> = MutableLiveData()
@@ -21,16 +24,46 @@ class ShopCatalogViewModel(val context: Context, val appRepository: AppRepositor
     init {
         itemList.value = mutableListOf()
         selectedItemList.value = mutableListOf()
-        currentOrder.value = Order(
-            "${FirebaseAuth.getInstance().currentUser!!.uid}-cs-1",
-            System.currentTimeMillis()/1000,
-            FirebaseAuth.getInstance().currentUser!!.uid,
-            1,
-            shopId,
-            mutableListOf(),
-            0
-        )
-        appRepository.getItems(shopId, object : AppRepository.OnItemRetreiveCallback {
+        appRepository.getOrderListCount(FirebaseAuth.getInstance().currentUser!!.uid, object : AppRepository.OnOrderCountRetrieveCallback{
+            override fun dataDownloaded(itemCount: Long) {
+                if(itemCount != 0.toLong()){
+                    currentOrder.value = Order(
+                        "${FirebaseAuth.getInstance().currentUser!!.uid}-cs-${itemCount + 1}",
+                        System.currentTimeMillis()/1000,
+                        FirebaseAuth.getInstance().currentUser!!.uid,
+                        1,
+                        shopId.id,
+                        mutableListOf(),
+                        0,
+                        sourceLat = shopId.lati,
+                        sourceLong = shopId.longi,
+                        courierLat = shopId.lati,
+                        courierLong = shopId.longi
+                    )
+                } else {
+                    currentOrder.value = Order(
+                        "${FirebaseAuth.getInstance().currentUser!!.uid}-cs-1",
+                        System.currentTimeMillis()/1000,
+                        FirebaseAuth.getInstance().currentUser!!.uid,
+                        1,
+                        shopId.id,
+                        mutableListOf(),
+                        0,
+                        sourceLat = shopId.lati,
+                        sourceLong = shopId.longi,
+                        courierLat = shopId.lati,
+                        courierLong = shopId.longi
+                    )
+                }
+            }
+
+            override fun onFailed(exception: Exception) {
+                errorMessage.value = exception.message
+            }
+
+        })
+
+        appRepository.getItems(shopId.id, object : AppRepository.OnItemRetreiveCallback {
             override fun onChildAdded(shopItem: ShopItem?) {
                 addChild(shopItem!!)
             }
@@ -147,5 +180,13 @@ class ShopCatalogViewModel(val context: Context, val appRepository: AppRepositor
             updatePosition.value = position
         }
 
+    }
+
+    fun getShopAddress(): String {
+        return Geocoder(context, Locale.getDefault()).getFromLocation(
+            shopId.lati,
+            shopId.longi,
+            1
+        )[0].getAddressLine(0)!!
     }
 }

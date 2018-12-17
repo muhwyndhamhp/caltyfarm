@@ -3,12 +3,21 @@ package com.caltyfarm.caltyfarm.viewmodel
 import android.app.Activity
 import android.content.Context
 import android.location.Geocoder
+import android.os.Build
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.akexorcist.googledirection.DirectionCallback
+import com.akexorcist.googledirection.GoogleDirection
+import com.akexorcist.googledirection.constant.AvoidType
+import com.akexorcist.googledirection.model.Direction
+import com.akexorcist.googledirection.util.DirectionConverter
+import com.caltyfarm.caltyfarm.BuildConfig
+import com.caltyfarm.caltyfarm.R
 import com.caltyfarm.caltyfarm.data.AppRepository
 import com.caltyfarm.caltyfarm.data.model.Order
 import com.caltyfarm.caltyfarm.data.model.ShopItem
+import com.caltyfarm.caltyfarm.utils.BASE_PRICE_PER_KM
 import com.caltyfarm.caltyfarm.utils.DEFAULT_ZOOM
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -32,6 +41,8 @@ class ShopOrderViewModel(
     var positionMarker: Marker? = null
 
     val address: MutableLiveData<String> = MutableLiveData()
+
+    val distance: MutableLiveData<Long> = MutableLiveData()
 
     fun getCurrentLocation(
         fusedLocationProviderClient: FusedLocationProviderClient,
@@ -67,6 +78,10 @@ class ShopOrderViewModel(
                             lastKnownLocation.longitude,
                             1
                         )[0].getAddressLine(0)!!
+                        updateDistance(LatLng(
+                            lastKnownLocation.latitude,
+                            lastKnownLocation.longitude
+                        ))
                     } else {
                         Log.d("GOVET", "Current location is null. Using defaults.")
                         Log.e("GOVET", "Exception: %s", task.exception)
@@ -87,6 +102,7 @@ class ShopOrderViewModel(
                             1
                         )[0].getAddressLine(0)!!
 
+                        updateDistance(LatLng(-7.797068, 110.370529))
                         map.value!!.uiSettings.isMyLocationButtonEnabled = false
                     }
                 }
@@ -114,6 +130,43 @@ class ShopOrderViewModel(
                 )
             )
         )
+
+        updateDistance(latLng)
+    }
+
+    private fun updateDistance(latLng: LatLng){
+        orderData.value!!.delivLat = latLng.latitude
+        orderData.value!!.delivLong = latLng.longitude
+        GoogleDirection.withServerKey(BuildConfig.MapsApiKey)
+            .from(LatLng(order.sourceLat, order.sourceLong))
+            .to(latLng)
+            .avoid(AvoidType.FERRIES)
+            .execute(object : DirectionCallback {
+                override fun onDirectionSuccess(direction: Direction?, rawBody: String?) {
+                    if (direction!!.isOK) {
+                        (context as Activity).runOnUiThread {
+                            val route = direction.routeList[0]
+                            distance.value = route.legList[0].distance.value.toLong()
+                        }
+                    }
+                }
+
+                override fun onDirectionFailure(t: Throwable?) {
+
+                }
+
+            })
+    }
+
+    fun countDelivFee(it: Long?): Long {
+        return it!!/1000 * BASE_PRICE_PER_KM
+    }
+
+    fun postOrder() {
+        val totalprice = orderData.value!!.totalPrice + countDelivFee(distance.value!!)
+        orderData.value!!.totalPrice = totalprice
+        orderData.value!!.totalDistance = distance.value!!
+        appRepository.postOrder(orderData)
     }
 
     val orderData: MutableLiveData<Order> = MutableLiveData()
@@ -122,5 +175,6 @@ class ShopOrderViewModel(
     init {
         orderData.value = order
         selectedItems.value = list as List<ShopItem>
+        distance.value = 0
     }
 }

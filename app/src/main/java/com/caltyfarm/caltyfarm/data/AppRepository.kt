@@ -1,5 +1,6 @@
 package com.caltyfarm.caltyfarm.data
 
+import androidx.lifecycle.MutableLiveData
 import com.caltyfarm.caltyfarm.data.model.*
 import com.caltyfarm.caltyfarm.utils.FirebaseUtils
 
@@ -42,6 +43,11 @@ class AppRepository(private val firebaseUtils: FirebaseUtils) {
         fun onChildAdded(shopItem: ShopItem?)
         fun onChildChanged(shopItem: ShopItem?)
         fun onChildDeleted(shopItem: ShopItem?)
+        fun onFailed(exception: Exception)
+    }
+
+    interface OnOrderCountRetrieveCallback{
+        fun dataDownloaded(itemCount: Long)
         fun onFailed(exception: Exception)
     }
 
@@ -150,6 +156,14 @@ class AppRepository(private val firebaseUtils: FirebaseUtils) {
 
     fun getItems(shopId: String, callback: OnItemRetreiveCallback) {
         firebaseUtils.getItems(shopId, callback)
+    }
+
+    fun getOrderListCount(uid: String, onOrderCountRetrieveCallback: OnOrderCountRetrieveCallback) {
+        firebaseUtils.getOrderListCount(uid, onOrderCountRetrieveCallback)
+    }
+
+    fun postOrder(orderData: MutableLiveData<Order>) {
+        firebaseUtils.postOrder(orderData)
     }
 
 

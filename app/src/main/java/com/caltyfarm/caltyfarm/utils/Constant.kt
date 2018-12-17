@@ -25,3 +25,9 @@ const val BASE_PRIVE_HALOCOWS = 35000
 const val BASE_PRICE_PER_KM = 2200
 
 const val PLACE_PICKER_REQUEST = 105
+
+const val CALTY_SHOP_ORDER_TYPE = 1
+
+const val GOVET_ORDER_TYPE = 2
+
+const val HALO_COWS_ORDER_TYPE = 0

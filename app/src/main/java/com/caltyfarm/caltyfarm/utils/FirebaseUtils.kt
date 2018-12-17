@@ -1,5 +1,6 @@
 package com.caltyfarm.caltyfarm.utils
 
+import androidx.lifecycle.MutableLiveData
 import com.caltyfarm.caltyfarm.data.AppRepository
 import com.caltyfarm.caltyfarm.data.model.*
 import com.google.firebase.auth.FirebaseAuth
@@ -125,7 +126,7 @@ object FirebaseUtils {
 
     fun getShopList(onShopRetireveCallback: AppRepository.OnShopRetireveCallback) {
         getFirebaseDatabase().child("workerShop")
-            .addChildEventListener(object : ChildEventListener{
+            .addChildEventListener(object : ChildEventListener {
                 override fun onCancelled(p0: DatabaseError) {
                     onShopRetireveCallback.onFailed(p0.toException())
                 }
@@ -160,7 +161,7 @@ object FirebaseUtils {
 
     fun getItems(shopId: String, callback: AppRepository.OnItemRetreiveCallback) {
         getFirebaseDatabase().child("itemShop").child(shopId)
-            .addChildEventListener(object: ChildEventListener{
+            .addChildEventListener(object : ChildEventListener {
                 override fun onCancelled(p0: DatabaseError) {
                     callback.onFailed(p0.toException())
                 }
@@ -185,5 +186,23 @@ object FirebaseUtils {
                 }
 
             })
+    }
+
+    fun getOrderListCount(uid: String, onOrderCountRetrieveCallback: AppRepository.OnOrderCountRetrieveCallback) {
+        getFirebaseDatabase().child("orders").child(uid).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                onOrderCountRetrieveCallback.onFailed(p0.toException())
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                onOrderCountRetrieveCallback.dataDownloaded(p0.childrenCount)
+            }
+
+        })
+    }
+
+    fun postOrder(orderData: MutableLiveData<Order>) {
+        getFirebaseDatabase().child("orders").child(orderData.value!!.clientId).child(orderData.value!!.id)
+            .setValue(orderData.value!!)
     }
 }

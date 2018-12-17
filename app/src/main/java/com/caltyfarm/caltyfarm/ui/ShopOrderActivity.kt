@@ -35,6 +35,17 @@ class ShopOrderActivity : AppCompatActivity(), OnMapReadyCallback {
         viewModel.address.observe(this, androidx.lifecycle.Observer {
             tv_location.text = it
         })
+
+        viewModel.distance.observe(this, androidx.lifecycle.Observer {
+            if(it != 0.toLong()){
+                tv_deliv_fee.text = NumberFormat
+                    .getCurrencyInstance(Locale("in", "ID"))
+                    .format(viewModel.countDelivFee(it))
+                tv_total_price.text = NumberFormat
+                    .getCurrencyInstance(Locale("in", "ID"))
+                    .format(viewModel.orderData.value!!.totalPrice + viewModel.countDelivFee(it))
+            }
+        })
     }
 
     lateinit var viewModel: ShopOrderViewModel
@@ -64,7 +75,7 @@ class ShopOrderActivity : AppCompatActivity(), OnMapReadyCallback {
 
             tv_total_price.text = NumberFormat
                 .getCurrencyInstance(Locale("in", "ID"))
-                .format(it.totalPrice + tv_deliv_fee.text.toString().toLong())
+                .format(it.totalPrice + viewModel.countDelivFee(viewModel.distance.value!!))
         })
 
         tv_location.onClick {
@@ -72,6 +83,7 @@ class ShopOrderActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         bt_order_now.onClick {
+            viewModel.postOrder()
             longToast("Order berhasil dikirim!")
             startActivity(Intent(this@ShopOrderActivity, MainActivity::class.java))
             finish()

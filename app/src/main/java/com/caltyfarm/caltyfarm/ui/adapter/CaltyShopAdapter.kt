@@ -3,6 +3,7 @@ package com.caltyfarm.caltyfarm.ui.adapter
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.location.Geocoder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,12 +17,17 @@ import com.caltyfarm.caltyfarm.utils.SHOP_CODE
 import com.caltyfarm.caltyfarm.viewmodel.CaltyShopViewModel
 import kotlinx.android.synthetic.main.item_calty_shop.view.*
 import org.jetbrains.anko.sdk27.coroutines.onClick
+import java.util.*
 
 class CaltyShopAdapter(val context: Context, val lifecycleOwner: LifecycleOwner, val viewModel: CaltyShopViewModel): RecyclerView.Adapter<CaltyShopAdapter.ViewHolder>(){
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         fun bindView(shop: Shop, context: Context) {
             itemView.tv_shop_name.text = shop.name
-            itemView.tv_location_literal.text = shop.location
+            itemView.tv_location_literal.text = Geocoder(context, Locale.getDefault()).getFromLocation(
+                shop.lati,
+                shop.longi,
+                1
+            )[0].getAddressLine(0)!!
             itemView.onClick {
                 val intent = Intent(context, ShopCatalogActivity::class.java)
                 intent.putExtra(SHOP_CODE, shop)
