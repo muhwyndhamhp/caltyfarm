@@ -5,7 +5,8 @@ import com.caltyfarm.caltyfarm.data.AppRepository
 import com.caltyfarm.caltyfarm.data.model.Order
 import com.caltyfarm.caltyfarm.data.model.Shop
 import com.caltyfarm.caltyfarm.viewmodel.VerifViewModelFactory
-import com.caltyfarm.caltyfarm.viewmodel.factory.*
+import com.caltyfarm.caltyfarm.viewmodel.factory.AuthViewModelFactory
+import com.caltyfarm.caltyfarm.viewmodel.factory.MainViewModelFactory
 
 object InjectorUtils {
 
@@ -21,45 +22,5 @@ object InjectorUtils {
 
     fun provideMainViewModelFactory(context: Context): MainViewModelFactory {
         return MainViewModelFactory(context, getAppRepository())
-    }
-
-    fun provideProfileViewModelFactory(context: Context): ProfileViewModelFactory {
-        return ProfileViewModelFactory(context, getAppRepository())
-    }
-
-    fun provideArticleViewModelFactory(context: Context): ArticleViewModelFactory {
-        return ArticleViewModelFactory(context, getAppRepository())
-    }
-
-    fun provideArticleViewModelFactory(
-        context: Context,
-        isActivity: Boolean,
-        articleId: String
-    ): ArticleViewModelFactory {
-        return ArticleViewModelFactory(context, getAppRepository(), isActivity, articleId)
-    }
-
-    fun provideHaloCowsViewModelFactory(context: Context): HaloCowsViewModelFactory {
-        return HaloCowsViewModelFactory(context, getAppRepository())
-    }
-
-    fun provideCaltyShopViewModelFactory(context: Context): CaltyShopViewModelFactory {
-        return CaltyShopViewModelFactory(context, getAppRepository())
-    }
-
-    fun provideShopCatalogViewModelFactory(context: Context, shopId: Shop): ShopCatalogViewModelFactory {
-        return ShopCatalogViewModelFactory(context, getAppRepository(), shopId)
-    }
-
-    fun provideShopOrderViewModelFactory(
-        context: Context,
-        order: Order,
-        list: List<*>
-    ): ShopOrderViewModelFactory {
-        return ShopOrderViewModelFactory(context, getAppRepository(), order, list)
-    }
-
-    fun provideGovetViewModelFactory(context: Context): GoVetViewModelFactory {
-        return GoVetViewModelFactory(getAppRepository(), context)
     }
 }
