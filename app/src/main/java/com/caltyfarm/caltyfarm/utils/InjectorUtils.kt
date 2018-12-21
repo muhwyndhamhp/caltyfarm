@@ -2,8 +2,6 @@ package com.caltyfarm.caltyfarm.utils
 
 import android.content.Context
 import com.caltyfarm.caltyfarm.data.AppRepository
-import com.caltyfarm.caltyfarm.data.model.Order
-import com.caltyfarm.caltyfarm.data.model.Shop
 import com.caltyfarm.caltyfarm.viewmodel.VerifViewModelFactory
 import com.caltyfarm.caltyfarm.viewmodel.factory.AuthViewModelFactory
 import com.caltyfarm.caltyfarm.viewmodel.factory.MainViewModelFactory
