@@ -26,6 +26,16 @@
     <string name="silahkan_pilih_dokter_hewan_terdekat">Silahkan pilih dokter hewan terdekat</string>
     <string name="pilih_dokter_hewan_yang_anda_inginkan">Pilih dokter hewan yang anda inginkan</string>
     <string name="pilih">Pilih</string>
+    <string name="input_data_sapi">Input Data Sapi</string>
+    <string name="input_sapi_desc">membuat identitas sapi dengan mudah dan dapat diakses 24 jam</string>
+    <string name="daftar_status_sapi">Daftar Status Sapi</string>
+    <string name="daftar_status_sapi_desc">cek semua kondisi ternak secara akurat dan realtime dari aplikasi anda</string>
+    <string name="tanda_alarm">Tanda Alarm</string>
+    <string name="alarm_desc">pengingat untuk tanda kondisi sapi secara realtime</string>
+    <string name="list_tindakan">List Tindakan</string>
+    <string name="list_tindakan_desc">daftar tindakan yang diinstruksikan oleh dokter hewan</string>
+    <string name="hubungi_dokter_hewan">Hubungi Dokter Hewan</string>
+    <string name="hubungi_dokter_hewan_desc">tanya jawab langsung dengan dokter hewan tentang kondisi ternak anda</string>
     <string-array name="gender">
         <item>Pilih Jenis Kelamin</item>
         <item>Laki-laki</item>

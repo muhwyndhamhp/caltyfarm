@@ -36,43 +36,18 @@
         <activity android:name=".ui.MainActivity">
         </activity>
         <activity
-                android:name=".ui.AuthActivity"
-                android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-                >
+                android:name=".ui.AuthActivity">
         </activity>
         <activity
-                android:name=".ui.VerificationActivity"
-                android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-                >
+                android:name=".ui.VerificationActivity">
         </activity>
         <activity
-                android:name=".ui.Splash"
-                android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-                >
+                android:name=".ui.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </activity>
-        <activity android:name=".ui.ProfileEditActivity">
-        </activity>
-        <activity android:name=".ui.ArticleReadActivity">
-        </activity>
-        <activity android:name=".ui.HaloCowsActivity">
-        </activity>
-        <activity android:name=".ui.CaltyShopActivity">
-        </activity>
-        <activity
-                android:name=".ui.ShopCatalogActivity"
-                android:theme="@style/AppTheme.NoActionBar"
-                >
-        </activity>
-        <activity android:name=".ui.ShopOrderActivity">
-        </activity>
-        <activity android:name=".ui.GoVetActivity">
-        </activity>
-        <activity android:name=".ui.RequestGovetOrderActivity">
         </activity>
     </application>
 
