@@ -1,9 +1,21 @@
 package com.caltyfarm.caltyfarm.data.model
 
+import com.google.firebase.database.PropertyName
+
 class User(
-    val uid: String = "",
+    @set: PropertyName("i")
+    @get: PropertyName("i")
+    var uid: String = "",
+    @set: PropertyName("n")
+    @get: PropertyName("n")
     var name: String? = "",
+    @set: PropertyName("t")
+    @get: PropertyName("t")
     var userType: Int = 0,
-    val phone: String = "",
+    @set: PropertyName("p")
+    @get: PropertyName("p")
+    var phone: String = "",
+    @set: PropertyName("f")
+    @get: PropertyName("f")
     var profileUrl: String? = ""
 )
