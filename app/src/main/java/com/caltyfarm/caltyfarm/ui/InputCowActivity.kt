@@ -59,21 +59,38 @@ class InputCowActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
         datePicker.show()
     }
 
+    fun handleSubmitClick(view: View) {
+    }
+
+    fun handleImageBackClick(view: View) {
+        onBackPressed()
+    }
+
     private fun subscribeUi() {
         viewModel.birthCalendar.observe(this, androidx.lifecycle.Observer {
-            updateLabel(it, 0)
+            if (checkDateNotMin(it)) {
+                updateLabel(it, 0)
+            }
         })
         viewModel.entryCalendar.observe(this, androidx.lifecycle.Observer {
-            updateLabel(it, 1)
+            if (checkDateNotMin(it)) {
+                updateLabel(it, 1)
+            }
         })
         viewModel.outCalendar.observe(this, androidx.lifecycle.Observer {
-            updateLabel(it, 2)
+            if (checkDateNotMin(it)) {
+                updateLabel(it, 2)
+            }
         })
         viewModel.pregnantCalendar.observe(this, androidx.lifecycle.Observer {
-            updateLabel(it, 3)
+            if (checkDateNotMin(it)) {
+                updateLabel(it, 3)
+            }
         })
         viewModel.wormCalendar.observe(this, androidx.lifecycle.Observer {
-            updateLabel(it, 4)
+            if (checkDateNotMin(it)) {
+                updateLabel(it, 4)
+            }
         })
     }
 
@@ -85,7 +102,7 @@ class InputCowActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
     }
 
     private fun getCalendarByView(view: View): Calendar {
-        return when (view.id) {
+        val calendar =  when (view.id) {
             R.id.text_birth_date -> viewModel.birthCalendar.value!!
             R.id.text_entry_date -> viewModel.entryCalendar.value!!
             R.id.text_out_date -> viewModel.outCalendar.value!!
@@ -93,6 +110,7 @@ class InputCowActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
             R.id.text_parasite_worm_drug -> viewModel.wormCalendar.value!!
             else -> Calendar.getInstance()
         }
+        return if (checkDateNotMin(calendar)) calendar else Calendar.getInstance()
     }
 
     private fun getIndexByView(view: View): Int {
@@ -117,14 +135,7 @@ class InputCowActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
         }
     }
 
-    private fun checkDateNotZero(calendar: Calendar): Boolean {
-        return calendar.time.compareTo(Date(0)) != 0
-    }
-
-    fun handleSubmitClick(view: View) {
-    }
-
-    fun handleImageBackClick(view: View) {
-        onBackPressed()
+    private fun checkDateNotMin(calendar: Calendar): Boolean {
+        return calendar.time.compareTo(Date(Long.MIN_VALUE)) != 0
     }
 }

@@ -14,11 +14,21 @@ class InputCowViewModel(val appRepository: AppRepository) : ViewModel() {
 
 
     init {
-        birthCalendar.value = Calendar.getInstance()
-        entryCalendar.value = Calendar.getInstance()
-        outCalendar.value = Calendar.getInstance()
-        pregnantCalendar.value = Calendar.getInstance()
-        wormCalendar.value = Calendar.getInstance()
+        birthCalendar.value = Calendar.getInstance().also {
+            it.time = Date(Long.MIN_VALUE)
+        }
+        entryCalendar.value = Calendar.getInstance().also {
+            it.time = Date(Long.MIN_VALUE)
+        }
+        outCalendar.value = Calendar.getInstance().also {
+            it.time = Date(Long.MIN_VALUE)
+        }
+        pregnantCalendar.value = Calendar.getInstance().also {
+            it.time = Date(Long.MIN_VALUE)
+        }
+        wormCalendar.value = Calendar.getInstance().also {
+            it.time = Date(Long.MIN_VALUE)
+        }
     }
 
 }
