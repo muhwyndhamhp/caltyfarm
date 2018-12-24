@@ -28,10 +28,6 @@ data class Cow(
     @get: PropertyName("o")
     var outDate: Long?,
 
-    @set: PropertyName("a")
-    @get: PropertyName("a")
-    var tag: String,
-
     @set: PropertyName("w")
     @get: PropertyName("w")
     var weight: Double,
