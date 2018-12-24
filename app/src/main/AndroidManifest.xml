@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
-          package="com.caltyfarm.caltyfarm"
-        >
+          package="com.caltyfarm.caltyfarm">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
@@ -17,36 +16,35 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
-            tools:ignore="GoogleAppIndexingWarning"
-            >
+            tools:ignore="GoogleAppIndexingWarning">
         <uses-library
                 android:name="org.apache.http.legacy"
-                android:required="false"
-                />
+                android:required="false"/>
 
         <meta-data
                 android:name="com.google.android.gms.version"
-                android:value="@integer/google_play_services_version"
-                />
-        <meta-data
-                android:name="com.google.android.geo.API_KEY"
-                android:value="@string/maps_api_key"
-                />
+                android:value="@integer/google_play_services_version"/>
+        <!-- <meta-data -->
+        <!-- android:name="com.google.android.geo.API_KEY" -->
+        <!-- android:value="@string/maps_api_key" -->
+        <!-- /> -->
 
         <activity android:name=".ui.MainActivity">
         </activity>
-        <activity
-                android:name=".ui.AuthActivity">
+        <activity android:name=".ui.AuthActivity">
         </activity>
-        <activity
-                android:name=".ui.VerificationActivity">
+        <activity android:name=".ui.VerificationActivity">
         </activity>
-        <activity
-                android:name=".ui.Splash">
+        <activity android:name=".ui.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.InputCowActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
         </activity>
     </application>
