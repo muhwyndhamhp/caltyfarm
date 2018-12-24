@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import androidx.lifecycle.ViewModelProviders
 import com.caltyfarm.caltyfarm.R
@@ -11,7 +12,6 @@ import com.caltyfarm.caltyfarm.utils.InjectorUtils
 import com.caltyfarm.caltyfarm.viewmodel.InputCowViewModel
 import kotlinx.android.synthetic.main.activity_input_cow.*
 import android.widget.TextView
-import com.caltyfarm.caltyfarm.R.id.*
 import java.util.*
 import java.text.SimpleDateFormat
 import kotlin.collections.HashMap
@@ -26,6 +26,7 @@ class InputCowActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
         setContentView(R.layout.activity_input_cow)
         val factory = InjectorUtils.provideInputCowViewModelFactory()
         viewModel = ViewModelProviders.of(this, factory).get(InputCowViewModel::class.java)
+        populateSpinner()
         subscribeUi()
     }
 
@@ -102,7 +103,7 @@ class InputCowActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
     }
 
     private fun getCalendarByView(view: View): Calendar {
-        val calendar =  when (view.id) {
+        val calendar = when (view.id) {
             R.id.text_birth_date -> viewModel.birthCalendar.value!!
             R.id.text_entry_date -> viewModel.entryCalendar.value!!
             R.id.text_out_date -> viewModel.outCalendar.value!!
@@ -137,5 +138,29 @@ class InputCowActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
 
     private fun checkDateNotMin(calendar: Calendar): Boolean {
         return calendar.time.compareTo(Date(Long.MIN_VALUE)) != 0
+    }
+
+    private fun populateSpinner() {
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.gender,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            // Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner
+            spinner_gender.adapter = adapter
+        }
+
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.breed,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            // Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner
+            spinner_breed.adapter = adapter
+        }
     }
 }

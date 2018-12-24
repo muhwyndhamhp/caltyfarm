@@ -57,9 +57,19 @@
     <string name="input_sapi_location_label">Lokasi</string>
     <string name="input_sapi_submit_button">SUBMIT</string>
     <string name="input_sapi_pick_date_hint">Pilih Tanggal</string>
+    <string-array name="breed">
+        <item>Ongol</item>
+        <item>Brahman</item>
+        <item>Peranakan Ongol (PO)</item>
+        <item>Simental</item>
+        <item>Limausin</item>
+        <item>SimPO</item>
+        <item>FH</item>
+        <item>Peranakan FH (PFH)</item>
+        <item>Wagyu</item>
+    </string-array>
     <string-array name="gender">
-        <item>Pilih Jenis Kelamin</item>
-        <item>Laki-laki</item>
-        <item>Perempuan</item>
+        <item>Jantan</item>
+        <item>Betina</item>
     </string-array>
 </resources>

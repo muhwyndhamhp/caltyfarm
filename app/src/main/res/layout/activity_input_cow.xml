@@ -141,12 +141,12 @@
                 android:text="@string/input_sapi_breed_label"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white"
-                app:layout_constraintBaseline_toBaselineOf="@id/text_breed"
+                app:layout_constraintBaseline_toBaselineOf="@id/spinner_breed"
                 app:layout_constraintEnd_toEndOf="@id/guide"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <EditText
-                android:id="@+id/text_breed"
+            <Spinner
+                android:id="@+id/spinner_breed"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -169,12 +169,12 @@
                 android:text="@string/input_sapi_gender_label"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white"
-                app:layout_constraintBaseline_toBaselineOf="@id/text_gender"
+                app:layout_constraintBaseline_toBaselineOf="@id/spinner_gender"
                 app:layout_constraintEnd_toEndOf="@id/guide"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <EditText
-                android:id="@+id/text_gender"
+            <Spinner
+                android:id="@+id/spinner_gender"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -185,7 +185,7 @@
                 android:textColor="@color/colorAccent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/guide"
-                app:layout_constraintTop_toBottomOf="@id/text_breed" />
+                app:layout_constraintTop_toBottomOf="@id/spinner_breed" />
 
             <!--Tanggal Datang-->
 
@@ -215,7 +215,7 @@
                 android:textColor="@color/colorAccent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/guide"
-                app:layout_constraintTop_toBottomOf="@id/text_gender" />
+                app:layout_constraintTop_toBottomOf="@id/spinner_gender" />
 
             <!--Tanggal Keluar-->
 
