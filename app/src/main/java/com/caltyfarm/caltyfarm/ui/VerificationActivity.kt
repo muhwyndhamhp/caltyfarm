@@ -64,17 +64,6 @@ class VerificationActivity : AppCompatActivity() {
     }
 
     private fun navigateToMain() {
-        Qiscus.setUser(FirebaseAuth.getInstance().currentUser!!.uid, FirebaseAuth.getInstance().currentUser!!.uid+"11")
-            .withUsername("Muhammad Wyndham Haryata Permana")
-            .save(object : QiscusCore.SetUserListener{
-                override fun onSuccess(qiscusAccount: QiscusAccount?) {
-                    startActivity(Intent(this@VerificationActivity, MainActivity::class.java))
-                }
-
-                override fun onError(throwable: Throwable?) {
-                    toast(throwable!!.message!!)
-                }
-
-            })
+        startActivity(Intent(this@VerificationActivity, MainActivity::class.java))
     }
 }

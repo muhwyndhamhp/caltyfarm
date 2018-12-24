@@ -2,10 +2,16 @@ package com.caltyfarm.caltyfarm.ui
 
 import android.app.Application
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.caltyfarm.caltyfarm.BuildConfig
 import com.caltyfarm.caltyfarm.R
+import com.caltyfarm.caltyfarm.data.model.User
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.qiscus.sdk.Qiscus
 import com.qiscus.sdk.chat.core.QiscusCore
 import com.qiscus.sdk.chat.core.data.model.QiscusAccount
@@ -25,26 +31,41 @@ class Splash : AppCompatActivity() {
     }
 
     private fun checkUserLogin() {
-        if(FirebaseAuth.getInstance().currentUser == null){
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if(currentUser == null){
             navigateToRegister()
         } else {
-            navigateToMain()
+            navigateToMain(currentUser.uid)
         }
     }
 
-    private fun navigateToMain() {
-        Qiscus.setUser(FirebaseAuth.getInstance().currentUser!!.uid, "19081997")
-            .withUsername("Muhammad Wyndham Haryata Permana")
-            .save(object : QiscusCore.SetUserListener{
-                override fun onSuccess(qiscusAccount: QiscusAccount?) {
-                    startActivity(Intent(this@Splash, MainActivity::class.java))
-                }
+    private fun navigateToMain(uid: String) {
+        FirebaseDatabase.getInstance().reference
+            .child("caltyManager")
+            .child("users")
+            .child(uid)
+            .addValueEventListener(object: ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                toast(p0.message)
+            }
 
-                override fun onError(throwable: Throwable?) {
-                    toast(throwable!!.message!!)
-                }
+            override fun onDataChange(p0: DataSnapshot) {
+                val user = p0.getValue(User::class.java)
+                Qiscus.setUser(FirebaseAuth.getInstance().currentUser!!.uid, BuildConfig.MasterPassword)
+                    .withUsername(user!!.name)
+                    .save(object : QiscusCore.SetUserListener{
+                        override fun onSuccess(qiscusAccount: QiscusAccount?) {
+                            startActivity(Intent(this@Splash, MainActivity::class.java))
+                        }
 
-            })
+                        override fun onError(throwable: Throwable?) {
+                            toast(throwable!!.message!!)
+                        }
+
+                    })
+            }
+
+        })
     }
 
     private fun navigateToRegister() {

@@ -37,6 +37,7 @@
     <string name="hubungi_dokter_hewan">Hubungi Dokter Hewan</string>
     <string name="hubungi_dokter_hewan_desc">tanya jawab langsung dengan dokter hewan tentang kondisi ternak anda</string>
     <string name="APP_ID">familyhub-zadxyu3d7au</string>
+    <string name="daftar_dokter_hewan">Daftar Dokter Hewan</string>
     <string-array name="gender">
         <item>Pilih Jenis Kelamin</item>
         <item>Laki-laki</item>

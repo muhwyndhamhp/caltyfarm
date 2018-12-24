@@ -18,14 +18,14 @@ android {
     }
     buildTypes {
         debug {
-            buildConfigField 'String', "MapsApiKey", Maps_API_Key
-            resValue 'string', "maps_api_key", Maps_API_Key
+            buildConfigField 'String', "MasterPassword", Master_Password
+            resValue 'string', "master_password", Master_Password
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField 'String', "MapsApiKey", Maps_API_Key
-            resValue 'string', "maps_api_key", Maps_API_Key
+            buildConfigField 'String', "MasterPassword", Master_Password
+            resValue 'string', "master_password", Master_Password
         }
     }
     compileOptions {
