@@ -370,15 +370,15 @@
                 android:layout_height="wrap_content"
                 android:gravity="start"
                 android:lines="1"
-                android:text="@string/input_sapi_case_history_label"
+                android:text="@string/input_sapi_action_history_label"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/white"
-                app:layout_constraintBaseline_toBaselineOf="@id/text_case_history"
+                app:layout_constraintBaseline_toBaselineOf="@id/text_action_history"
                 app:layout_constraintEnd_toEndOf="@id/guide"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <EditText
-                android:id="@+id/text_case_history"
+                android:id="@+id/text_action_history"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -417,7 +417,7 @@
                 android:textColor="@color/colorAccent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/guide"
-                app:layout_constraintTop_toBottomOf="@id/text_case_history" />
+                app:layout_constraintTop_toBottomOf="@id/text_action_history" />
 
             <!-- Tonus Rumen -->
 

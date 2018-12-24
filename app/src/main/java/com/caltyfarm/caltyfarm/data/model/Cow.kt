@@ -48,9 +48,9 @@ data class Cow(
     @get: PropertyName("m")
     var parasiteWormDrug: String?,
 
-    @set: PropertyName("c")
-    @get: PropertyName("c")
-    var caseHistory: String,
+    @set: PropertyName("a")
+    @get: PropertyName("a")
+    var actionHistory: String,
 
     @set: PropertyName("t")
     @get: PropertyName("t")

@@ -49,7 +49,7 @@
     <string name="input_sapi_pregnant_date_label">Tanggal Bunting</string>
     <string name="input_sapi_vaccine_status_label">Status Vaksin</string>
     <string name="input_sapi_parasite_worm_drug_label">Obat Cacing</string>
-    <string name="input_sapi_case_history_label">Riwayat Kasus</string>
+    <string name="input_sapi_action_history_label">Riwayat Tindakan</string>
     <string name="input_sapi_temperature_label">Temperatur</string>
     <string name="input_sapi_tonus_rumen_label">Tonus Rumen</string>
     <string name="input_sapi_insemination_label">Inseminasi</string>
