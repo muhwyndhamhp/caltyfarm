@@ -57,8 +57,10 @@ class VerifViewModel(val context: Context, val appRepository: AppRepository, pri
     }
 
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
+        isLoading.value = true
         FirebaseAuth.getInstance().signInWithCredential(credential)
             .addOnCompleteListener {
+                isLoading.value = false
                 if(it.isSuccessful){
                     initiateUser(it.result!!.user)
 

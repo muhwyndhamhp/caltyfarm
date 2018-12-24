@@ -1,15 +1,19 @@
 package com.caltyfarm.caltyfarm.ui
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import com.caltyfarm.caltyfarm.R
 import com.caltyfarm.caltyfarm.utils.InjectorUtils
 import com.caltyfarm.caltyfarm.viewmodel.MainViewModel
+import com.qiscus.sdk.Qiscus
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.indeterminateProgressDialog
+import org.jetbrains.anko.sdk27.coroutines.onClick
 import java.util.*
 import kotlin.concurrent.schedule
 
@@ -18,6 +22,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
     private lateinit var progressDialog: ProgressDialog
 
+    companion object {
+        const val TAG = "MAIN_ACTIVITY"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -25,8 +33,8 @@ class MainActivity : AppCompatActivity() {
         val factory = InjectorUtils.provideMainViewModelFactory(this)
         viewModel = ViewModelProviders.of(this, factory).get(MainViewModel::class.java)
         viewModel.userData.observe(this, androidx.lifecycle.Observer {
-            if(it != null && it.uid != ""){
-                when(it.userType){
+            if (it != null && it.uid != "") {
+                when (it.userType) {
                     0 -> showInvestorLayout()
                     1 -> showAnakKandangLayout()
                     2 -> showVetLayout()
@@ -41,6 +49,19 @@ class MainActivity : AppCompatActivity() {
         ll_input_sapi.visibility = View.GONE
         ll_alarm.visibility = View.GONE
         ll_list_tindakan.visibility = View.GONE
+
+        ll_chat.onClick {
+            Qiscus.buildChatWith("iVN0YkxpVHXjPe6VRnKw1peIAvQ2").build(this@MainActivity, object: Qiscus.ChatActivityBuilderListener{
+                override fun onSuccess(intent: Intent?) {
+                    startActivity(intent)
+                }
+
+                override fun onError(throwable: Throwable?) {
+                    Log.e("MAIN", throwable!!.message)
+                }
+
+            })
+        }
     }
 
     private fun showVetLayout() {

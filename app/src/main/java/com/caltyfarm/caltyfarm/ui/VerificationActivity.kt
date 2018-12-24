@@ -5,6 +5,7 @@ import android.app.ProgressDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -12,6 +13,10 @@ import com.caltyfarm.caltyfarm.R
 import com.caltyfarm.caltyfarm.utils.InjectorUtils
 import com.caltyfarm.caltyfarm.utils.PHONE_NUMBER_CODE
 import com.caltyfarm.caltyfarm.viewmodel.VerifViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.qiscus.sdk.Qiscus
+import com.qiscus.sdk.chat.core.QiscusCore
+import com.qiscus.sdk.chat.core.data.model.QiscusAccount
 import kotlinx.android.synthetic.main.activity_verification.*
 import org.jetbrains.anko.indeterminateProgressDialog
 import org.jetbrains.anko.toast
@@ -59,6 +64,17 @@ class VerificationActivity : AppCompatActivity() {
     }
 
     private fun navigateToMain() {
-        startActivity(Intent(this, MainActivity::class.java))
+        Qiscus.setUser(FirebaseAuth.getInstance().currentUser!!.uid, FirebaseAuth.getInstance().currentUser!!.uid+"11")
+            .withUsername("Muhammad Wyndham Haryata Permana")
+            .save(object : QiscusCore.SetUserListener{
+                override fun onSuccess(qiscusAccount: QiscusAccount?) {
+                    startActivity(Intent(this@VerificationActivity, MainActivity::class.java))
+                }
+
+                override fun onError(throwable: Throwable?) {
+                    toast(throwable!!.message!!)
+                }
+
+            })
     }
 }

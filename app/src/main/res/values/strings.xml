@@ -36,6 +36,7 @@
     <string name="list_tindakan_desc">daftar tindakan yang diinstruksikan oleh dokter hewan</string>
     <string name="hubungi_dokter_hewan">Hubungi Dokter Hewan</string>
     <string name="hubungi_dokter_hewan_desc">tanya jawab langsung dengan dokter hewan tentang kondisi ternak anda</string>
+    <string name="APP_ID">familyhub-zadxyu3d7au</string>
     <string-array name="gender">
         <item>Pilih Jenis Kelamin</item>
         <item>Laki-laki</item>
