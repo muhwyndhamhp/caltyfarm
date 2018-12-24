@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import androidx.lifecycle.ViewModelProviders
@@ -42,7 +43,6 @@ class InputCowActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
                 1 -> viewModel.entryCalendar.value = calendar
                 2 -> viewModel.outCalendar.value = calendar
                 3 -> viewModel.pregnantCalendar.value = calendar
-                4 -> viewModel.wormCalendar.value = calendar
             }
         }
     }
@@ -88,11 +88,6 @@ class InputCowActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
                 updateLabel(it, 3)
             }
         })
-        viewModel.wormCalendar.observe(this, androidx.lifecycle.Observer {
-            if (checkDateNotMin(it)) {
-                updateLabel(it, 4)
-            }
-        })
     }
 
     private fun updateLabel(calendar: Calendar, position: Int) {
@@ -108,7 +103,6 @@ class InputCowActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
             R.id.text_entry_date -> viewModel.entryCalendar.value!!
             R.id.text_out_date -> viewModel.outCalendar.value!!
             R.id.text_pregnant_date -> viewModel.pregnantCalendar.value!!
-            R.id.text_parasite_worm_drug -> viewModel.wormCalendar.value!!
             else -> Calendar.getInstance()
         }
         return if (checkDateNotMin(calendar)) calendar else Calendar.getInstance()
@@ -120,7 +114,6 @@ class InputCowActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
             R.id.text_entry_date -> 1
             R.id.text_out_date -> 2
             R.id.text_pregnant_date -> 3
-            R.id.text_parasite_worm_drug -> 4
             else -> 0
         }
     }
@@ -131,7 +124,6 @@ class InputCowActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
             1 -> text_entry_date
             2 -> text_out_date
             3 -> text_pregnant_date
-            4 -> text_parasite_worm_drug
             else -> text_birth_date
         }
     }
@@ -151,6 +143,16 @@ class InputCowActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
             // Apply the adapter to the spinner
             spinner_gender.adapter = adapter
         }
+        spinner_gender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                when (position) {
+                    0 -> femaleFieldToggle(false)
+                    1 -> femaleFieldToggle(true)
+                }
+            }
+        }
 
         ArrayAdapter.createFromResource(
             this,
@@ -161,6 +163,16 @@ class InputCowActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             // Apply the adapter to the spinner
             spinner_breed.adapter = adapter
+        }
+    }
+
+    private fun femaleFieldToggle(isFemale: Boolean) {
+        if (isFemale) {
+            label_pregnant_date.visibility = View.VISIBLE
+            text_pregnant_date.visibility = View.VISIBLE
+        } else {
+            label_pregnant_date.visibility = View.GONE
+            text_pregnant_date.visibility = View.GONE
         }
     }
 }

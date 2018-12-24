@@ -278,6 +278,7 @@
             <!--Tanggal Bunting-->
 
             <TextView
+                android:id="@+id/label_pregnant_date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="start"
@@ -305,119 +306,6 @@
                 app:layout_constraintStart_toStartOf="@id/guide"
                 app:layout_constraintTop_toBottomOf="@id/text_weight" />
 
-            <!-- Status Vaksin -->
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:lines="1"
-                android:text="@string/input_sapi_vaccine_status_label"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:textColor="@color/white"
-                app:layout_constraintBaseline_toBaselineOf="@id/text_vaccine_status"
-                app:layout_constraintEnd_toEndOf="@id/guide"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <EditText
-                android:id="@+id/text_vaccine_status"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/rectangle_rounded"
-                android:gravity="start"
-                android:lines="1"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:textColor="@color/colorAccent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/guide"
-                app:layout_constraintTop_toBottomOf="@id/text_pregnant_date" />
-
-            <!-- obat cacing -->
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:lines="1"
-                android:text="@string/input_sapi_parasite_worm_drug_label"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:textColor="@color/white"
-                app:layout_constraintBaseline_toBaselineOf="@id/text_parasite_worm_drug"
-                app:layout_constraintEnd_toEndOf="@id/guide"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:text="@string/input_sapi_pick_date_hint"
-                android:id="@+id/text_parasite_worm_drug"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/rectangle_rounded"
-                android:gravity="start"
-                android:lines="1"
-                android:onClick="pickDate"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:textColor="@color/colorAccent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/guide"
-                app:layout_constraintTop_toBottomOf="@id/text_vaccine_status" />
-
-            <!-- Inseminasi -->
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:lines="1"
-                android:text="@string/input_sapi_insemination_label"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:textColor="@color/white"
-                app:layout_constraintBaseline_toBaselineOf="@id/text_insemination"
-                app:layout_constraintEnd_toEndOf="@id/guide"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <EditText
-                android:id="@+id/text_insemination"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/rectangle_rounded"
-                android:gravity="start"
-                android:lines="1"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:textColor="@color/colorAccent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/guide"
-                app:layout_constraintTop_toBottomOf="@id/text_parasite_worm_drug" />
-
-            <!-- Lokasi -->
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:lines="1"
-                android:text="@string/input_sapi_location_label"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:textColor="@color/white"
-                app:layout_constraintBaseline_toBaselineOf="@id/text_location"
-                app:layout_constraintEnd_toEndOf="@id/guide"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <EditText
-                android:id="@+id/text_location"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/rectangle_rounded"
-                android:gravity="start"
-                android:lines="1"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:textColor="@color/colorAccent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/guide"
-                app:layout_constraintTop_toBottomOf="@id/text_insemination" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_submit"
@@ -430,7 +318,7 @@
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_location" />
+                app:layout_constraintTop_toBottomOf="@id/text_pregnant_date" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

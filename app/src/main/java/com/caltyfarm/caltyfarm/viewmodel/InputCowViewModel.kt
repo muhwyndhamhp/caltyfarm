@@ -10,7 +10,6 @@ class InputCowViewModel(val appRepository: AppRepository) : ViewModel() {
     val entryCalendar = MutableLiveData<Calendar>()
     val outCalendar = MutableLiveData<Calendar>()
     val pregnantCalendar = MutableLiveData<Calendar>()
-    val wormCalendar = MutableLiveData<Calendar>()
 
 
     init {
@@ -24,9 +23,6 @@ class InputCowViewModel(val appRepository: AppRepository) : ViewModel() {
             it.time = Date(Long.MIN_VALUE)
         }
         pregnantCalendar.value = Calendar.getInstance().also {
-            it.time = Date(Long.MIN_VALUE)
-        }
-        wormCalendar.value = Calendar.getInstance().also {
             it.time = Date(Long.MIN_VALUE)
         }
     }
