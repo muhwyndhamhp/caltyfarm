@@ -1,34 +1,40 @@
-package com.caltyfarm.caltyfarm.ui
+package com.caltyfarm.caltyfarm.ui.inputcow
 
 import android.app.DatePickerDialog
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
+import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.caltyfarm.caltyfarm.R
-import com.caltyfarm.caltyfarm.utils.InjectorUtils
 import com.caltyfarm.caltyfarm.viewmodel.InputCowViewModel
-import kotlinx.android.synthetic.main.activity_input_cow.*
-import android.widget.TextView
-import java.util.*
+import kotlinx.android.synthetic.main.fragment_basic_input_cow.view.*
 import java.text.SimpleDateFormat
-import kotlin.collections.HashMap
+import java.util.*
 
+class BasicInputFragment : Fragment(), DatePickerDialog.OnDateSetListener {
 
-class InputCowActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
     private lateinit var viewModel: InputCowViewModel
     private val hashMap: HashMap<Int, Int> = hashMapOf()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_input_cow)
-        val factory = InjectorUtils.provideInputCowViewModelFactory()
-        viewModel = ViewModelProviders.of(this, factory).get(InputCowViewModel::class.java)
-        populateSpinner()
-        subscribeUi()
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        return inflater.inflate(R.layout.fragment_basic_input_cow, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel = activity?.run {
+            ViewModelProviders.of(this).get(InputCowViewModel::class.java)
+        } ?: throw Exception("Invalid Activity")
+        addOnClickListener(view)
+        populateSpinner(view)
+        subscribeUi(view)
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
@@ -50,7 +56,7 @@ class InputCowActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
     fun pickDate(view: View) {
         val calendar = getCalendarByView(view)
         val datePicker = DatePickerDialog(
-            this,
+            context!!,
             this,
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
@@ -61,39 +67,43 @@ class InputCowActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
     }
 
     fun handleSubmitClick(view: View) {
+
     }
 
-    fun handleImageBackClick(view: View) {
-        onBackPressed()
-    }
-
-    private fun subscribeUi() {
+    private fun subscribeUi(view: View) {
         viewModel.birthCalendar.observe(this, androidx.lifecycle.Observer {
             if (checkDateNotMin(it)) {
-                updateLabel(it, 0)
+                updateLabel(view, it, 0)
             }
         })
         viewModel.entryCalendar.observe(this, androidx.lifecycle.Observer {
             if (checkDateNotMin(it)) {
-                updateLabel(it, 1)
+                updateLabel(view, it, 1)
             }
         })
         viewModel.outCalendar.observe(this, androidx.lifecycle.Observer {
             if (checkDateNotMin(it)) {
-                updateLabel(it, 2)
+                updateLabel(view, it, 2)
             }
         })
         viewModel.pregnantCalendar.observe(this, androidx.lifecycle.Observer {
             if (checkDateNotMin(it)) {
-                updateLabel(it, 3)
+                updateLabel(view, it, 3)
             }
         })
     }
 
-    private fun updateLabel(calendar: Calendar, position: Int) {
+    private fun addOnClickListener(view: View) {
+        view.text_birth_date.setOnClickListener { pickDate(view.text_birth_date) }
+        view.text_entry_date.setOnClickListener { pickDate(view.text_entry_date) }
+        view.text_out_date.setOnClickListener { pickDate(view.text_out_date) }
+        view.text_pregnant_date.setOnClickListener { pickDate(view.text_pregnant_date) }
+    }
+
+    private fun updateLabel(view: View, calendar: Calendar, position: Int) {
         val myFormat = "dd/MM/yy" //In which you need put here
         val sdf = SimpleDateFormat(myFormat, Locale.US)
-        val textView = getTextViewByIndex(position)
+        val textView = getTextViewByIndex(view, position)
         textView.text = sdf.format(calendar.time)
     }
 
@@ -118,13 +128,13 @@ class InputCowActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
         }
     }
 
-    private fun getTextViewByIndex(position: Int): TextView {
+    private fun getTextViewByIndex(view: View, position: Int): TextView {
         return when (position) {
-            0 -> text_birth_date
-            1 -> text_entry_date
-            2 -> text_out_date
-            3 -> text_pregnant_date
-            else -> text_birth_date
+            0 -> view.text_birth_date
+            1 -> view.text_entry_date
+            2 -> view.text_out_date
+            3 -> view.text_pregnant_date
+            else -> view.text_birth_date
         }
     }
 
@@ -132,47 +142,51 @@ class InputCowActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
         return calendar.time.compareTo(Date(Long.MIN_VALUE)) != 0
     }
 
-    private fun populateSpinner() {
+    private fun populateSpinner(fragmentView: View) {
         ArrayAdapter.createFromResource(
-            this,
+            context!!,
             R.array.gender,
             android.R.layout.simple_spinner_item
         ).also { adapter ->
             // Specify the layout to use when the list of choices appears
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             // Apply the adapter to the spinner
-            spinner_gender.adapter = adapter
+            fragmentView.spinner_gender.adapter = adapter
         }
-        spinner_gender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        fragmentView.spinner_gender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 when (position) {
-                    0 -> femaleFieldToggle(false)
-                    1 -> femaleFieldToggle(true)
+                    0 -> femaleFieldToggle(fragmentView, false)
+                    1 -> femaleFieldToggle(fragmentView, true)
                 }
             }
         }
 
         ArrayAdapter.createFromResource(
-            this,
+            context!!,
             R.array.breed,
             android.R.layout.simple_spinner_item
         ).also { adapter ->
             // Specify the layout to use when the list of choices appears
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             // Apply the adapter to the spinner
-            spinner_breed.adapter = adapter
+            fragmentView.spinner_breed.adapter = adapter
         }
     }
 
-    private fun femaleFieldToggle(isFemale: Boolean) {
+    private fun femaleFieldToggle(view: View, isFemale: Boolean) {
         if (isFemale) {
-            label_pregnant_date.visibility = View.VISIBLE
-            text_pregnant_date.visibility = View.VISIBLE
+            view.label_pregnant_date.visibility = View.VISIBLE
+            view.text_pregnant_date.visibility = View.VISIBLE
         } else {
-            label_pregnant_date.visibility = View.GONE
-            text_pregnant_date.visibility = View.GONE
+            view.label_pregnant_date.visibility = View.GONE
+            view.text_pregnant_date.visibility = View.GONE
         }
+    }
+
+    companion object {
+        fun newInstance() = BasicInputFragment()
     }
 }

@@ -57,6 +57,7 @@
     <string name="input_sapi_location_label">Lokasi</string>
     <string name="input_sapi_submit_button">SUBMIT</string>
     <string name="input_sapi_pick_date_hint">Pilih Tanggal</string>
+    <string name="input_sapi_title">Input Data Sapi</string>
     <string-array name="breed">
         <item>Ongol</item>
         <item>Brahman</item>
