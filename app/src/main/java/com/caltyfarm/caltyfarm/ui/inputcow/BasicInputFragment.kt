@@ -16,6 +16,9 @@ import com.caltyfarm.caltyfarm.viewmodel.InputCowViewModel
 import kotlinx.android.synthetic.main.fragment_basic_input_cow.view.*
 import java.text.SimpleDateFormat
 import java.util.*
+import android.os.Build
+import androidx.appcompat.app.AlertDialog
+
 
 class BasicInputFragment : Fragment(), DatePickerDialog.OnDateSetListener {
 
@@ -66,10 +69,6 @@ class BasicInputFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         datePicker.show()
     }
 
-    fun handleSubmitClick(view: View) {
-
-    }
-
     private fun subscribeUi(view: View) {
         viewModel.birthCalendar.observe(this, androidx.lifecycle.Observer {
             if (checkDateNotMin(it)) {
@@ -98,6 +97,55 @@ class BasicInputFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         view.text_entry_date.setOnClickListener { pickDate(view.text_entry_date) }
         view.text_out_date.setOnClickListener { pickDate(view.text_out_date) }
         view.text_pregnant_date.setOnClickListener { pickDate(view.text_pregnant_date) }
+        view.button_next.setOnClickListener { handleNextButtonClick(view) }
+    }
+
+    private fun handleNextButtonClick(view: View) {
+        if (isFieldsValid(view)) {
+            viewModel.page.value = 1
+        }
+    }
+
+    private fun isFieldsValid(view: View): Boolean {
+        val id = view.text_id.text.toString().trim()
+        val weight = view.text_weight.text.toString().trim()
+        if (id.isEmpty()) {
+            showAlertDialog(getString(R.string.input_sapi_error_id_must_not_empty))
+            return false
+        }
+        try {
+            id.toInt()
+        } catch (e: Exception) {
+            showAlertDialog(getString(R.string.input_sapi_error_id_must_number))
+            return false
+        }
+        if (!checkDateNotMin(viewModel.birthCalendar.value!!)) {
+            showAlertDialog(getString(R.string.input_sapi_error_birth_date_must_be_filled))
+            return false
+        }
+        if (!checkDateNotMin(viewModel.entryCalendar.value!!)) {
+            showAlertDialog(getString(R.string.input_sapi_error_entry_date_must_be_filled))
+            return false
+        }
+//        if (!checkDateNotMin(viewModel.outCalendar.value!!)) {
+//            showAlertDialog(getString(R.string.input_sapi_error_out_date_must_be_filled))
+//            return false
+//        }
+        if (weight.isEmpty()) {
+            showAlertDialog(getString(R.string.input_sapi_error_weight_must_not_be_empty))
+            return false
+        }
+        try {
+            weight.toDouble()
+        } catch (e: Exception) {
+            showAlertDialog(getString(R.string.input_sapi_error_weight_must_be_number))
+            return false
+        }
+//        if (!checkDateNotMin(viewModel.pregnantCalendar.value!!) && view.spinner_gender.selectedItemPosition == 1) {
+//            showAlertDialog(getString(R.string.input_sapi_error_pregnant_date_must_be_filled))
+//            return false
+//        }
+        return true
     }
 
     private fun updateLabel(view: View, calendar: Calendar, position: Int) {
@@ -184,6 +232,21 @@ class BasicInputFragment : Fragment(), DatePickerDialog.OnDateSetListener {
             view.label_pregnant_date.visibility = View.GONE
             view.text_pregnant_date.visibility = View.GONE
         }
+    }
+
+    private fun showAlertDialog(message: String) {
+        val builder: AlertDialog.Builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            AlertDialog.Builder(context!!, android.R.style.Theme_Material_Dialog_Alert)
+        } else {
+            AlertDialog.Builder(context!!)
+        }
+        builder
+            .setMessage(message)
+            .setPositiveButton(android.R.string.yes) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .show()
     }
 
     companion object {

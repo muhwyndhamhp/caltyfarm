@@ -6,9 +6,13 @@ import com.caltyfarm.caltyfarm.data.AppRepository
 import java.util.*
 
 class InputCowViewModel(val appRepository: AppRepository) : ViewModel() {
+    val idSapi = MutableLiveData<Int>()
     val birthCalendar = MutableLiveData<Calendar>()
+    val breedIndex = MutableLiveData<Int>()
+    val genderIndex = MutableLiveData<Int>()
     val entryCalendar = MutableLiveData<Calendar>()
     val outCalendar = MutableLiveData<Calendar>()
+    val weight = MutableLiveData<Double>()
     val pregnantCalendar = MutableLiveData<Calendar>()
     val page = MutableLiveData<Int>()
 

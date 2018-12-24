@@ -55,9 +55,17 @@
     <string name="input_sapi_insemination_label">Inseminasi</string>
     <string name="input_sapi_treatment_label">Pengobatan</string>
     <string name="input_sapi_location_label">Lokasi</string>
-    <string name="input_sapi_submit_button">SUBMIT</string>
+    <string name="input_sapi_submit_button">LANJUT</string>
     <string name="input_sapi_pick_date_hint">Pilih Tanggal</string>
     <string name="input_sapi_title">Input Data Sapi</string>
+    <string name="input_sapi_error_id_must_number">Kolom ID harus angka</string>
+    <string name="input_sapi_error_id_must_not_empty">Kolom ID tidak boleh kosong</string>
+    <string name="input_sapi_error_birth_date_must_be_filled">Kolom tanggal lahir harus diisi</string>
+    <string name="input_sapi_error_entry_date_must_be_filled">Kolom tanggal datang harus diisi</string>
+    <string name="input_sapi_error_out_date_must_be_filled">Kolom tanggal keluar harus diisi</string>
+    <string name="input_sapi_error_pregnant_date_must_be_filled">Kolom tanggal bunting harus diisi</string>
+    <string name="input_sapi_error_weight_must_not_be_empty">Kolom berat badan tidak boleh kosong</string>
+    <string name="input_sapi_error_weight_must_be_number">Kolom berat badan harus angka</string>
     <string-array name="breed">
         <item>Ongol</item>
         <item>Brahman</item>
