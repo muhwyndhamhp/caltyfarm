@@ -32,17 +32,17 @@ class InputCowActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         val index = hashMap[view!!.id]
         if (index in 0..4) {
-            val calendar = when (index) {
-                0 -> viewModel.birthCalendar.value!!
-                1 -> viewModel.entryCalendar.value!!
-                2 -> viewModel.outCalendar.value!!
-                3 -> viewModel.pregnantCalendar.value!!
-                4 -> viewModel.wormCalendar.value!!
-                else -> Calendar.getInstance()
-            }
+            val calendar = Calendar.getInstance()
             calendar.set(Calendar.YEAR, year)
             calendar.set(Calendar.MONTH, month)
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            when (index) {
+                0 -> viewModel.birthCalendar.value = calendar
+                1 -> viewModel.entryCalendar.value = calendar
+                2 -> viewModel.outCalendar.value = calendar
+                3 -> viewModel.pregnantCalendar.value = calendar
+                4 -> viewModel.wormCalendar.value = calendar
+            }
         }
     }
 
