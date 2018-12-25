@@ -3,14 +3,13 @@ package com.caltyfarm.caltyfarm.ui
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import com.caltyfarm.caltyfarm.R
 import com.caltyfarm.caltyfarm.utils.InjectorUtils
+import com.caltyfarm.caltyfarm.utils.USER_DATA_KEY
 import com.caltyfarm.caltyfarm.viewmodel.MainViewModel
-import com.qiscus.sdk.Qiscus
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.indeterminateProgressDialog
 import org.jetbrains.anko.sdk27.coroutines.onClick
@@ -51,16 +50,9 @@ class MainActivity : AppCompatActivity() {
         ll_list_tindakan.visibility = View.GONE
 
         ll_chat.onClick {
-            Qiscus.buildChatWith("iVN0YkxpVHXjPe6VRnKw1peIAvQ2").build(this@MainActivity, object: Qiscus.ChatActivityBuilderListener{
-                override fun onSuccess(intent: Intent?) {
-                    startActivity(intent)
-                }
-
-                override fun onError(throwable: Throwable?) {
-                    Log.e("MAIN", throwable!!.message)
-                }
-
-            })
+            val intent = Intent(this@MainActivity, RoomListActivity::class.java)
+            intent.putExtra(USER_DATA_KEY, viewModel.userData.value)
+            startActivity(intent)
         }
     }
 
@@ -68,12 +60,24 @@ class MainActivity : AppCompatActivity() {
         ll_input_sapi.visibility = View.VISIBLE
         ll_alarm.visibility = View.VISIBLE
         ll_list_tindakan.visibility = View.VISIBLE
+
+        ll_chat.onClick {
+            val intent = Intent(this@MainActivity, RoomListActivity::class.java)
+            intent.putExtra(USER_DATA_KEY, viewModel.userData.value)
+            startActivity(intent)
+        }
     }
 
     private fun showAnakKandangLayout() {
         ll_input_sapi.visibility = View.VISIBLE
         ll_alarm.visibility = View.VISIBLE
         ll_list_tindakan.visibility = View.VISIBLE
+
+        ll_chat.onClick {
+            val intent = Intent(this@MainActivity, RoomListActivity::class.java)
+            intent.putExtra(USER_DATA_KEY, viewModel.userData.value)
+            startActivity(intent)
+        }
     }
 
 

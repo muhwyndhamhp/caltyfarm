@@ -7,8 +7,6 @@ import com.caltyfarm.caltyfarm.data.AppRepository
 
 class VerifViewModelFactory(val context: Context, val appRepository: AppRepository, val initalPhonenumber: String) :
     ViewModelProvider.NewInstanceFactory() {
-
-
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return VerifViewModel(context, appRepository, initalPhonenumber) as T

@@ -11,15 +11,17 @@ class MainViewModel(val context: Context, val appRepository: AppRepository) : Vi
 
     val userData = MutableLiveData<User>()
 
-    var errorMessages :MutableLiveData<String> = MutableLiveData()
+    var errorMessages: MutableLiveData<String> = MutableLiveData()
 
     init {
         appRepository.getUserData(
             FirebaseAuth.getInstance().currentUser!!.uid,
             object : AppRepository.OnUserDataCallback {
                 override fun onDataRetrieved(user: User?) {
-                    if(user != null){
+                    if (user != null) {
                         userData.value = user
+                        if (userData.value!!.isFirstTime) {
+                        }
                     }
                 }
 
@@ -29,5 +31,4 @@ class MainViewModel(val context: Context, val appRepository: AppRepository) : Vi
 
             })
     }
-
 }

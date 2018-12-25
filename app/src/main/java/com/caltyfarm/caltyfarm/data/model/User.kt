@@ -1,6 +1,7 @@
 package com.caltyfarm.caltyfarm.data.model
 
 import com.google.firebase.database.PropertyName
+import java.io.Serializable
 
 class User(
     @set: PropertyName("i")
@@ -17,5 +18,11 @@ class User(
     var phone: String = "",
     @set: PropertyName("f")
     @get: PropertyName("f")
-    var profileUrl: String? = ""
-)
+    var profileUrl: String? = "",
+    @set: PropertyName("c")
+    @get: PropertyName("c")
+    var companyId: String? ="",
+    @set: PropertyName("s")
+    @get: PropertyName("s")
+    var isFirstTime : Boolean = true
+):Serializable

@@ -70,7 +70,11 @@ class VerifViewModel(val context: Context, val appRepository: AppRepository, pri
                 if (it.isSuccessful) {
                     appRepository.getUserData(it.result!!.user.uid, object : AppRepository.OnUserDataCallback {
                         override fun onDataRetrieved(user: User?) {
-                            Qiscus.setUser(FirebaseAuth.getInstance().currentUser!!.uid, BuildConfig.MasterPassword)
+                            Qiscus.setUser(
+                                FirebaseAuth.getInstance().currentUser!!.uid,
+                                BuildConfig.MasterPassword
+//                            "19081997"
+                            )
                                 .withUsername(user!!.name)
                                 .save(object : QiscusCore.SetUserListener {
                                     override fun onSuccess(qiscusAccount: QiscusAccount?) {

@@ -38,6 +38,8 @@
     <string name="hubungi_dokter_hewan_desc">tanya jawab langsung dengan dokter hewan tentang kondisi ternak anda</string>
     <string name="APP_ID">familyhub-zadxyu3d7au</string>
     <string name="daftar_dokter_hewan">Daftar Dokter Hewan</string>
+    <string name="gambar_grup">Gambar grup</string>
+    <string name="nama_tujuan_chat">Nama Tujuan Chat</string>
     <string-array name="gender">
         <item>Pilih Jenis Kelamin</item>
         <item>Laki-laki</item>

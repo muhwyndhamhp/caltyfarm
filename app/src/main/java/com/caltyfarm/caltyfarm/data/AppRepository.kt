@@ -10,12 +10,23 @@ class AppRepository(private val firebaseUtils: FirebaseUtils) {
         fun onDataRetrieved(user: User?)
         fun onFailed(exception: Exception)
     }
+
+    interface OnUserListDataCallback {
+        fun onDataChanged(user: User?)
+        fun onDataAdded(user: User?)
+        fun onDataDeleted(user: User?)
+        fun onError(exception: Exception)
+    }
     fun uploadUser(userData: User) {
         firebaseUtils.uploadUser(userData)
     }
 
     fun getUserData(uid: String, callback: OnUserDataCallback) {
         firebaseUtils.getUserData(uid, callback)
+    }
+
+    fun getFriendsData(companyId: String, callback: OnUserListDataCallback) {
+        firebaseUtils.getFriendsData(companyId, callback)
     }
 
     companion object {

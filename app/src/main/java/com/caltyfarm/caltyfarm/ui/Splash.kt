@@ -1,6 +1,5 @@
 package com.caltyfarm.caltyfarm.ui
 
-import android.app.Application
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -24,15 +23,15 @@ class Splash : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-        Qiscus.init(applicationContext as Application?, resources.getString(R.string.APP_ID))
-        Timer().schedule(2000){
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true)
+        Timer().schedule(2000) {
             checkUserLogin()
         }
     }
 
     private fun checkUserLogin() {
         val currentUser = FirebaseAuth.getInstance().currentUser
-        if(currentUser == null){
+        if (currentUser == null) {
             navigateToRegister()
         } else {
             navigateToMain(currentUser.uid)
@@ -44,28 +43,32 @@ class Splash : AppCompatActivity() {
             .child("caltyManager")
             .child("users")
             .child(uid)
-            .addValueEventListener(object: ValueEventListener{
-            override fun onCancelled(p0: DatabaseError) {
-                toast(p0.message)
-            }
+            .addValueEventListener(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+                    toast(p0.message)
+                }
 
-            override fun onDataChange(p0: DataSnapshot) {
-                val user = p0.getValue(User::class.java)
-                Qiscus.setUser(FirebaseAuth.getInstance().currentUser!!.uid, BuildConfig.MasterPassword)
-                    .withUsername(user!!.name)
-                    .save(object : QiscusCore.SetUserListener{
-                        override fun onSuccess(qiscusAccount: QiscusAccount?) {
-                            startActivity(Intent(this@Splash, MainActivity::class.java))
-                        }
+                override fun onDataChange(p0: DataSnapshot) {
+                    val user = p0.getValue(User::class.java)
+                    Qiscus.setUser(
+                        FirebaseAuth.getInstance().currentUser!!.uid,
+                        BuildConfig.MasterPassword
+//                "19081997"
+                    )
+                        .withUsername(user!!.name)
+                        .save(object : QiscusCore.SetUserListener {
+                            override fun onSuccess(qiscusAccount: QiscusAccount?) {
+                                startActivity(Intent(this@Splash, MainActivity::class.java))
+                            }
 
-                        override fun onError(throwable: Throwable?) {
-                            toast(throwable!!.message!!)
-                        }
+                            override fun onError(throwable: Throwable?) {
+                                toast(throwable!!.message!!)
+                            }
 
-                    })
-            }
+                        })
+                }
 
-        })
+            })
     }
 
     private fun navigateToRegister() {

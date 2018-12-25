@@ -2,32 +2,4 @@ package com.caltyfarm.caltyfarm.utils
 
 const val PHONE_NUMBER_CODE = "PHONE_NUMBER_CODE"
 
-const val ARTICLE_ID_CODE = "ARTICLE_ID_CODE"
-
-const val REQUEST_PHONE_CODE = 102
-
-const val REQUEST_FINE_LOCATION = 103
-
-const val SHOP_CODE = "SHOP_CODE"
-
-const val ORDER_CODE = "ORDER_CODE"
-
-const val SELECTED_ITEM_CODE = "SELECTED_ITEMS"
-
-const val REQUEST_ACCESS_FINE_LOCATION = 104
-
-const val DEFAULT_ZOOM = 13f
-
-const val BASE_PRICE_GOVET = 50000
-
-const val BASE_PRIVE_HALOCOWS = 35000
-
-const val BASE_PRICE_PER_KM = 2200
-
-const val PLACE_PICKER_REQUEST = 105
-
-const val CALTY_SHOP_ORDER_TYPE = 1
-
-const val GOVET_ORDER_TYPE = 2
-
-const val HALO_COWS_ORDER_TYPE = 0
+const val USER_DATA_KEY = "USER_DATA_KEY"
