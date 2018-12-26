@@ -35,6 +35,7 @@ class BasicInputFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         viewModel = activity?.run {
             ViewModelProviders.of(this).get(InputCowViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
+        viewModel.pageTitle.value = getString(R.string.input_sapi_basic_input_title)
         addOnClickListener(view)
         populateSpinner(view)
         subscribeUi(view)

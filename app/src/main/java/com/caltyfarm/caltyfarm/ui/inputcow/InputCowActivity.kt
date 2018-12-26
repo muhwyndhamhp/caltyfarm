@@ -9,6 +9,7 @@ import com.caltyfarm.caltyfarm.utils.InjectorUtils
 import com.caltyfarm.caltyfarm.viewmodel.InputCowViewModel
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import kotlinx.android.synthetic.main.activity_input_cow.*
 import kotlin.collections.HashMap
 
 
@@ -32,6 +33,9 @@ class InputCowActivity : AppCompatActivity() {
         viewModel.page.observe(this, Observer {
             replaceFragment(selectFragment(it))
         })
+        viewModel.pageTitle.observe(this, Observer {
+            text_title.text = it
+        })
     }
 
     private fun replaceFragment(fragment: Fragment) {
@@ -44,6 +48,7 @@ class InputCowActivity : AppCompatActivity() {
     private fun selectFragment(position: Int): Fragment {
         return when (position) {
             0 -> BasicInputFragment.newInstance()
+            1 -> InputActionHistoryFragment.newInstance()
             else -> BasicInputFragment.newInstance()
         }
     }

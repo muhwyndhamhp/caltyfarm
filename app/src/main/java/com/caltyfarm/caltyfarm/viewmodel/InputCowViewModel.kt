@@ -15,6 +15,7 @@ class InputCowViewModel(val appRepository: AppRepository) : ViewModel() {
     val weight = MutableLiveData<Double>()
     val pregnantCalendar = MutableLiveData<Calendar>()
     val page = MutableLiveData<Int>()
+    val pageTitle = MutableLiveData<String>()
 
     init {
         birthCalendar.value = Calendar.getInstance().also {

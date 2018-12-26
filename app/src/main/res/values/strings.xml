@@ -66,6 +66,8 @@
     <string name="input_sapi_error_pregnant_date_must_be_filled">Kolom tanggal bunting harus diisi</string>
     <string name="input_sapi_error_weight_must_not_be_empty">Kolom berat badan tidak boleh kosong</string>
     <string name="input_sapi_error_weight_must_be_number">Kolom berat badan harus angka</string>
+    <string name="input_sapi_basic_input_title">Input Data Sapi</string>
+    <string name="input_sapi_action_history_input_title">Riwayat Tindakan</string>
     <string-array name="breed">
         <item>Ongol</item>
         <item>Brahman</item>
