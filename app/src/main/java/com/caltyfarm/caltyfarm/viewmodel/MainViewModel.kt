@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.caltyfarm.caltyfarm.data.AppRepository
 import com.caltyfarm.caltyfarm.data.model.User
-import com.google.firebase.auth.FirebaseAuth
+import com.caltyfarm.caltyfarm.utils.FirebaseUtils
 
 class MainViewModel(val context: Context, val appRepository: AppRepository) : ViewModel() {
 
@@ -15,7 +15,7 @@ class MainViewModel(val context: Context, val appRepository: AppRepository) : Vi
 
     init {
         appRepository.getUserData(
-            FirebaseAuth.getInstance().currentUser!!.uid,
+            FirebaseUtils.getFirebaseAuth().currentUser!!.uid,
             object : AppRepository.OnUserDataCallback {
                 override fun onDataRetrieved(user: User?) {
                     if (user != null) {

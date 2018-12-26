@@ -5,12 +5,33 @@ import com.caltyfarm.caltyfarm.data.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
-object FirebaseUtils {
+class FirebaseUtils {
 
-    fun getFirebaseAuth() = FirebaseAuth.getInstance()
+    companion object {
 
-    fun getFirebaseDatabase() =
-        FirebaseDatabase.getInstance().reference.child("caltyManager")
+        var firebaseDatabase: FirebaseDatabase? = null
+
+        fun getFirebaseAuth() = FirebaseAuth.getInstance()
+
+        fun getFirebaseDatabase() : DatabaseReference {
+            if(firebaseDatabase == null)
+            {
+                firebaseDatabase = FirebaseDatabase.getInstance()
+                firebaseDatabase!!.setPersistenceEnabled(true)
+
+            }
+            return firebaseDatabase!!.reference.child("caltyManager")
+        }
+
+        fun setPersistenceEnabled() {
+            if(firebaseDatabase == null){
+                firebaseDatabase = FirebaseDatabase.getInstance()
+                firebaseDatabase!!.setPersistenceEnabled(true)
+            }
+        }
+    }
+
+
 
     fun uploadUser(userData: User) {
         getFirebaseDatabase().child("users").child(userData.uid).setValue(userData)

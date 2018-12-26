@@ -5,6 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="@color/white"
         tools:context=".ui.MainActivity">
     <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
@@ -27,6 +28,7 @@
             android:id="@+id/ll_input_sapi"
             android:layout_width="match_parent"
             android:layout_height="80dp"
+            android:background="?android:selectableItemBackground"
             android:orientation="horizontal">
         <ImageView
                 android:layout_width="70dp"
@@ -42,14 +44,14 @@
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:layout_gravity="center_vertical">
-            <TextView
+            <com.caltyfarm.caltyfarm.customElements.CustomTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textColor="@color/darkGrey"
                     android:maxLines="1"
                     android:text="@string/input_data_sapi"/>
-            <TextView
+            <com.caltyfarm.caltyfarm.customElements.CustomTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="4"
@@ -60,6 +62,7 @@
             android:id="@+id/ll_status_sapi"
             android:layout_width="match_parent"
             android:layout_height="80dp"
+            android:background="?android:selectableItemBackground"
             android:orientation="horizontal">
         <ImageView
                 android:layout_width="70dp"
@@ -75,14 +78,14 @@
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:layout_gravity="center_vertical">
-            <TextView
+            <com.caltyfarm.caltyfarm.customElements.CustomTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textColor="@color/darkGrey"
                     android:maxLines="1"
                     android:text="@string/daftar_status_sapi"/>
-            <TextView
+            <com.caltyfarm.caltyfarm.customElements.CustomTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="4"
@@ -93,6 +96,7 @@
             android:id="@+id/ll_alarm"
             android:layout_width="match_parent"
             android:layout_height="80dp"
+            android:background="?android:selectableItemBackground"
             android:orientation="horizontal">
         <ImageView
                 android:layout_width="70dp"
@@ -108,14 +112,14 @@
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:layout_gravity="center_vertical">
-            <TextView
+            <com.caltyfarm.caltyfarm.customElements.CustomTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textColor="@color/darkGrey"
                     android:maxLines="1"
                     android:text="@string/tanda_alarm"/>
-            <TextView
+            <com.caltyfarm.caltyfarm.customElements.CustomTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="4"
@@ -126,6 +130,7 @@
             android:id="@+id/ll_list_tindakan"
             android:layout_width="match_parent"
             android:layout_height="80dp"
+            android:background="?android:selectableItemBackground"
             android:orientation="horizontal">
         <ImageView
                 android:layout_width="70dp"
@@ -141,14 +146,14 @@
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:layout_gravity="center_vertical">
-            <TextView
+            <com.caltyfarm.caltyfarm.customElements.CustomTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textColor="@color/darkGrey"
                     android:maxLines="1"
                     android:text="@string/list_tindakan"/>
-            <TextView
+            <com.caltyfarm.caltyfarm.customElements.CustomTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="4"
@@ -159,6 +164,7 @@
             android:id="@+id/ll_chat"
             android:layout_width="match_parent"
             android:layout_height="80dp"
+            android:background="?android:selectableItemBackground"
             android:orientation="horizontal">
         <ImageView
                 android:layout_width="70dp"
@@ -174,14 +180,14 @@
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:layout_gravity="center_vertical">
-            <TextView
+            <com.caltyfarm.caltyfarm.customElements.CustomTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textColor="@color/darkGrey"
                     android:maxLines="1"
                     android:text="@string/hubungi_dokter_hewan"/>
-            <TextView
+            <com.caltyfarm.caltyfarm.customElements.CustomTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="4"

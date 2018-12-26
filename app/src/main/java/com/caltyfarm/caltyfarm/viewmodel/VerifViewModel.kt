@@ -9,8 +9,8 @@ import com.caltyfarm.caltyfarm.BuildConfig
 import com.caltyfarm.caltyfarm.R
 import com.caltyfarm.caltyfarm.data.AppRepository
 import com.caltyfarm.caltyfarm.data.model.User
+import com.caltyfarm.caltyfarm.utils.FirebaseUtils
 import com.google.firebase.FirebaseException
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
@@ -64,16 +64,15 @@ class VerifViewModel(val context: Context, val appRepository: AppRepository, pri
 
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
         isLoading.value = true
-        FirebaseAuth.getInstance().signInWithCredential(credential)
+        FirebaseUtils.getFirebaseAuth().signInWithCredential(credential)
             .addOnCompleteListener {
                 isLoading.value = false
                 if (it.isSuccessful) {
                     appRepository.getUserData(it.result!!.user.uid, object : AppRepository.OnUserDataCallback {
                         override fun onDataRetrieved(user: User?) {
                             Qiscus.setUser(
-                                FirebaseAuth.getInstance().currentUser!!.uid,
+                                FirebaseUtils.getFirebaseAuth().currentUser!!.uid,
                                 BuildConfig.MasterPassword
-//                            "19081997"
                             )
                                 .withUsername(user!!.name)
                                 .save(object : QiscusCore.SetUserListener {

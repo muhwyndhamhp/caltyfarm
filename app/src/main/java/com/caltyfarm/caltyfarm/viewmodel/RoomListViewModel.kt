@@ -11,7 +11,7 @@ import com.qiscus.sdk.Qiscus
 
 
 class RoomListViewModel(
-    private val appRepository: AppRepository,
+    appRepository: AppRepository,
     val userData: User,
     private val roomListActivity: RoomListActivity
 ) : ViewModel() {

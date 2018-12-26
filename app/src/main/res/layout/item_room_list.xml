@@ -26,7 +26,7 @@
             android:contentDescription="@string/gambar_grup"
             android:id="@+id/iv_chat_avatar"/>
 
-    <TextView
+    <com.caltyfarm.caltyfarm.customElements.CustomTextView
             android:id="@+id/tV_chat_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

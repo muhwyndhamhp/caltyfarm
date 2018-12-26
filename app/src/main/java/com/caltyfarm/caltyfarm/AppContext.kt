@@ -2,6 +2,7 @@ package com.caltyfarm.caltyfarm
 
 import android.app.Application
 import com.qiscus.sdk.Qiscus
+import org.greenrobot.eventbus.EventBus
 
 class AppContext : Application() {
 
@@ -11,7 +12,9 @@ class AppContext : Application() {
         Qiscus.getChatConfig().apply {
             statusBarColor = R.color.colorPrimaryDark
             appBarColor = R.color.colorPrimary
+            isEnablePushNotification = true
         }
 
     }
+
 }
