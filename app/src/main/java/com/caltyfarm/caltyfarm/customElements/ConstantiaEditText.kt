@@ -5,7 +5,7 @@ import android.graphics.Typeface
 import android.util.AttributeSet
 import android.widget.EditText
 
-class CustomEditText : EditText {
+class ConstantiaEditText : EditText {
     constructor(context: Context) : super(context) {
         setFont()
     }

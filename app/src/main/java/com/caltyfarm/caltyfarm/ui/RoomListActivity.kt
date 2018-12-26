@@ -1,6 +1,7 @@
 package com.caltyfarm.caltyfarm.ui
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -35,6 +36,7 @@ class RoomListActivity : AppCompatActivity() {
             .get(RoomListViewModel::class.java)
 
         prepareRecyclerView()
+        prepareToolbar()
 
         viewModel.errorMessage.observe(this, Observer { toast(it) })
         viewModel.addPosition.observe(this, Observer { if (it != null) adapter.notifyItemInserted(it) })
@@ -42,6 +44,21 @@ class RoomListActivity : AppCompatActivity() {
         viewModel.removePosition.observe(this, Observer { if (it != null) adapter.notifyItemRemoved(it) })
         viewModel.chatIntent.observe(this, Observer { if (it != null) startActivity(it) })
 
+    }
+
+    private fun prepareToolbar() {
+        setSupportActionBar(toolbar_room_list)
+        val upArrow = resources.getDrawable(R.drawable.ic_qiscus_back)
+        supportActionBar!!.setHomeAsUpIndicator(upArrow)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setDisplayShowTitleEnabled(false)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return if(item!!.itemId == android.R.id.home) {
+            onBackPressed()
+            true
+        } else super.onOptionsItemSelected(item)
     }
 
     private fun prepareRecyclerView() {

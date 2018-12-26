@@ -40,6 +40,7 @@
     <string name="daftar_dokter_hewan">Daftar Dokter Hewan</string>
     <string name="gambar_grup">Gambar grup</string>
     <string name="nama_tujuan_chat">Nama Tujuan Chat</string>
+    <string name="cek_kondisi_ternak_anda_nkapan_saja_di_mana_saja">Cek kondisi ternak anda \nkapan saja, di mana saja</string>
     <string-array name="gender">
         <item>Pilih Jenis Kelamin</item>
         <item>Laki-laki</item>

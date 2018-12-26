@@ -9,6 +9,8 @@ class FirebaseUtils {
 
     companion object {
 
+        fun newInstance() = FirebaseUtils()
+
         var firebaseDatabase: FirebaseDatabase? = null
 
         fun getFirebaseAuth() = FirebaseAuth.getInstance()

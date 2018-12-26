@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
+import com.bumptech.glide.Glide
 import com.caltyfarm.caltyfarm.R
+import com.caltyfarm.caltyfarm.utils.BANNER_URL
 import com.caltyfarm.caltyfarm.utils.InjectorUtils
 import com.caltyfarm.caltyfarm.utils.USER_DATA_KEY
 import com.caltyfarm.caltyfarm.viewmodel.MainViewModel
@@ -31,6 +33,8 @@ class MainActivity : AppCompatActivity() {
         showLoading("Memuat data pengguna", "Harap Tunggu...")
         val factory = InjectorUtils.provideMainViewModelFactory(this)
         viewModel = ViewModelProviders.of(this, factory).get(MainViewModel::class.java)
+        Glide.with(this).load(BANNER_URL)
+            .into(iv_banner)
         viewModel.userData.observe(this, androidx.lifecycle.Observer {
             if (it != null && it.uid != "") {
                 when (it.userType) {

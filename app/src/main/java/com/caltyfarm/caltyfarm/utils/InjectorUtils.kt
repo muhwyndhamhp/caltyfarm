@@ -11,7 +11,7 @@ import com.caltyfarm.caltyfarm.viewmodel.factory.RoomListViewModelFactory
 
 object InjectorUtils {
 
-    private fun getAppRepository() = AppRepository.getInstance(FirebaseUtils)
+    private fun getAppRepository() = AppRepository.getInstance(FirebaseUtils.newInstance())
 
     fun provideAuthViewModelFactory(context: Context): AuthViewModelFactory {
         return AuthViewModelFactory(context, getAppRepository())

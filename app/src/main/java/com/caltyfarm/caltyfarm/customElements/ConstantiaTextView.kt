@@ -5,7 +5,7 @@ import android.graphics.Typeface
 import android.util.AttributeSet
 import android.widget.TextView
 
-class CustomTextView : TextView {
+class ConstantiaTextView : TextView {
     constructor(context: Context) : super(context) {
         setFont()
     }

@@ -13,6 +13,8 @@ class AppContext : Application() {
             statusBarColor = R.color.colorPrimaryDark
             appBarColor = R.color.colorPrimary
             isEnablePushNotification = true
+            isEnableFcmPushNotification = true
+            isOnlyEnablePushNotificationOutsideChatRoom = true
         }
 
     }

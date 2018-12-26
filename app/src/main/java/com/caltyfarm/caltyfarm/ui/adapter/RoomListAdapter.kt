@@ -64,7 +64,7 @@ class RoomListAdapter(
         ) {
             glide.load(
                 if(qiscusChatRoom.profileUrl != "") qiscusChatRoom.profileUrl
-                else "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909__340.png"
+                else "https://firebasestorage.googleapis.com/v0/b/calty-farm.appspot.com/o/profile_placeholder.png?alt=media&token=ef4d7ba7-ca9b-4e56-a040-fac1c749f6dc"
             ).listener(LoggingListener<Drawable>()).into(itemView.iv_chat_avatar)
             itemView.tV_chat_name.text = qiscusChatRoom.name
         }
