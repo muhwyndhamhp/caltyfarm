@@ -316,8 +316,7 @@ class BasicInputFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         if (isChild) {
             view.label_parent_id.visibility = View.VISIBLE
             view.text_parent_id.visibility = View.VISIBLE
-        }
-        else {
+        } else {
             view.label_parent_id.visibility = View.GONE
             view.text_parent_id.visibility = View.GONE
         }
@@ -325,7 +324,14 @@ class BasicInputFragment : Fragment(), DatePickerDialog.OnDateSetListener {
     }
 
     private fun possiblePregnantToggle(view: View, isPossiblePregnant: Boolean) {
-        if (isPossiblePregnant) {
+        if (isPossiblePregnant && viewModel.isPregnant.value == true) {
+            view.label_is_pregnant.visibility = View.VISIBLE
+            view.checkbox_is_pregnant.visibility = View.VISIBLE
+            view.label_pregnant_number.visibility = View.VISIBLE
+            view.text_pregnant_number.visibility = View.VISIBLE
+            view.label_pregnant_date.visibility = View.VISIBLE
+            view.text_pregnant_date.visibility = View.VISIBLE
+        } else if (isPossiblePregnant) {
             view.label_is_pregnant.visibility = View.VISIBLE
             view.checkbox_is_pregnant.visibility = View.VISIBLE
         } else {
@@ -344,8 +350,7 @@ class BasicInputFragment : Fragment(), DatePickerDialog.OnDateSetListener {
             view.text_pregnant_number.visibility = View.VISIBLE
             view.label_pregnant_date.visibility = View.VISIBLE
             view.text_pregnant_date.visibility = View.VISIBLE
-        }
-        else {
+        } else {
             view.label_pregnant_number.visibility = View.GONE
             view.text_pregnant_number.visibility = View.GONE
             view.label_pregnant_date.visibility = View.GONE
