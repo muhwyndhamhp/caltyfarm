@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.caltyfarm.caltyfarm.R
@@ -45,6 +46,8 @@ class InputActionHistoryFragment : Fragment() {
     }
 
     private fun saveInput(view: View) {
+        viewModel.saveCowData()
+        Toast.makeText(context, "InsyaAllah Terupload", Toast.LENGTH_SHORT).show()
     }
 
     private fun subscribeUi(view: View) {

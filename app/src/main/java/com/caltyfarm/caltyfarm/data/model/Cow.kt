@@ -8,17 +8,25 @@ data class Cow(
     @get: PropertyName("i")
     var id: Long,
 
-    @set: PropertyName("r")
-    @get: PropertyName("r")
-    var birthDate: Long,
+    @set: PropertyName("a")
+    @get: PropertyName("a")
+    var ageIndex: Int,
+
+    @set: PropertyName("p")
+    @get: PropertyName("p")
+    var parentId: Long?,
 
     @set: PropertyName("b")
     @get: PropertyName("b")
-    var breed: String,
+    var birthDate: Long,
+
+    @set: PropertyName("r")
+    @get: PropertyName("r")
+    var breedIndex: Int,
 
     @set: PropertyName("g")
     @get: PropertyName("g")
-    var gender: String,
+    var genderIndex: Int,
 
     @set: PropertyName("e")
     @get: PropertyName("e")
@@ -32,43 +40,23 @@ data class Cow(
     @get: PropertyName("w")
     var weight: Double,
 
-    @set: PropertyName("p")
-    @get: PropertyName("p")
-    var pregnantDate: Long?,
-
     @set: PropertyName("s")
     @get: PropertyName("s")
-    var estimatedBirthDate: Long?,
-
-    @set: PropertyName("v")
-    @get: PropertyName("v")
-    var vaccineStatus: String,
-
-    @set: PropertyName("m")
-    @get: PropertyName("m")
-    var parasiteWormDrug: String?,
-
-    @set: PropertyName("a")
-    @get: PropertyName("a")
-    var actionHistory: String,
-
-    @set: PropertyName("t")
-    @get: PropertyName("t")
-    var temperature :Double?,
+    var isPregnant: Boolean?,
 
     @set: PropertyName("n")
     @get: PropertyName("n")
-    var tonusRumen: String?,
+    var pregnantNumber: Int?,
 
-    @set: PropertyName("j")
-    @get: PropertyName("j")
-    var insemination: String,
+    @set: PropertyName("d")
+    @get: PropertyName("d")
+    var pregnantDate: Long?,
 
-    @set: PropertyName("k")
-    @get: PropertyName("k")
-    var treatment: String,
+    @set: PropertyName("c")
+    @get: PropertyName("c")
+    var actionHistoryList: List<ActionHistory>?,
 
-    @set: PropertyName("i")
-    @get: PropertyName("i")
+    @set: PropertyName("l")
+    @get: PropertyName("l")
     var location: String?
 )

@@ -58,7 +58,7 @@ class AddActionHistoryActivity : AppCompatActivity(), DatePickerDialog.OnDateSet
     fun handleAddButtonClick(view: View) {
         if (checkFields()) {
             val actionHistory = ActionHistory(
-                myCalendar.value!!.time,
+                myCalendar.value!!.timeInMillis / 1000,
                 text_action.text.toString().trim(),
                 text_condition.text.toString().trim(),
                 text_diagnostic.text.toString().trim(),

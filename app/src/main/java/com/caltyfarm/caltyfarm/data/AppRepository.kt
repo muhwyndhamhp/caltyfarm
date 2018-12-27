@@ -19,8 +19,8 @@ class AppRepository(private val firebaseUtils: FirebaseUtils) {
         firebaseUtils.getUserData(uid, callback)
     }
 
-    fun uploadCowData(cow: Cow) {
-
+    fun uploadCowData(cowData: Cow) {
+        firebaseUtils.uploadCow(cowData)
     }
 
     companion object {

@@ -129,7 +129,7 @@ class BasicInputFragment : Fragment(), DatePickerDialog.OnDateSetListener {
             return false
         }
         try {
-            id.toInt()
+            id.toLong()
         } catch (e: Exception) {
             showAlertDialog(getString(R.string.input_sapi_error_id_must_number))
             return false
@@ -212,7 +212,7 @@ class BasicInputFragment : Fragment(), DatePickerDialog.OnDateSetListener {
             override fun afterTextChanged(s: Editable?) {
                 val cowId = s.toString().trim()
                 try {
-                    viewModel.cowId.value = cowId.toInt()
+                    viewModel.cowId.value = cowId.toLong()
                 } catch (exception: java.lang.Exception) {
                 }
             }
@@ -225,7 +225,7 @@ class BasicInputFragment : Fragment(), DatePickerDialog.OnDateSetListener {
             override fun afterTextChanged(s: Editable?) {
                 val parentId = s.toString().trim()
                 try {
-                    viewModel.parentId.value = parentId.toInt()
+                    viewModel.parentId.value = parentId.toLong()
                 } catch (exception: java.lang.Exception) {
                 }
             }
