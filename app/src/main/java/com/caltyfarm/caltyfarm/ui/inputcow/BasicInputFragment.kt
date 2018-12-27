@@ -97,6 +97,15 @@ class BasicInputFragment : Fragment(), DatePickerDialog.OnDateSetListener {
                 updateDateFields(view, it, 3)
             }
         })
+        viewModel.ageIndex.observe(this, androidx.lifecycle.Observer {
+            childToggle(view, (it == 1)) // jika anakan
+        })
+        viewModel.isPossiblePregnant.observe(this, androidx.lifecycle.Observer {
+            possiblePregnantToggle(view, it)
+        })
+        viewModel.isPregnant.observe(this, androidx.lifecycle.Observer {
+            isPregnantToggle(view, it && viewModel.isPossiblePregnant.value == true)
+        })
     }
 
     private fun addCalendarOnClickListener(view: View) {
@@ -304,14 +313,41 @@ class BasicInputFragment : Fragment(), DatePickerDialog.OnDateSetListener {
     }
 
     private fun childToggle(view: View, isChild: Boolean) {
+        if (isChild) {
+            view.label_parent_id.visibility = View.VISIBLE
+            view.text_parent_id.visibility = View.VISIBLE
+        }
+        else {
+            view.label_parent_id.visibility = View.GONE
+            view.text_parent_id.visibility = View.GONE
+        }
 
     }
 
     private fun possiblePregnantToggle(view: View, isPossiblePregnant: Boolean) {
         if (isPossiblePregnant) {
+            view.label_is_pregnant.visibility = View.VISIBLE
+            view.checkbox_is_pregnant.visibility = View.VISIBLE
+        } else {
+            view.label_is_pregnant.visibility = View.GONE
+            view.checkbox_is_pregnant.visibility = View.GONE
+            view.label_pregnant_number.visibility = View.GONE
+            view.text_pregnant_number.visibility = View.GONE
+            view.label_pregnant_date.visibility = View.GONE
+            view.text_pregnant_date.visibility = View.GONE
+        }
+    }
+
+    private fun isPregnantToggle(view: View, isPregnant: Boolean) {
+        if (isPregnant) {
+            view.label_pregnant_number.visibility = View.VISIBLE
+            view.text_pregnant_number.visibility = View.VISIBLE
             view.label_pregnant_date.visibility = View.VISIBLE
             view.text_pregnant_date.visibility = View.VISIBLE
-        } else {
+        }
+        else {
+            view.label_pregnant_number.visibility = View.GONE
+            view.text_pregnant_number.visibility = View.GONE
             view.label_pregnant_date.visibility = View.GONE
             view.text_pregnant_date.visibility = View.GONE
         }
