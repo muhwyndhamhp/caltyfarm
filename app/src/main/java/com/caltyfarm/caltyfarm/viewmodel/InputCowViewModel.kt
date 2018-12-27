@@ -3,9 +3,14 @@ package com.caltyfarm.caltyfarm.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.caltyfarm.caltyfarm.data.AppRepository
+import com.caltyfarm.caltyfarm.data.model.ActionHistory
 import java.util.*
 
 class InputCowViewModel(val appRepository: AppRepository) : ViewModel() {
+
+
+    val page = MutableLiveData<Int>()
+    val pageTitle = MutableLiveData<String>()
 
     //fields
     val cowId = MutableLiveData<Int>()
@@ -22,8 +27,7 @@ class InputCowViewModel(val appRepository: AppRepository) : ViewModel() {
     val pregnantCalendar = MutableLiveData<Calendar>()
     val isPossiblePregnant = MutableLiveData<Boolean>()
 
-    val page = MutableLiveData<Int>()
-    val pageTitle = MutableLiveData<String>()
+    val actionHistoryList = MutableLiveData<List<ActionHistory>>()
 
     init {
         birthCalendar.value = Calendar.getInstance().also {
@@ -39,6 +43,8 @@ class InputCowViewModel(val appRepository: AppRepository) : ViewModel() {
             it.time = Date(Long.MIN_VALUE)
         }
         page.value = 0
+
+        actionHistoryList.value = listOf()
     }
 
     fun setGenderIndex(value: Int) {
@@ -51,4 +57,9 @@ class InputCowViewModel(val appRepository: AppRepository) : ViewModel() {
         isPossiblePregnant.value = (value == 0 && genderIndex.value == 1) // betina dewasa
     }
 
+    fun addActionHistory(actionHistory: ActionHistory) {
+        val oldList = actionHistoryList.value!!
+        val newList = oldList + actionHistory
+        actionHistoryList.value = newList
+    }
 }

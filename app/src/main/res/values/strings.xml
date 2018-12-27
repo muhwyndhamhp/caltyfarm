@@ -73,6 +73,16 @@
     <string name="input_sapi_is_pregnant_label">Sedang Bunting</string>
     <string name="input_sapi_pregnant_number_label">Bunting Keberapa</string>
     <string name="input_sapi_error_pregnant_number_must_be_filled">Kolom bunting keberapa harus diisi</string>
+    <string name="input_sapi_add_action_history_title">Tambahkan riwayat tindakan</string>
+    <string name="input_sapi_date_label">Tanggal</string>
+    <string name="input_sapi_action_label">Tindakan</string>
+    <string name="input_sapi_condition_label">Kondisi Sapi</string>
+    <string name="input_sapi_drug_or_vaccine_label">Obat atau Vaksin</string>
+    <string name="input_sapi_add_button">Tambahkan</string>
+    <string name="input_sapi_error_date_field_must_be_filled">Kolom tanggal harus diisi</string>
+    <string name="input_sapi_error_action_field_must_be_filled">Kolom tindakan harus diisi</string>
+    <string name="input_sapi_error_diagnostic_field_must_be_filled">Kolom diagnosa harus diisi</string>
+    <string name="input_sapi_error_cow_condition_must_be_filled">Kolom kondisi sapi harus diisi</string>
     <string-array name="breed">
         <item>Ongol</item>
         <item>Brahman</item>

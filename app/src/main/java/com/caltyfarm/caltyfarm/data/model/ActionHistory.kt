@@ -1,5 +1,6 @@
 package com.caltyfarm.caltyfarm.data.model
 
+import java.io.Serializable
 import java.util.*
 
 data class ActionHistory(
@@ -8,4 +9,4 @@ data class ActionHistory(
     var condition: String,
     var diagnostic: String,
     var drugOrVaccine: String?
-)
+) : Serializable

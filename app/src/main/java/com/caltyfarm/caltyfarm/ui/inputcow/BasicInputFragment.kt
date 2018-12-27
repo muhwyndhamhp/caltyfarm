@@ -172,10 +172,6 @@ class BasicInputFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         return true
     }
 
-    private fun checkDateNotMin(calendar: Calendar): Boolean {
-        return calendar.time.compareTo(Date(Long.MIN_VALUE)) != 0
-    }
-
     private fun populateSpinner(fragmentView: View) {
         ArrayAdapter.createFromResource(
             context!!,
@@ -409,6 +405,10 @@ class BasicInputFragment : Fragment(), DatePickerDialog.OnDateSetListener {
             }
             .setIcon(android.R.drawable.ic_dialog_alert)
             .show()
+    }
+
+    private fun checkDateNotMin(calendar: Calendar): Boolean {
+        return calendar.time.compareTo(Date(Long.MIN_VALUE)) != 0
     }
 
     companion object {
