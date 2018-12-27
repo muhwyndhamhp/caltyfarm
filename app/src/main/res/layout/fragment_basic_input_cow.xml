@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="8dp">
@@ -40,6 +39,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/rectangle_rounded"
             android:gravity="start"
+            android:inputType="number"
             android:lines="1"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:textColor="@color/colorAccent"
@@ -47,6 +47,63 @@
             app:layout_constraintStart_toStartOf="@id/guide"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!--Usia Sapi-->
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:lines="1"
+            android:text="@string/input_sapi_cow_age_label"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/white"
+            app:layout_constraintBaseline_toBaselineOf="@id/spinner_age"
+            app:layout_constraintEnd_toEndOf="@id/guide"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Spinner
+            android:id="@+id/spinner_age"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rectangle_rounded"
+            android:gravity="start"
+            android:lines="1"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guide"
+            app:layout_constraintTop_toBottomOf="@id/text_id" />
+
+        <!--ID induk-->
+
+        <TextView
+            android:id="@+id/label_parent_id"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:lines="1"
+            android:text="@string/input_sapi_parent_id_label"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/white"
+            app:layout_constraintBaseline_toBaselineOf="@id/text_parent_id"
+            app:layout_constraintEnd_toEndOf="@id/guide"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/text_parent_id"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rectangle_rounded"
+            android:gravity="start"
+            android:inputType="number"
+            android:lines="1"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guide"
+            app:layout_constraintTop_toBottomOf="@id/spinner_age" />
 
         <!--Tanggal Lahir-->
 
@@ -75,7 +132,7 @@
             android:textColor="@color/colorAccent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/guide"
-            app:layout_constraintTop_toBottomOf="@id/text_id" />
+            app:layout_constraintTop_toBottomOf="@id/text_parent_id" />
 
         <!--Jenis / Breed-->
 
@@ -212,12 +269,69 @@
             android:layout_marginTop="8dp"
             android:background="@drawable/rectangle_rounded"
             android:gravity="start"
+            android:inputType="numberDecimal"
             android:lines="1"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:textColor="@color/colorAccent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/guide"
             app:layout_constraintTop_toBottomOf="@id/text_out_date" />
+
+        <!--Sedang Hamil?-->
+
+        <TextView
+            android:id="@+id/label_is_pregnant"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:lines="1"
+            android:text="@string/input_sapi_is_pregnant_label"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/white"
+            app:layout_constraintBaseline_toBaselineOf="@id/checkbox_is_pregnant"
+            app:layout_constraintEnd_toEndOf="@id/guide"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <CheckBox
+            android:id="@+id/checkbox_is_pregnant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:buttonTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="@id/guide"
+            app:layout_constraintTop_toBottomOf="@id/text_weight" />
+
+        <!--Hamil Keberapa-->
+
+        <TextView
+            android:id="@+id/label_pregnant_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:lines="1"
+            android:text="@string/input_sapi_pregnant_number_label"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/white"
+            app:layout_constraintBaseline_toBaselineOf="@id/text_pregnant_number"
+            app:layout_constraintEnd_toEndOf="@id/guide"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/text_pregnant_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rectangle_rounded"
+            android:gravity="start"
+            android:inputType="number"
+            android:lines="1"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guide"
+            app:layout_constraintTop_toBottomOf="@id/checkbox_is_pregnant" />
 
         <!--Tanggal Bunting-->
 
@@ -230,7 +344,6 @@
             android:text="@string/input_sapi_pregnant_date_label"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:textColor="@color/white"
-            android:visibility="gone"
             app:layout_constraintBaseline_toBaselineOf="@id/text_pregnant_date"
             app:layout_constraintEnd_toEndOf="@id/guide"
             app:layout_constraintStart_toStartOf="parent" />
@@ -246,10 +359,9 @@
             android:text="@string/input_sapi_pick_date_hint"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:textColor="@color/colorAccent"
-            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/guide"
-            app:layout_constraintTop_toBottomOf="@id/text_weight" />
+            app:layout_constraintTop_toBottomOf="@id/text_pregnant_number" />
 
 
         <androidx.appcompat.widget.AppCompatButton

@@ -17,12 +17,15 @@ import kotlinx.android.synthetic.main.fragment_basic_input_cow.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 import android.os.Build
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.appcompat.app.AlertDialog
 
 
 class BasicInputFragment : Fragment(), DatePickerDialog.OnDateSetListener {
 
     private lateinit var viewModel: InputCowViewModel
+
     private val hashMap: HashMap<Int, Int> = hashMapOf()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -36,10 +39,13 @@ class BasicInputFragment : Fragment(), DatePickerDialog.OnDateSetListener {
             ViewModelProviders.of(this).get(InputCowViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
         viewModel.pageTitle.value = getString(R.string.input_sapi_basic_input_title)
-        addOnClickListener(view)
+        addCalendarOnClickListener(view)
         populateSpinner(view)
+        loadFields(view)
+        recordFields(view)
         subscribeUi(view)
     }
+
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         val index = hashMap[view!!.id]
@@ -57,7 +63,7 @@ class BasicInputFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         }
     }
 
-    fun pickDate(view: View) {
+    private fun pickDate(view: View) {
         val calendar = getCalendarByView(view)
         val datePicker = DatePickerDialog(
             context!!,
@@ -73,27 +79,27 @@ class BasicInputFragment : Fragment(), DatePickerDialog.OnDateSetListener {
     private fun subscribeUi(view: View) {
         viewModel.birthCalendar.observe(this, androidx.lifecycle.Observer {
             if (checkDateNotMin(it)) {
-                updateLabel(view, it, 0)
+                updateDateFields(view, it, 0)
             }
         })
         viewModel.entryCalendar.observe(this, androidx.lifecycle.Observer {
             if (checkDateNotMin(it)) {
-                updateLabel(view, it, 1)
+                updateDateFields(view, it, 1)
             }
         })
         viewModel.outCalendar.observe(this, androidx.lifecycle.Observer {
             if (checkDateNotMin(it)) {
-                updateLabel(view, it, 2)
+                updateDateFields(view, it, 2)
             }
         })
         viewModel.pregnantCalendar.observe(this, androidx.lifecycle.Observer {
             if (checkDateNotMin(it)) {
-                updateLabel(view, it, 3)
+                updateDateFields(view, it, 3)
             }
         })
     }
 
-    private fun addOnClickListener(view: View) {
+    private fun addCalendarOnClickListener(view: View) {
         view.text_birth_date.setOnClickListener { pickDate(view.text_birth_date) }
         view.text_entry_date.setOnClickListener { pickDate(view.text_entry_date) }
         view.text_out_date.setOnClickListener { pickDate(view.text_out_date) }
@@ -109,7 +115,6 @@ class BasicInputFragment : Fragment(), DatePickerDialog.OnDateSetListener {
 
     private fun isFieldsValid(view: View): Boolean {
         val id = view.text_id.text.toString().trim()
-        val weight = view.text_weight.text.toString().trim()
         if (id.isEmpty()) {
             showAlertDialog(getString(R.string.input_sapi_error_id_must_not_empty))
             return false
@@ -132,6 +137,7 @@ class BasicInputFragment : Fragment(), DatePickerDialog.OnDateSetListener {
 //            showAlertDialog(getString(R.string.input_sapi_error_out_date_must_be_filled))
 //            return false
 //        }
+        val weight = view.text_weight.text.toString().trim()
         if (weight.isEmpty()) {
             showAlertDialog(getString(R.string.input_sapi_error_weight_must_not_be_empty))
             return false
@@ -142,14 +148,176 @@ class BasicInputFragment : Fragment(), DatePickerDialog.OnDateSetListener {
             showAlertDialog(getString(R.string.input_sapi_error_weight_must_be_number))
             return false
         }
-//        if (!checkDateNotMin(viewModel.pregnantCalendar.value!!) && view.spinner_gender.selectedItemPosition == 1) {
-//            showAlertDialog(getString(R.string.input_sapi_error_pregnant_date_must_be_filled))
-//            return false
-//        }
+
+        val isPregnant = view.checkbox_is_pregnant.isChecked && viewModel.isPossiblePregnant.value == true
+        val pregnantNumber = view.text_pregnant_number.text.toString().trim()
+
+        if (isPregnant && pregnantNumber.isEmpty()) {
+            showAlertDialog(getString(R.string.input_sapi_error_pregnant_number_must_be_filled))
+            return false
+        }
+        if (!checkDateNotMin(viewModel.pregnantCalendar.value!!) && isPregnant) {
+            showAlertDialog(getString(R.string.input_sapi_error_pregnant_date_must_be_filled))
+            return false
+        }
         return true
     }
 
-    private fun updateLabel(view: View, calendar: Calendar, position: Int) {
+    private fun checkDateNotMin(calendar: Calendar): Boolean {
+        return calendar.time.compareTo(Date(Long.MIN_VALUE)) != 0
+    }
+
+    private fun populateSpinner(fragmentView: View) {
+        ArrayAdapter.createFromResource(
+            context!!,
+            R.array.gender,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            // Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner
+            fragmentView.spinner_gender.adapter = adapter
+        }
+
+        ArrayAdapter.createFromResource(
+            context!!,
+            R.array.breed,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            // Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner
+            fragmentView.spinner_breed.adapter = adapter
+        }
+
+        ArrayAdapter.createFromResource(
+            context!!,
+            R.array.age,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            // Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner
+            fragmentView.spinner_age.adapter = adapter
+        }
+    }
+
+    private fun recordFields(view: View) {
+        view.text_id.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                val cowId = s.toString().trim()
+                try {
+                    viewModel.cowId.value = cowId.toInt()
+                } catch (exception: java.lang.Exception) {
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+
+        view.text_parent_id.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                val parentId = s.toString().trim()
+                try {
+                    viewModel.parentId.value = parentId.toInt()
+                } catch (exception: java.lang.Exception) {
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+
+        view.text_weight.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                val weight = s.toString().trim()
+                try {
+                    viewModel.weight.value = weight.toDouble()
+                } catch (exception: java.lang.Exception) {
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+
+        view.text_pregnant_number.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                val pregnantNumber = s.toString().trim()
+                try {
+                    viewModel.pregnantNumber.value = pregnantNumber.toInt()
+                } catch (exception: java.lang.Exception) {
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+
+        view.spinner_gender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                viewModel.setGenderIndex(position)
+            }
+        }
+
+        view.spinner_breed.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                viewModel.breedIndex.value = position
+            }
+        }
+
+        view.spinner_age.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                viewModel.setAgeIndex(position)
+            }
+        }
+
+        view.checkbox_is_pregnant.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.isPregnant.value = isChecked
+        }
+    }
+
+    private fun loadFields(view: View) {
+        if (viewModel.cowId.value != null) {
+            view.text_id.setText(viewModel.cowId.value.toString())
+        }
+        view.spinner_age.setSelection(viewModel.ageIndex.value ?: 0)
+        if (viewModel.parentId.value != null) {
+            view.text_parent_id.setText(viewModel.parentId.value.toString())
+        }
+        view.spinner_breed.setSelection(viewModel.breedIndex.value ?: 0)
+        view.spinner_gender.setSelection(viewModel.genderIndex.value ?: 0)
+        if (viewModel.weight.value != null) {
+            view.text_weight.setText(viewModel.weight.value.toString())
+        }
+        view.checkbox_is_pregnant.isChecked = viewModel.isPregnant.value ?: false
+        if (viewModel.pregnantNumber.value != null) {
+            view.text_pregnant_number.setText(viewModel.pregnantNumber.value.toString())
+        }
+    }
+
+    private fun childToggle(view: View, isChild: Boolean) {
+
+    }
+
+    private fun possiblePregnantToggle(view: View, isPossiblePregnant: Boolean) {
+        if (isPossiblePregnant) {
+            view.label_pregnant_date.visibility = View.VISIBLE
+            view.text_pregnant_date.visibility = View.VISIBLE
+        } else {
+            view.label_pregnant_date.visibility = View.GONE
+            view.text_pregnant_date.visibility = View.GONE
+        }
+    }
+
+    private fun updateDateFields(view: View, calendar: Calendar, position: Int) {
         val myFormat = "dd/MM/yy" //In which you need put here
         val sdf = SimpleDateFormat(myFormat, Locale.US)
         val textView = getTextViewByIndex(view, position)
@@ -184,54 +352,6 @@ class BasicInputFragment : Fragment(), DatePickerDialog.OnDateSetListener {
             2 -> view.text_out_date
             3 -> view.text_pregnant_date
             else -> view.text_birth_date
-        }
-    }
-
-    private fun checkDateNotMin(calendar: Calendar): Boolean {
-        return calendar.time.compareTo(Date(Long.MIN_VALUE)) != 0
-    }
-
-    private fun populateSpinner(fragmentView: View) {
-        ArrayAdapter.createFromResource(
-            context!!,
-            R.array.gender,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            // Specify the layout to use when the list of choices appears
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Apply the adapter to the spinner
-            fragmentView.spinner_gender.adapter = adapter
-        }
-        fragmentView.spinner_gender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                when (position) {
-                    0 -> femaleFieldToggle(fragmentView, false)
-                    1 -> femaleFieldToggle(fragmentView, true)
-                }
-            }
-        }
-
-        ArrayAdapter.createFromResource(
-            context!!,
-            R.array.breed,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            // Specify the layout to use when the list of choices appears
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Apply the adapter to the spinner
-            fragmentView.spinner_breed.adapter = adapter
-        }
-    }
-
-    private fun femaleFieldToggle(view: View, isFemale: Boolean) {
-        if (isFemale) {
-            view.label_pregnant_date.visibility = View.VISIBLE
-            view.text_pregnant_date.visibility = View.VISIBLE
-        } else {
-            view.label_pregnant_date.visibility = View.GONE
-            view.text_pregnant_date.visibility = View.GONE
         }
     }
 

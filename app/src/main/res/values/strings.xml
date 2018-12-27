@@ -45,7 +45,7 @@
     <string name="input_sapi_entry_date_label">Tanggal Datang</string>
     <string name="input_sapi_out_date_label">Tanggal Keluar</string>
     <string name="input_sapi_cow_tag_label">Tanda Sapi</string>
-    <string name="input_sapi_weight_label">Berat Badan</string>
+    <string name="input_sapi_weight_label">Berat Badan (kg)</string>
     <string name="input_sapi_pregnant_date_label">Tanggal Bunting</string>
     <string name="input_sapi_vaccine_status_label">Status Vaksin</string>
     <string name="input_sapi_parasite_worm_drug_label">Obat Cacing</string>
@@ -68,6 +68,11 @@
     <string name="input_sapi_error_weight_must_be_number">Kolom berat badan harus angka</string>
     <string name="input_sapi_basic_input_title">Input Data Sapi</string>
     <string name="input_sapi_action_history_input_title">Riwayat Tindakan</string>
+    <string name="input_sapi_cow_age_label">Usia Sapi</string>
+    <string name="input_sapi_parent_id_label">ID Induk</string>
+    <string name="input_sapi_is_pregnant_label">Sedang Bunting</string>
+    <string name="input_sapi_pregnant_number_label">Bunting Keberapa</string>
+    <string name="input_sapi_error_pregnant_number_must_be_filled">Kolom bunting keberapa harus diisi</string>
     <string-array name="breed">
         <item>Ongol</item>
         <item>Brahman</item>
@@ -82,5 +87,9 @@
     <string-array name="gender">
         <item>Jantan</item>
         <item>Betina</item>
+    </string-array>
+    <string-array name="age">
+        <item>Dewasa</item>
+        <item>Anakan</item>
     </string-array>
 </resources>
