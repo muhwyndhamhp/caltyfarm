@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.caltyfarm.caltyfarm.R
+import com.caltyfarm.caltyfarm.ui.inputcow.InputCowActivity
 import com.caltyfarm.caltyfarm.utils.BANNER_URL
 import com.caltyfarm.caltyfarm.utils.InjectorUtils
 import com.caltyfarm.caltyfarm.utils.USER_DATA_KEY
@@ -46,42 +47,33 @@ class MainActivity : AppCompatActivity() {
                 dismissLoading()
             }
         })
+        ll_chat.onClick {
+            val intent = Intent(this@MainActivity, RoomListActivity::class.java)
+            intent.putExtra(USER_DATA_KEY, viewModel.userData.value)
+            startActivity(intent)
+        }
+
+        ll_input_sapi.onClick {
+            startActivity(Intent(this@MainActivity, InputCowActivity::class.java))
+        }
     }
 
     private fun showInvestorLayout() {
         ll_input_sapi.visibility = View.GONE
         ll_alarm.visibility = View.GONE
         ll_list_tindakan.visibility = View.GONE
-
-        ll_chat.onClick {
-            val intent = Intent(this@MainActivity, RoomListActivity::class.java)
-            intent.putExtra(USER_DATA_KEY, viewModel.userData.value)
-            startActivity(intent)
-        }
     }
 
     private fun showVetLayout() {
         ll_input_sapi.visibility = View.VISIBLE
         ll_alarm.visibility = View.VISIBLE
         ll_list_tindakan.visibility = View.VISIBLE
-
-        ll_chat.onClick {
-            val intent = Intent(this@MainActivity, RoomListActivity::class.java)
-            intent.putExtra(USER_DATA_KEY, viewModel.userData.value)
-            startActivity(intent)
-        }
     }
 
     private fun showAnakKandangLayout() {
         ll_input_sapi.visibility = View.VISIBLE
         ll_alarm.visibility = View.VISIBLE
         ll_list_tindakan.visibility = View.VISIBLE
-
-        ll_chat.onClick {
-            val intent = Intent(this@MainActivity, RoomListActivity::class.java)
-            intent.putExtra(USER_DATA_KEY, viewModel.userData.value)
-            startActivity(intent)
-        }
     }
 
 
