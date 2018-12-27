@@ -29,12 +29,56 @@
     <string name="input_data_sapi">Input Data Sapi</string>
     <string name="input_sapi_desc">membuat identitas sapi dengan mudah dan dapat diakses 24 jam</string>
     <string name="daftar_status_sapi">Daftar Status Sapi</string>
-    <string name="daftar_status_sapi_desc">cek semua kondisi ternak secara akurat dan realtime dari aplikasi anda</string>
+    <string name="daftar_status_sapi_desc">cek semua kondisi ternak secara akurat dan realtime dari aplikasi anda
+    </string>
     <string name="tanda_alarm">Tanda Alarm</string>
     <string name="alarm_desc">pengingat untuk tanda kondisi sapi secara realtime</string>
     <string name="list_tindakan">List Tindakan</string>
     <string name="list_tindakan_desc">daftar tindakan yang diinstruksikan oleh dokter hewan</string>
     <string name="hubungi_dokter_hewan">Hubungi Dokter Hewan</string>
+    <string name="hubungi_dokter_hewan_desc">tanya jawab langsung dengan dokter hewan tentang kondisi ternak anda
+    </string>
+    <string name="input_sapi_id_label">ID Sapi</string>
+    <string name="input_sapi_birthdate_label">Tanggal Lahir</string>
+    <string name="input_sapi_breed_label">Jenis / Breed</string>
+    <string name="input_sapi_gender_label">Jenis Kelamin</string>
+    <string name="input_sapi_entry_date_label">Tanggal Datang</string>
+    <string name="input_sapi_out_date_label">Tanggal Keluar</string>
+    <string name="input_sapi_cow_tag_label">Tanda Sapi</string>
+    <string name="input_sapi_weight_label">Berat Badan</string>
+    <string name="input_sapi_pregnant_date_label">Tanggal Bunting</string>
+    <string name="input_sapi_vaccine_status_label">Status Vaksin</string>
+    <string name="input_sapi_parasite_worm_drug_label">Obat Cacing</string>
+    <string name="input_sapi_action_history_label">Riwayat Tindakan</string>
+    <string name="input_sapi_temperature_label">Temperatur</string>
+    <string name="input_sapi_tonus_rumen_label">Tonus Rumen</string>
+    <string name="input_sapi_insemination_label">Inseminasi</string>
+    <string name="input_sapi_treatment_label">Pengobatan</string>
+    <string name="input_sapi_location_label">Lokasi</string>
+    <string name="input_sapi_submit_button">LANJUT</string>
+    <string name="input_sapi_pick_date_hint">Pilih Tanggal</string>
+    <string name="input_sapi_title">Input Data Sapi</string>
+    <string name="input_sapi_error_id_must_number">Kolom ID harus angka</string>
+    <string name="input_sapi_error_id_must_not_empty">Kolom ID tidak boleh kosong</string>
+    <string name="input_sapi_error_birth_date_must_be_filled">Kolom tanggal lahir harus diisi</string>
+    <string name="input_sapi_error_entry_date_must_be_filled">Kolom tanggal datang harus diisi</string>
+    <string name="input_sapi_error_out_date_must_be_filled">Kolom tanggal keluar harus diisi</string>
+    <string name="input_sapi_error_pregnant_date_must_be_filled">Kolom tanggal bunting harus diisi</string>
+    <string name="input_sapi_error_weight_must_not_be_empty">Kolom berat badan tidak boleh kosong</string>
+    <string name="input_sapi_error_weight_must_be_number">Kolom berat badan harus angka</string>
+    <string name="input_sapi_basic_input_title">Input Data Sapi</string>
+    <string name="input_sapi_action_history_input_title">Riwayat Tindakan</string>
+    <string-array name="breed">
+        <item>Ongol</item>
+        <item>Brahman</item>
+        <item>Peranakan Ongol (PO)</item>
+        <item>Simental</item>
+        <item>Limausin</item>
+        <item>SimPO</item>
+        <item>FH</item>
+        <item>Peranakan FH (PFH)</item>
+        <item>Wagyu</item>
+    </string-array>
     <string name="hubungi_dokter_hewan_desc">tanya jawab langsung dengan dokter hewan tentang kondisi ternak anda</string>
     <string name="APP_ID">familyhub-zadxyu3d7au</string>
     <string name="daftar_dokter_hewan">Daftar Dokter Hewan</string>
@@ -42,8 +86,7 @@
     <string name="nama_tujuan_chat">Nama Tujuan Chat</string>
     <string name="cek_kondisi_ternak_anda_nkapan_saja_di_mana_saja">Cek kondisi ternak anda \nkapan saja, di mana saja</string>
     <string-array name="gender">
-        <item>Pilih Jenis Kelamin</item>
-        <item>Laki-laki</item>
-        <item>Perempuan</item>
+        <item>Jantan</item>
+        <item>Betina</item>
     </string-array>
 </resources>

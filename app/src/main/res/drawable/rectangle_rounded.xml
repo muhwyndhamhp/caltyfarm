@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!--The width and color of the border-->
+    <!--<stroke-->
+    <!--android:width="4dp"-->
+    <!--android:color="#de3d3d" />-->
+
+    <solid android:color="@color/white" />
+
+    <!--The desired corner radius. reduce it to keep it less rounded-->
+    <corners android:radius="4dp" />
+
+    <!--Add your desired padding-->
+    <padding
+        android:bottom="4dp"
+        android:left="4dp"
+        android:right="4dp"
+        android:top="4dp" />
+
+</shape>

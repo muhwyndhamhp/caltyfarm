@@ -6,8 +6,10 @@ import com.caltyfarm.caltyfarm.data.model.User
 import com.caltyfarm.caltyfarm.ui.RoomListActivity
 import com.caltyfarm.caltyfarm.viewmodel.VerifViewModelFactory
 import com.caltyfarm.caltyfarm.viewmodel.factory.AuthViewModelFactory
+import com.caltyfarm.caltyfarm.viewmodel.factory.InputCowViewModelFactory
 import com.caltyfarm.caltyfarm.viewmodel.factory.MainViewModelFactory
 import com.caltyfarm.caltyfarm.viewmodel.factory.RoomListViewModelFactory
+import com.caltyfarm.caltyfarm.viewmodel.InputCowViewModel
 
 object InjectorUtils {
 
@@ -30,5 +32,9 @@ object InjectorUtils {
         roomListActivity: RoomListActivity
     ): RoomListViewModelFactory {
         return RoomListViewModelFactory(getAppRepository(), userData, roomListActivity)
+    }
+
+    fun provideInputCowViewModelFactory(): InputCowViewModelFactory {
+        return InputCowViewModelFactory(getAppRepository())
     }
 }

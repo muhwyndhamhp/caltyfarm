@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <!--ID Sapi-->
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:lines="1"
+            android:text="@string/input_sapi_id_label"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/white"
+            app:layout_constraintBaseline_toBaselineOf="@id/text_id"
+            app:layout_constraintEnd_toEndOf="@id/guide"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/text_id"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rectangle_rounded"
+            android:gravity="start"
+            android:lines="1"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guide"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <!--Tanggal Lahir-->
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:lines="1"
+            android:text="@string/input_sapi_birthdate_label"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/white"
+            app:layout_constraintBaseline_toBaselineOf="@id/text_birth_date"
+            app:layout_constraintEnd_toEndOf="@id/guide"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/text_birth_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rectangle_rounded"
+            android:gravity="start"
+            android:lines="1"
+            android:text="@string/input_sapi_pick_date_hint"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guide"
+            app:layout_constraintTop_toBottomOf="@id/text_id" />
+
+        <!--Jenis / Breed-->
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:lines="1"
+            android:text="@string/input_sapi_breed_label"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/white"
+            app:layout_constraintBaseline_toBaselineOf="@id/spinner_breed"
+            app:layout_constraintEnd_toEndOf="@id/guide"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Spinner
+            android:id="@+id/spinner_breed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rectangle_rounded"
+            android:gravity="start"
+            android:lines="1"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guide"
+            app:layout_constraintTop_toBottomOf="@id/text_birth_date" />
+
+        <!--Jenis Kelamin-->
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:lines="1"
+            android:text="@string/input_sapi_gender_label"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/white"
+            app:layout_constraintBaseline_toBaselineOf="@id/spinner_gender"
+            app:layout_constraintEnd_toEndOf="@id/guide"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Spinner
+            android:id="@+id/spinner_gender"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rectangle_rounded"
+            android:gravity="start"
+            android:lines="1"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guide"
+            app:layout_constraintTop_toBottomOf="@id/spinner_breed" />
+
+        <!--Tanggal Datang-->
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:lines="1"
+            android:text="@string/input_sapi_entry_date_label"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/white"
+            app:layout_constraintBaseline_toBaselineOf="@id/text_entry_date"
+            app:layout_constraintEnd_toEndOf="@id/guide"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/text_entry_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rectangle_rounded"
+            android:gravity="start"
+            android:lines="1"
+            android:text="@string/input_sapi_pick_date_hint"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guide"
+            app:layout_constraintTop_toBottomOf="@id/spinner_gender" />
+
+        <!--Tanggal Keluar-->
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:lines="1"
+            android:text="@string/input_sapi_out_date_label"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/white"
+            app:layout_constraintBaseline_toBaselineOf="@id/text_out_date"
+            app:layout_constraintEnd_toEndOf="@id/guide"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/text_out_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rectangle_rounded"
+            android:gravity="start"
+            android:lines="1"
+            android:text="@string/input_sapi_pick_date_hint"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guide"
+            app:layout_constraintTop_toBottomOf="@id/text_entry_date" />
+
+        <!--Berat Badan-->
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:lines="1"
+            android:text="@string/input_sapi_weight_label"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/white"
+            app:layout_constraintBaseline_toBaselineOf="@id/text_weight"
+            app:layout_constraintEnd_toEndOf="@id/guide"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/text_weight"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rectangle_rounded"
+            android:gravity="start"
+            android:lines="1"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guide"
+            app:layout_constraintTop_toBottomOf="@id/text_out_date" />
+
+        <!--Tanggal Bunting-->
+
+        <TextView
+            android:id="@+id/label_pregnant_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:lines="1"
+            android:text="@string/input_sapi_pregnant_date_label"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            app:layout_constraintBaseline_toBaselineOf="@id/text_pregnant_date"
+            app:layout_constraintEnd_toEndOf="@id/guide"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/text_pregnant_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rectangle_rounded"
+            android:gravity="start"
+            android:lines="1"
+            android:text="@string/input_sapi_pick_date_hint"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/colorAccent"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guide"
+            app:layout_constraintTop_toBottomOf="@id/text_weight" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_next"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/input_sapi_submit_button"
+            android:textAllCaps="false"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_pregnant_date" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
