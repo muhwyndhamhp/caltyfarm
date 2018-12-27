@@ -12,6 +12,10 @@ class AppContext : Application() {
         Qiscus.getChatConfig().apply {
             statusBarColor = R.color.colorPrimaryDark
             appBarColor = R.color.colorPrimary
+            rightBubbleColor = R.color.colorPrimary
+            rightBubbleTextColor = R.color.white
+            rightBubbleTimeColor = R.color.white
+            rightLinkTextColor = R.color.defaultUnselected
             isEnablePushNotification = true
             isEnableFcmPushNotification = true
             isOnlyEnablePushNotificationOutsideChatRoom = true

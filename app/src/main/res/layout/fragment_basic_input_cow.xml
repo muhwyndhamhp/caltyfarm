@@ -22,7 +22,7 @@
 
         <!--ID Sapi-->
 
-        <TextView
+        <com.caltyfarm.caltyfarm.customElements.ConstantiaTextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="start"
@@ -34,7 +34,7 @@
             app:layout_constraintEnd_toEndOf="@id/guide"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <EditText
+        <com.caltyfarm.caltyfarm.customElements.ConstantiaEditText
             android:id="@+id/text_id"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
 
         <!--Tanggal Lahir-->
 
-        <TextView
+        <com.caltyfarm.caltyfarm.customElements.ConstantiaTextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="start"
@@ -62,7 +62,7 @@
             app:layout_constraintEnd_toEndOf="@id/guide"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
+        <com.caltyfarm.caltyfarm.customElements.ConstantiaTextView
             android:id="@+id/text_birth_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
 
         <!--Jenis / Breed-->
 
-        <TextView
+        <com.caltyfarm.caltyfarm.customElements.ConstantiaTextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="start"
@@ -107,7 +107,7 @@
 
         <!--Jenis Kelamin-->
 
-        <TextView
+        <com.caltyfarm.caltyfarm.customElements.ConstantiaTextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="start"
@@ -135,7 +135,7 @@
 
         <!--Tanggal Datang-->
 
-        <TextView
+        <com.caltyfarm.caltyfarm.customElements.ConstantiaTextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="start"
@@ -147,7 +147,7 @@
             app:layout_constraintEnd_toEndOf="@id/guide"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
+        <com.caltyfarm.caltyfarm.customElements.ConstantiaTextView
             android:id="@+id/text_entry_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -164,7 +164,7 @@
 
         <!--Tanggal Keluar-->
 
-        <TextView
+        <com.caltyfarm.caltyfarm.customElements.ConstantiaTextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="start"
@@ -176,7 +176,7 @@
             app:layout_constraintEnd_toEndOf="@id/guide"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
+        <com.caltyfarm.caltyfarm.customElements.ConstantiaTextView
             android:id="@+id/text_out_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -193,7 +193,7 @@
 
         <!--Berat Badan-->
 
-        <TextView
+        <com.caltyfarm.caltyfarm.customElements.ConstantiaTextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="start"
@@ -205,7 +205,7 @@
             app:layout_constraintEnd_toEndOf="@id/guide"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <EditText
+        <com.caltyfarm.caltyfarm.customElements.ConstantiaEditText
             android:id="@+id/text_weight"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -221,7 +221,7 @@
 
         <!--Tanggal Bunting-->
 
-        <TextView
+        <com.caltyfarm.caltyfarm.customElements.ConstantiaTextView
             android:id="@+id/label_pregnant_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -235,7 +235,7 @@
             app:layout_constraintEnd_toEndOf="@id/guide"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
+        <com.caltyfarm.caltyfarm.customElements.ConstantiaTextView
             android:id="@+id/text_pregnant_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

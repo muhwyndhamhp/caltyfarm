@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.os.Build
 import androidx.appcompat.app.AlertDialog
+import com.caltyfarm.caltyfarm.customElements.CustomArrayAdapter
 
 
 class BasicInputFragment : Fragment(), DatePickerDialog.OnDateSetListener {
@@ -192,10 +193,10 @@ class BasicInputFragment : Fragment(), DatePickerDialog.OnDateSetListener {
     }
 
     private fun populateSpinner(fragmentView: View) {
-        ArrayAdapter.createFromResource(
-            context!!,
-            R.array.gender,
-            android.R.layout.simple_spinner_item
+        CustomArrayAdapter(
+            context,
+            android.R.layout.simple_spinner_item,
+            Arrays.asList(*resources.getStringArray(R.array.gender))
         ).also { adapter ->
             // Specify the layout to use when the list of choices appears
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -213,10 +214,10 @@ class BasicInputFragment : Fragment(), DatePickerDialog.OnDateSetListener {
             }
         }
 
-        ArrayAdapter.createFromResource(
-            context!!,
-            R.array.breed,
-            android.R.layout.simple_spinner_item
+        CustomArrayAdapter(
+            context,
+            android.R.layout.simple_spinner_item,
+            Arrays.asList(*resources.getStringArray(R.array.breed))
         ).also { adapter ->
             // Specify the layout to use when the list of choices appears
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)

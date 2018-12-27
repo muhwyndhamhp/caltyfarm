@@ -22,7 +22,8 @@ android {
             resValue 'string', "master_password", Master_Password
         }
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField 'String', "MasterPassword", Master_Password
             resValue 'string', "master_password", Master_Password
