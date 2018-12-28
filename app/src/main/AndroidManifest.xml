@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="com.caltyfarm.caltyfarm">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.caltyfarm.caltyfarm">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.READ_SMS"/>
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
-            android:name=".AppContext"
-            android:allowBackup="true"
+            android:name=".AppContext"android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
@@ -19,17 +18,15 @@
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
         <uses-library
-                android:name="org.apache.http.legacy"
-                android:required="false"/>
+            android:name="org.apache.http.legacy"
+            android:required="false" />
 
         <meta-data
                 android:name="com.google.android.gms.version"
                 android:value="@integer/google_play_services_version"
-                />
-        <meta-data
-                android:name="com.google.firebase.messaging.default_notification_icon"
-                android:resource="@mipmap/ic_launcher_round" />
-
+        />
+        <meta-data android:name="com.google.firebase.messaging.default_notification_icon"
+                   android:resource="@mipmap/ic_launcher_round" />
         <meta-data android:name="com.google.firebase.messaging.default_notification_color"
                    android:resource="@color/colorPrimary" />
 
@@ -44,26 +41,24 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
-        <activity android:name=".ui.MainActivity">
-        </activity>
-        <activity android:name=".ui.AuthActivity">
-        </activity>
-        <activity android:name=".ui.VerificationActivity">
-        </activity>
+        <activity android:name=".ui.MainActivity"></activity>
+        <activity android:name=".ui.AuthActivity"></activity>
+        <activity android:name=".ui.VerificationActivity"></activity>
         <activity android:name=".ui.Splash">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".ui.inputcow.InputCowActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity android:name=".ui.RoomListActivity">
         </activity>
+        <activity android:name=".ui.inputcow.AddActionHistoryActivity"></activity>
     </application>
 
 </manifest>

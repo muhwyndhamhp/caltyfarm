@@ -39,6 +39,10 @@ class FirebaseUtils {
         getFirebaseDatabase().child("users").child(userData.uid).setValue(userData)
     }
 
+    fun uploadCow(cowData: Cow) {
+        getFirebaseDatabase().child("cows").child(cowData.id.toString()).setValue(cowData)
+    }
+
     fun getUserData(uid: String, callback: AppRepository.OnUserDataCallback) {
         getFirebaseDatabase().child("users").child(uid).addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {

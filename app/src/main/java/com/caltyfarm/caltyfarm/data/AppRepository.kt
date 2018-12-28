@@ -1,5 +1,6 @@
 package com.caltyfarm.caltyfarm.data
 
+import com.caltyfarm.caltyfarm.data.model.Cow
 import com.caltyfarm.caltyfarm.data.model.User
 import com.caltyfarm.caltyfarm.utils.FirebaseUtils
 import java.lang.Exception
@@ -27,6 +28,10 @@ class AppRepository(private val firebaseUtils: FirebaseUtils) {
 
     fun getFriendsData(companyId: String, callback: OnUserListDataCallback) {
         firebaseUtils.getFriendsData(companyId, callback)
+    }
+
+    fun uploadCowData(cowData: Cow) {
+        firebaseUtils.uploadCow(cowData)
     }
 
     companion object {

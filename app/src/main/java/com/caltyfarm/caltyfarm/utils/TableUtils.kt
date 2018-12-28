@@ -32,7 +32,7 @@ object TableUtils {
         tableHtml.append(tableHtmlPrefix)
         for (actionHistory in actionHistoryList) {
             tableHtml.append("<tr>")
-            tableHtml.append("<td class=\"date\">${sdf.format(actionHistory.date)}</td>")
+            tableHtml.append("<td class=\"date\">${sdf.format(Date(actionHistory.date * 1000))}</td>")
             tableHtml.append("<td class=\"action\">${actionHistory.action}</td>")
             tableHtml.append("<td class=\"condition\">${actionHistory.condition}</td>")
             tableHtml.append("<td class=\"diagnostic\">${actionHistory.diagnostic}</td>")

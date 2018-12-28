@@ -1,5 +1,7 @@
 package com.caltyfarm.caltyfarm.ui.inputcow
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -9,6 +11,7 @@ import com.caltyfarm.caltyfarm.utils.InjectorUtils
 import com.caltyfarm.caltyfarm.viewmodel.InputCowViewModel
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.caltyfarm.caltyfarm.data.model.ActionHistory
 import kotlinx.android.synthetic.main.activity_input_cow.*
 import kotlin.collections.HashMap
 
@@ -23,6 +26,14 @@ class InputCowActivity : AppCompatActivity() {
         val factory = InjectorUtils.provideInputCowViewModelFactory()
         viewModel = ViewModelProviders.of(this, factory).get(InputCowViewModel::class.java)
         subscribeUi()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == ADD_ACTION_HISTORY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            viewModel.addActionHistory(data!!.getSerializableExtra(ACTION_HISTORY) as ActionHistory)
+        }
     }
 
     fun handleImageBackClick(view: View) {
@@ -51,5 +62,10 @@ class InputCowActivity : AppCompatActivity() {
             1 -> InputActionHistoryFragment.newInstance()
             else -> BasicInputFragment.newInstance()
         }
+    }
+
+    companion object {
+        private const val ADD_ACTION_HISTORY_REQUEST_CODE: Int = 212
+        private const val ACTION_HISTORY = "ACTION_HISTORY"
     }
 }
