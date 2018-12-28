@@ -44,7 +44,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
 
     //anko implementation
-    implementation 'org.jetbrains.anko:anko:0.10.8'
+    implementation 'org.jetbrains.anko:anko:0.10.7'
 
     //architecture component
     def lifecycle_version = "2.0.0"
@@ -58,6 +58,10 @@ dependencies {
 
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
+
+    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
+
+    implementation "android.arch.work:work-runtime-ktx:$work_version"
 
     //glide implementation
     implementation "com.github.bumptech.glide:glide:4.8.0"

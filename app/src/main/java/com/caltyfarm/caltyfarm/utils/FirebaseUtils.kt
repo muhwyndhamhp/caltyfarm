@@ -1,6 +1,7 @@
 package com.caltyfarm.caltyfarm.utils
 
 import com.caltyfarm.caltyfarm.data.AppRepository
+import com.caltyfarm.caltyfarm.data.model.Cow
 import com.caltyfarm.caltyfarm.data.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
