@@ -5,8 +5,10 @@ import androidx.lifecycle.ViewModel
 import com.caltyfarm.caltyfarm.data.AppRepository
 import com.caltyfarm.caltyfarm.data.model.ActionHistory
 import com.caltyfarm.caltyfarm.data.model.Cow
+import com.caltyfarm.caltyfarm.data.model.User
+import com.caltyfarm.caltyfarm.utils.FirebaseUtils
+import java.lang.Exception
 import java.util.*
-import kotlin.math.absoluteValue
 
 class InputCowViewModel(val appRepository: AppRepository) : ViewModel() {
 
@@ -66,6 +68,19 @@ class InputCowViewModel(val appRepository: AppRepository) : ViewModel() {
     }
 
     fun saveCowData() {
+        appRepository.getUserData(FirebaseUtils.getFirebaseAuth().uid!!, object : AppRepository.OnUserDataCallback {
+            override fun onDataRetrieved(user: User?) {
+                initiateSaveData(user!!)
+            }
+
+            override fun onFailed(exception: Exception) {
+
+            }
+
+        })
+    }
+
+    private fun initiateSaveData(user: User){
         val newId = cowId.value!!
         val newAgeIndex = ageIndex.value!!
         var newParentId: Long? = null
@@ -109,10 +124,20 @@ class InputCowViewModel(val appRepository: AppRepository) : ViewModel() {
             newPregnantNumber,
             newPregnantDate,
             newActionHistoryList,
-            newLocation
+            newLocation,
+            checkIsHealthy(newActionHistoryList!![newActionHistoryList.size-1]),
+            user.companyId!!
         )
 
         appRepository.uploadCowData(cow)
+    }
+
+    private fun checkIsHealthy(actionHistory: ActionHistory): Boolean {
+        return when {
+            actionHistory.condition == "Sehat" -> true
+            actionHistory.condition == "Tidak Sehat" -> false
+            else -> false
+        }
     }
 
     private fun checkDateNotMin(calendar: Calendar): Boolean {

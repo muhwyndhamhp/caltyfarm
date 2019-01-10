@@ -1,5 +1,6 @@
 package com.caltyfarm.caltyfarm.ui.inputcow
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -48,6 +49,7 @@ class InputActionHistoryFragment : Fragment() {
     private fun saveInput(view: View) {
         viewModel.saveCowData()
         Toast.makeText(context, "InsyaAllah Terupload", Toast.LENGTH_SHORT).show()
+        (context as Activity).onBackPressed()
     }
 
     private fun subscribeUi(view: View) {

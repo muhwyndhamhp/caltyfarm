@@ -16,9 +16,8 @@ class FirebaseUtils {
 
         fun getFirebaseAuth() = FirebaseAuth.getInstance()
 
-        fun getFirebaseDatabase() : DatabaseReference {
-            if(firebaseDatabase == null)
-            {
+        fun getFirebaseDatabase(): DatabaseReference {
+            if (firebaseDatabase == null) {
                 firebaseDatabase = FirebaseDatabase.getInstance()
                 firebaseDatabase!!.setPersistenceEnabled(true)
 
@@ -27,7 +26,7 @@ class FirebaseUtils {
         }
 
         fun setPersistenceEnabled() {
-            if(firebaseDatabase == null){
+            if (firebaseDatabase == null) {
                 firebaseDatabase = FirebaseDatabase.getInstance()
                 firebaseDatabase!!.setPersistenceEnabled(true)
             }
@@ -35,13 +34,20 @@ class FirebaseUtils {
     }
 
 
-
     fun uploadUser(userData: User) {
         getFirebaseDatabase().child("users").child(userData.uid).setValue(userData)
     }
 
     fun uploadCow(cowData: Cow) {
-        getFirebaseDatabase().child("cows").child(cowData.id.toString()).setValue(cowData)
+        getFirebaseDatabase().child("cows").child(cowData.companyId).child(cowData.id.toString()).setValue(cowData)
+        if(cowData.actionHistoryList != null && cowData.actionHistoryList!!.isNotEmpty()){
+            for (i in cowData.actionHistoryList!!.indices) {
+                getFirebaseDatabase().child("actions").child(cowData.companyId)
+                    .child(cowData.actionHistoryList!![i].date.toString()).setValue(
+                        cowData.actionHistoryList!![i]
+                    )
+            }
+        }
     }
 
     fun getUserData(uid: String, callback: AppRepository.OnUserDataCallback) {
