@@ -62,8 +62,7 @@ class AddActionHistoryActivity : AppCompatActivity(), DatePickerDialog.OnDateSet
                 text_action.text.toString().trim(),
                 text_condition.text.toString().trim(),
                 text_diagnostic.text.toString().trim(),
-                text_drug.text.toString().trim()
-            )
+                text_drug.text.toString().trim(), null)
             val sendIntent = Intent()
             sendIntent.putExtra(ACTION_HISTORY, actionHistory)
             setResult(Activity.RESULT_OK, sendIntent)

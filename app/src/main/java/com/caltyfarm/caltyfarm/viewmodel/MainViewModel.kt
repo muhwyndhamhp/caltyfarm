@@ -5,11 +5,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.caltyfarm.caltyfarm.data.AppRepository
 import com.caltyfarm.caltyfarm.data.model.User
+import com.caltyfarm.caltyfarm.ui.reminder.Reminder
+import com.caltyfarm.caltyfarm.ui.reminder.ReminderDatabase
 import com.caltyfarm.caltyfarm.utils.FirebaseUtils
 
 class MainViewModel(val context: Context, val appRepository: AppRepository) : ViewModel() {
 
     val userData = MutableLiveData<User>()
+
+    val reminderList = MutableLiveData<List<Reminder>>()
 
     var errorMessages: MutableLiveData<String> = MutableLiveData()
 
@@ -30,5 +34,14 @@ class MainViewModel(val context: Context, val appRepository: AppRepository) : Vi
                 }
 
             })
+
+        initiateAlarmDatabase()
     }
+
+    fun initiateAlarmDatabase() {
+        val rb = ReminderDatabase(context)
+        reminderList.value = rb.allReminders
+    }
+
+
 }

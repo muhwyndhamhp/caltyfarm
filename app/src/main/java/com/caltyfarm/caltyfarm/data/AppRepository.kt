@@ -1,5 +1,6 @@
 package com.caltyfarm.caltyfarm.data
 
+import com.caltyfarm.caltyfarm.data.model.ActionHistory
 import com.caltyfarm.caltyfarm.data.model.Cow
 import com.caltyfarm.caltyfarm.data.model.User
 import com.caltyfarm.caltyfarm.utils.FirebaseUtils
@@ -18,6 +19,19 @@ class AppRepository(private val firebaseUtils: FirebaseUtils) {
         fun onDataDeleted(user: User?)
         fun onError(exception: Exception)
     }
+
+    interface OnCowListDataCallback {
+        fun onDataChaned(cow: Cow?)
+        fun onDataAdded(cow: Cow?)
+        fun onDataDeleted(cow: Cow?)
+        fun onError(exception: Exception)
+    }
+    interface OnActionListDataCallback {
+        fun onDataChanged(actionHistory: ActionHistory?)
+        fun onDataAdded(actionHistory: ActionHistory?)
+        fun onDataDeleted(actionHistory: ActionHistory?)
+        fun onError(exception: Exception)
+    }
     fun uploadUser(userData: User) {
         firebaseUtils.uploadUser(userData)
     }
@@ -32,6 +46,14 @@ class AppRepository(private val firebaseUtils: FirebaseUtils) {
 
     fun uploadCowData(cowData: Cow) {
         firebaseUtils.uploadCow(cowData)
+    }
+
+    fun getCowList(companyId: String, callback : OnCowListDataCallback){
+        firebaseUtils.getCowList(companyId, callback)
+    }
+
+    fun getActionList(companyId: String, callback : OnActionListDataCallback){
+        firebaseUtils.getActionList(companyId, callback)
     }
 
     companion object {

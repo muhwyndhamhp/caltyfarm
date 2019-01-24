@@ -10,7 +10,10 @@ import com.caltyfarm.caltyfarm.utils.FirebaseUtils
 import java.lang.Exception
 import java.util.*
 
-class InputCowViewModel(val appRepository: AppRepository) : ViewModel() {
+class InputCowViewModel(
+    val appRepository: AppRepository,
+    val cow: Cow? = null
+) : ViewModel() {
 
 
     val page = MutableLiveData<Int>()
@@ -31,9 +34,11 @@ class InputCowViewModel(val appRepository: AppRepository) : ViewModel() {
     val pregnantCalendar = MutableLiveData<Calendar>()
     val isPossiblePregnant = MutableLiveData<Boolean>()
 
+    val cowData = MutableLiveData<Cow>()
     val actionHistoryList = MutableLiveData<List<ActionHistory>>()
 
     init {
+        if(cow != null) cowData.value = cow
         birthCalendar.value = Calendar.getInstance().also {
             it.time = Date(Long.MIN_VALUE)
         }

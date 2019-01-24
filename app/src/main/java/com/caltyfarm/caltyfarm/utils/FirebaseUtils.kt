@@ -1,6 +1,7 @@
 package com.caltyfarm.caltyfarm.utils
 
 import com.caltyfarm.caltyfarm.data.AppRepository
+import com.caltyfarm.caltyfarm.data.model.ActionHistory
 import com.caltyfarm.caltyfarm.data.model.Cow
 import com.caltyfarm.caltyfarm.data.model.User
 import com.google.firebase.auth.FirebaseAuth
@@ -43,7 +44,7 @@ class FirebaseUtils {
         if(cowData.actionHistoryList != null && cowData.actionHistoryList!!.isNotEmpty()){
             for (i in cowData.actionHistoryList!!.indices) {
                 getFirebaseDatabase().child("actions").child(cowData.companyId)
-                    .child(cowData.actionHistoryList!![i].date.toString()).setValue(
+                    .child(cowData.actionHistoryList!![i].date.toString() + "-" + cowData.id).setValue(
                         cowData.actionHistoryList!![i]
                     )
             }
@@ -94,5 +95,70 @@ class FirebaseUtils {
                 }
 
             })
+    }
+
+    fun getCowList(companyId: String, callback: AppRepository.OnCowListDataCallback) {
+        getFirebaseDatabase().child("cows").child(companyId).addChildEventListener(object: ChildEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                callback.onError(p0.toException())
+            }
+
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+
+            }
+
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                val cow = p0.getValue(Cow::class.java)
+                if(cow != null) callback.onDataChaned(cow)
+            }
+
+            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                val cow = p0.getValue(Cow::class.java)
+                if(cow != null) callback.onDataAdded(cow)
+            }
+
+            override fun onChildRemoved(p0: DataSnapshot) {
+                val cow = p0.getValue(Cow::class.java)
+                if(cow != null) callback.onDataDeleted(cow)
+            }
+
+        })
+    }
+
+    fun getActionList(companyId: String, callback: AppRepository.OnActionListDataCallback) {
+        getFirebaseDatabase().child("actions").child(companyId).addChildEventListener(object: ChildEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                callback.onError(p0.toException())
+            }
+
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+
+            }
+
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                val cow = p0.getValue(ActionHistory::class.java)
+                if(cow != null) {
+                    cow.cowId = p0.key!!.split("-")[1].toInt()
+                    callback.onDataChanged(cow)
+                }
+            }
+
+            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                val cow = p0.getValue(ActionHistory::class.java)
+                if(cow != null) {
+                    cow.cowId = p0.key!!.split("-")[1].toInt()
+                    callback.onDataAdded(cow)
+                }
+            }
+
+            override fun onChildRemoved(p0: DataSnapshot) {
+                val cow = p0.getValue(ActionHistory::class.java)
+                if(cow != null) {
+                    cow.cowId = p0.key!!.split("-")[1].toInt()
+                    callback.onDataDeleted(cow)
+                }
+            }
+
+        })
     }
 }

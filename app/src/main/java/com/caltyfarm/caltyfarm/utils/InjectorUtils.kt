@@ -2,14 +2,12 @@ package com.caltyfarm.caltyfarm.utils
 
 import android.content.Context
 import com.caltyfarm.caltyfarm.data.AppRepository
+import com.caltyfarm.caltyfarm.data.model.Cow
 import com.caltyfarm.caltyfarm.data.model.User
+import com.caltyfarm.caltyfarm.ui.CowListActivity
 import com.caltyfarm.caltyfarm.ui.RoomListActivity
 import com.caltyfarm.caltyfarm.viewmodel.VerifViewModelFactory
-import com.caltyfarm.caltyfarm.viewmodel.factory.AuthViewModelFactory
-import com.caltyfarm.caltyfarm.viewmodel.factory.InputCowViewModelFactory
-import com.caltyfarm.caltyfarm.viewmodel.factory.MainViewModelFactory
-import com.caltyfarm.caltyfarm.viewmodel.factory.RoomListViewModelFactory
-import com.caltyfarm.caltyfarm.viewmodel.InputCowViewModel
+import com.caltyfarm.caltyfarm.viewmodel.factory.*
 
 object InjectorUtils {
 
@@ -34,7 +32,14 @@ object InjectorUtils {
         return RoomListViewModelFactory(getAppRepository(), userData, roomListActivity)
     }
 
-    fun provideInputCowViewModelFactory(): InputCowViewModelFactory {
-        return InputCowViewModelFactory(getAppRepository())
+    fun provideInputCowViewModelFactory(cow: Cow? = null): InputCowViewModelFactory {
+        return InputCowViewModelFactory(getAppRepository(), cow)
+    }
+
+    fun provideCowListViewModelFactory(
+        user: User,
+        cowListActivity: CowListActivity
+    ): CowListViewModelFactory {
+        return CowListViewModelFactory(getAppRepository(), user, cowListActivity)
     }
 }

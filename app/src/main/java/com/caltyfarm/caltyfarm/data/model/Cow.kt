@@ -1,6 +1,7 @@
 package com.caltyfarm.caltyfarm.data.model
 
 import com.google.firebase.database.PropertyName
+import java.io.Serializable
 
 data class Cow(
 
@@ -67,4 +68,4 @@ data class Cow(
     @set: PropertyName("y")
     @get: PropertyName("y")
     var companyId: String = ""
-)
+): Serializable

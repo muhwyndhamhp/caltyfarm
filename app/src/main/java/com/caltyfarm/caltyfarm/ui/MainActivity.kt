@@ -6,13 +6,21 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.caltyfarm.caltyfarm.R
+import com.caltyfarm.caltyfarm.ui.adapter.CowListAdapter
+import com.caltyfarm.caltyfarm.ui.adapter.UpcomingActionListAdapter
 import com.caltyfarm.caltyfarm.ui.inputcow.InputCowActivity
+import com.caltyfarm.caltyfarm.ui.reminder.MainReminder
+import com.caltyfarm.caltyfarm.ui.reminder.Reminder
+import com.caltyfarm.caltyfarm.ui.reminder.ReminderDatabase
 import com.caltyfarm.caltyfarm.utils.BANNER_URL
 import com.caltyfarm.caltyfarm.utils.InjectorUtils
 import com.caltyfarm.caltyfarm.utils.USER_DATA_KEY
 import com.caltyfarm.caltyfarm.viewmodel.MainViewModel
+import kotlinx.android.synthetic.main.activity_cow_list.*
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.indeterminateProgressDialog
 import org.jetbrains.anko.sdk27.coroutines.onClick
@@ -56,6 +64,34 @@ class MainActivity : AppCompatActivity() {
         ll_input_sapi.onClick {
             startActivity(Intent(this@MainActivity, InputCowActivity::class.java))
         }
+
+        ll_status_sapi.onClick {
+            val intent = Intent(this@MainActivity, CowListActivity::class.java)
+            intent.putExtra(USER_DATA_KEY, viewModel.userData.value!!)
+            startActivity(intent)
+        }
+
+        ll_list_tindakan.onClick {
+            val intent = Intent(this@MainActivity, ActionListActivity::class.java)
+            intent.putExtra(USER_DATA_KEY, viewModel.userData.value!!)
+            startActivity(intent)
+        }
+
+        ll_alarm.onClick {
+            startActivity(Intent(this@MainActivity, MainReminder::class.java))
+        }
+
+        viewModel.reminderList.observe(this, androidx.lifecycle.Observer {
+            if(it.isNotEmpty())
+            prepareRecyclerViewVet(it)
+        })
+    }
+
+    private fun prepareRecyclerViewVet(it: List<Reminder>?) {
+        rv_jadwal.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        val adapter = UpcomingActionListAdapter(it!!, this, viewModel)
+        rv_jadwal.adapter = adapter
+        rv_jadwal.scheduleLayoutAnimation()
     }
 
     private fun showInvestorLayout() {
@@ -68,6 +104,8 @@ class MainActivity : AppCompatActivity() {
         ll_input_sapi.visibility = View.VISIBLE
         ll_alarm.visibility = View.VISIBLE
         ll_list_tindakan.visibility = View.VISIBLE
+        tv_chat_title.text = getString(R.string.chat_title)
+        tv_chat_subtitle.text = getString(R.string.chat_subtitle)
     }
 
     private fun showAnakKandangLayout() {
@@ -88,5 +126,10 @@ class MainActivity : AppCompatActivity() {
             if (progressDialog.isShowing) progressDialog.dismiss()
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.initiateAlarmDatabase()
     }
 }
