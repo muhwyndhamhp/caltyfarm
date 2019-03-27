@@ -1,98 +1,75 @@
 package com.caltyfarm.caltyfarm.utils
 
 import com.caltyfarm.caltyfarm.data.AppRepository
-import com.caltyfarm.caltyfarm.data.model.*
+import com.caltyfarm.caltyfarm.data.model.ActionHistory
+import com.caltyfarm.caltyfarm.data.model.Cow
+import com.caltyfarm.caltyfarm.data.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
-object FirebaseUtils {
+class FirebaseUtils {
 
-    fun getFirebaseAuth() = FirebaseAuth.getInstance()
+    companion object {
 
-    fun getFirebaseDatabase() =
-        FirebaseDatabase.getInstance().reference.child("caltyApp")
+        fun newInstance() = FirebaseUtils()
+
+        var firebaseDatabase: FirebaseDatabase? = null
+
+        fun getFirebaseAuth() = FirebaseAuth.getInstance()
+
+        fun getFirebaseDatabase(): DatabaseReference {
+            if (firebaseDatabase == null) {
+                firebaseDatabase = FirebaseDatabase.getInstance()
+                firebaseDatabase!!.setPersistenceEnabled(true)
+
+            }
+            return firebaseDatabase!!.reference.child("caltyManager")
+        }
+
+        fun setPersistenceEnabled() {
+            if (firebaseDatabase == null) {
+                firebaseDatabase = FirebaseDatabase.getInstance()
+                firebaseDatabase!!.setPersistenceEnabled(true)
+            }
+        }
+    }
+
 
     fun uploadUser(userData: User) {
         getFirebaseDatabase().child("users").child(userData.uid).setValue(userData)
     }
 
-    fun getUserData(uid: String, onFirebaseUserDownload: AppRepository.OnFirebaseUserDownload) {
-        getFirebaseDatabase().child("users").child(uid)
-            .addValueEventListener(object : ValueEventListener {
-                override fun onCancelled(p0: DatabaseError) {
-                    onFirebaseUserDownload.onDownloadFailed(Exception("Failed to Download"))
-                }
-
-                override fun onDataChange(p0: DataSnapshot) {
-                    if (p0.exists()) {
-                        val user = p0.getValue(User::class.java)
-                        onFirebaseUserDownload.onUserDownloaded(user)
-                    }
-                }
-
-            })
+    fun uploadCow(cowData: Cow) {
+        getFirebaseDatabase().child("cows").child(cowData.companyId).child(cowData.id.toString()).setValue(cowData)
+        if(cowData.actionHistoryList != null && cowData.actionHistoryList!!.isNotEmpty()){
+            for (i in cowData.actionHistoryList!!.indices) {
+                getFirebaseDatabase().child("actions").child(cowData.companyId)
+                    .child(cowData.actionHistoryList!![i].date.toString() + "-" + cowData.id).setValue(
+                        cowData.actionHistoryList!![i]
+                    )
+            }
+        }
     }
 
-    fun getArticles(onArticleDataCallback: AppRepository.OnArticleDataCallback) {
-        getFirebaseDatabase().child("articles")
-            .addChildEventListener(object : ChildEventListener {
-                override fun onCancelled(p0: DatabaseError) {
-                    onArticleDataCallback.onFailed(p0.toException())
-                }
-
-                override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-
-                }
-
-                override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-                    if (p0.exists()) {
-                        val article = p0.getValue(Article::class.java)
-                        onArticleDataCallback.onChildChanged(article)
-                    }
-                }
-
-                override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                    if (p0.exists()) {
-                        val article = p0.getValue(Article::class.java)
-                        onArticleDataCallback.onChildAdded(article)
-                    }
-                }
-
-                override fun onChildRemoved(p0: DataSnapshot) {
-                    if (p0.exists()) {
-                        val article = p0.getValue(Article::class.java)
-                        onArticleDataCallback.onChildDeleted(article)
-                    }
-                }
-
-            })
-    }
-
-    fun getArticle(articleId: String, onDataRetrieveCallback: AppRepository.OnDataRetrieveCallback) {
-        getFirebaseDatabase().child("articles").child(articleId).addValueEventListener(object : ValueEventListener {
+    fun getUserData(uid: String, callback: AppRepository.OnUserDataCallback) {
+        getFirebaseDatabase().child("users").child(uid).addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
-                onDataRetrieveCallback.onFailed(p0.toException())
+                callback.onFailed(p0.toException())
             }
 
             override fun onDataChange(p0: DataSnapshot) {
-                if (p0.exists()) {
-                    val article = p0.getValue(Article::class.java)
-                    onDataRetrieveCallback.onDataRetrieved(article!!)
-                }
+                val user = p0.getValue(User::class.java)
+                callback.onDataRetrieved(user)
             }
 
         })
     }
 
-    fun postVet(vet: Vet) {
-        getFirebaseDatabase().child("vet").child(vet.id).setValue(vet)
-    }
-
-    fun getVetList(onVetRetrievedCallback: AppRepository.OnVetRetrievedCallback) {
-        getFirebaseDatabase().child("workerVet")
+    fun getFriendsData(companyId: String, callback: AppRepository.OnUserListDataCallback) {
+        getFirebaseDatabase().child("users").orderByChild("c").equalTo(companyId)
             .addChildEventListener(object : ChildEventListener {
                 override fun onCancelled(p0: DatabaseError) {
-                    onVetRetrievedCallback.onFailed(p0.toException())
+                    callback.onError(p0.toException())
                 }
 
                 override fun onChildMoved(p0: DataSnapshot, p1: String?) {
@@ -100,90 +77,88 @@ object FirebaseUtils {
                 }
 
                 override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-                    if (p0.exists()) {
-                        val article = p0.getValue(Vet::class.java)
-                        onVetRetrievedCallback.onChildChanged(article)
-                    }
+                    val user = p0.getValue(User::class.java)
+                    if (user != null)
+                        callback.onDataChanged(user)
                 }
 
                 override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                    if (p0.exists()) {
-                        val article = p0.getValue(Vet::class.java)
-                        onVetRetrievedCallback.onChildAdded(article)
-                    }
+                    val user = p0.getValue(User::class.java)
+                    if (user != null)
+                        callback.onDataAdded(user)
                 }
 
                 override fun onChildRemoved(p0: DataSnapshot) {
-                    if (p0.exists()) {
-                        val article = p0.getValue(Vet::class.java)
-                        onVetRetrievedCallback.onChildDeleted(article)
-                    }
+                    val user = p0.getValue(User::class.java)
+                    if (user != null)
+                        callback.onDataDeleted(user)
                 }
 
             })
     }
 
-    fun getShopList(onShopRetireveCallback: AppRepository.OnShopRetireveCallback) {
-        getFirebaseDatabase().child("workerShop")
-            .addChildEventListener(object : ChildEventListener{
-                override fun onCancelled(p0: DatabaseError) {
-                    onShopRetireveCallback.onFailed(p0.toException())
-                }
+    fun getCowList(companyId: String, callback: AppRepository.OnCowListDataCallback) {
+        getFirebaseDatabase().child("cows").child(companyId).addChildEventListener(object: ChildEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                callback.onError(p0.toException())
+            }
 
-                override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                }
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
 
-                override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-                    if (p0.exists()) {
-                        val article = p0.getValue(Shop::class.java)
-                        onShopRetireveCallback.onChildChanged(article)
-                    }
-                }
+            }
 
-                override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                    if (p0.exists()) {
-                        val article = p0.getValue(Shop::class.java)
-                        onShopRetireveCallback.onChildAdded(article)
-                    }
-                }
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                val cow = p0.getValue(Cow::class.java)
+                if(cow != null) callback.onDataChaned(cow)
+            }
 
-                override fun onChildRemoved(p0: DataSnapshot) {
-                    if (p0.exists()) {
-                        val article = p0.getValue(Shop::class.java)
-                        onShopRetireveCallback.onChildDeleted(article)
-                    }
-                }
+            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                val cow = p0.getValue(Cow::class.java)
+                if(cow != null) callback.onDataAdded(cow)
+            }
 
-            })
+            override fun onChildRemoved(p0: DataSnapshot) {
+                val cow = p0.getValue(Cow::class.java)
+                if(cow != null) callback.onDataDeleted(cow)
+            }
+
+        })
     }
 
-    fun getItems(shopId: String, callback: AppRepository.OnItemRetreiveCallback) {
-        getFirebaseDatabase().child("itemShop").child(shopId)
-            .addChildEventListener(object: ChildEventListener{
-                override fun onCancelled(p0: DatabaseError) {
-                    callback.onFailed(p0.toException())
+    fun getActionList(companyId: String, callback: AppRepository.OnActionListDataCallback) {
+        getFirebaseDatabase().child("actions").child(companyId).addChildEventListener(object: ChildEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                callback.onError(p0.toException())
+            }
+
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+
+            }
+
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                val cow = p0.getValue(ActionHistory::class.java)
+                if(cow != null) {
+                    cow.cowId = p0.key!!.split("-")[1].toInt()
+                    callback.onDataChanged(cow)
                 }
+            }
 
-                override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-
+            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                val cow = p0.getValue(ActionHistory::class.java)
+                if(cow != null) {
+                    cow.cowId = p0.key!!.split("-")[1].toInt()
+                    callback.onDataAdded(cow)
                 }
+            }
 
-                override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-                    val item = p0.getValue(ShopItem::class.java)
-                    callback.onChildChanged(item!!)
+            override fun onChildRemoved(p0: DataSnapshot) {
+                val cow = p0.getValue(ActionHistory::class.java)
+                if(cow != null) {
+                    cow.cowId = p0.key!!.split("-")[1].toInt()
+                    callback.onDataDeleted(cow)
                 }
+            }
 
-                override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                    val item = p0.getValue(ShopItem::class.java)
-                    callback.onChildAdded(item!!)
-                }
-
-                override fun onChildRemoved(p0: DataSnapshot) {
-                    val item = p0.getValue(ShopItem::class.java)
-                    callback.onChildDeleted(item!!)
-                }
-
-            })
+        })
     }
 }

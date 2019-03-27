@@ -5,11 +5,18 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.caltyfarm.caltyfarm.BuildConfig
 import com.caltyfarm.caltyfarm.R
 import com.caltyfarm.caltyfarm.data.AppRepository
 import com.caltyfarm.caltyfarm.data.model.User
+import com.caltyfarm.caltyfarm.utils.FirebaseUtils
 import com.google.firebase.FirebaseException
-import com.google.firebase.auth.*
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthProvider
+import com.qiscus.sdk.Qiscus
+import com.qiscus.sdk.chat.core.QiscusCore
+import com.qiscus.sdk.chat.core.data.model.QiscusAccount
 import java.util.concurrent.TimeUnit
 
 class VerifViewModel(val context: Context, val appRepository: AppRepository, private val initialPhoneNumber: String) :
@@ -28,7 +35,7 @@ class VerifViewModel(val context: Context, val appRepository: AppRepository, pri
     }
 
     private fun startPhoneAuth() {
-        callback = object: PhoneAuthProvider.OnVerificationStateChangedCallbacks(){
+        callback = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             override fun onVerificationCompleted(p0: PhoneAuthCredential) {
                 signInWithPhoneAuthCredential(p0)
             }
@@ -56,11 +63,35 @@ class VerifViewModel(val context: Context, val appRepository: AppRepository, pri
     }
 
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
-        FirebaseAuth.getInstance().signInWithCredential(credential)
+        isLoading.value = true
+        FirebaseUtils.getFirebaseAuth().signInWithCredential(credential)
             .addOnCompleteListener {
-                if(it.isSuccessful){
-                    user.value = it.result!!.user
-                    initiateUser()
+                isLoading.value = false
+                if (it.isSuccessful) {
+                    appRepository.getUserData(it.result!!.user.uid, object : AppRepository.OnUserDataCallback {
+                        override fun onDataRetrieved(user: User?) {
+                            Qiscus.setUser(
+                                FirebaseUtils.getFirebaseAuth().currentUser!!.uid,
+                                BuildConfig.MasterPassword
+                            )
+                                .withUsername(user!!.name)
+                                .save(object : QiscusCore.SetUserListener {
+                                    override fun onSuccess(qiscusAccount: QiscusAccount?) {
+                                        initiateUser(it.result!!.user)
+                                    }
+
+                                    override fun onError(throwable: Throwable?) {
+                                        errorMessage.value = throwable!!.message
+                                    }
+
+                                })
+                        }
+
+                        override fun onFailed(exception: Exception) {
+                            errorMessage.value = exception.message
+                        }
+
+                    })
 
                 } else {
                     errorMessage.value = context.getString(R.string.verif_failed)
@@ -69,18 +100,28 @@ class VerifViewModel(val context: Context, val appRepository: AppRepository, pri
             }
     }
 
-    private fun initiateUser() {
-        val userData = User(
-            user.value!!.uid,
+    private fun initiateUser(userData: FirebaseUser) {
+        val tempUser = User(
+            userData.uid,
             "",
             0,
-            0,
-            initialPhoneNumber,
             "",
             ""
         )
+        appRepository.getUserData(userData.uid, object : AppRepository.OnUserDataCallback {
+            override fun onDataRetrieved(user: User?) {
+                if (user == null) {
+                    appRepository.uploadUser(tempUser)
+                }
+                this@VerifViewModel.user.value = userData
+            }
 
-        appRepository.uploadUser(userData)
+            override fun onFailed(exception: Exception) {
+                errorMessage.value = exception.message
+            }
+
+        })
+
     }
 
     fun manualSignIn(text: String) {

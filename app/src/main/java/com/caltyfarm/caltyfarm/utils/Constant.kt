@@ -2,26 +2,8 @@ package com.caltyfarm.caltyfarm.utils
 
 const val PHONE_NUMBER_CODE = "PHONE_NUMBER_CODE"
 
-const val ARTICLE_ID_CODE = "ARTICLE_ID_CODE"
+const val USER_DATA_KEY = "USER_DATA_KEY"
 
-const val REQUEST_PHONE_CODE = 102
+const val COW_DATA_KEY = "COW_DATA_KEY"
 
-const val REQUEST_FINE_LOCATION = 103
-
-const val SHOP_CODE = "SHOP_CODE"
-
-const val ORDER_CODE = "ORDER_CODE"
-
-const val SELECTED_ITEM_CODE = "SELECTED_ITEMS"
-
-const val REQUEST_ACCESS_FINE_LOCATION = 104
-
-const val DEFAULT_ZOOM = 13f
-
-const val BASE_PRICE_GOVET = 50000
-
-const val BASE_PRIVE_HALOCOWS = 35000
-
-const val BASE_PRICE_PER_KM = 2200
-
-const val PLACE_PICKER_REQUEST = 105
+const val BANNER_URL = "https://firebasestorage.googleapis.com/v0/b/calty-farm.appspot.com/o/banner%20gambar%20sapi-08.png?alt=media&token=f359c62e-9803-4ede-a53c-c319c3c7dca1"

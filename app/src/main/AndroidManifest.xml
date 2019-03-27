@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
-          package="com.caltyfarm.caltyfarm"
-        >
+          package="com.caltyfarm.caltyfarm">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
@@ -11,61 +10,84 @@
     <uses-permission android:name="android.permission.CALL_PHONE"/>
 
     <application
+            android:name=".AppContext"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
-            tools:ignore="GoogleAppIndexingWarning"
-            >
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version"/>
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/maps_api_key"/>
+            tools:ignore="GoogleAppIndexingWarning">
+        <uses-library
+                android:name="org.apache.http.legacy"
+                android:required="false"/>
 
-        <activity android:name=".ui.MainActivity">
-        </activity>
-        <activity
-                android:name=".ui.AuthActivity"
-                android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-                >
-        </activity>
-        <activity
-                android:name=".ui.VerificationActivity"
-                android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-                >
-        </activity>
-        <activity
-                android:name=".ui.Splash"
-                android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-                >
+        <meta-data
+                android:name="com.google.android.gms.version"
+                android:value="@integer/google_play_services_version"/>
+        <meta-data
+                android:name="com.google.firebase.messaging.default_notification_icon"
+                android:resource="@mipmap/ic_launcher_round"/>
+        <meta-data
+                android:name="com.google.firebase.messaging.default_notification_color"
+                android:resource="@color/colorPrimary"/>
+
+        <service android:name=".service.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <service android:name=".service.MyFirebaseIdService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <activity android:name=".ui.MainActivity"/>
+        <activity android:name=".ui.AuthActivity"/>
+        <activity android:name=".ui.VerificationActivity"/>
+        <activity android:name=".ui.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.ProfileEditActivity">
+        <activity android:name=".ui.inputcow.InputCowActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
         </activity>
-        <activity android:name=".ui.ArticleReadActivity">
+        <activity android:name=".ui.RoomListActivity">
         </activity>
-        <activity android:name=".ui.HaloCowsActivity">
+        <activity android:name=".ui.inputcow.AddActionHistoryActivity"/>
+        <activity android:name=".ui.CowListActivity">
         </activity>
-        <activity android:name=".ui.CaltyShopActivity">
+        <activity android:name=".ui.cowdetail.CowDetailActivity">
+        </activity>
+        <activity android:name=".ui.ActionListActivity">
         </activity>
         <activity
-                android:name=".ui.ShopCatalogActivity"
-                android:theme="@style/AppTheme.NoActionBar"
-                >
+                android:name=".ui.reminder.MainReminder"
+                android:label="@string/app_name" >
         </activity>
-        <activity android:name=".ui.ShopOrderActivity">
-        </activity>
-        <activity android:name=".ui.GoVetActivity">
-        </activity>
+
+        <activity android:name=".ui.reminder.ReminderAddActivity"
+                  android:label="@string/title_activity_add_reminder"/>
+
+        <activity android:name=".ui.reminder.ReminderEditActivity"
+                  android:label="@string/title_activity_edit_reminder"/>
+
+        <activity android:name=".ui.reminder.LicencesActivity"
+                  android:label="@string/title_activity_licenses"/>
+
+        <receiver android:name=".ui.reminder.AlarmReceiver"/>
+
+        <receiver android:name=".ui.reminder.BootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

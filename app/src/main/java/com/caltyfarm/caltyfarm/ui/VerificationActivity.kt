@@ -3,9 +3,9 @@ package com.caltyfarm.caltyfarm.ui
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.KeyEvent
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.caltyfarm.caltyfarm.R
@@ -31,34 +31,33 @@ class VerificationActivity : AppCompatActivity() {
         val factory = InjectorUtils.provideVerifViewModelFactory(this, intent.getStringExtra(PHONE_NUMBER_CODE))
         viewModel = ViewModelProviders.of(this, factory).get(VerifViewModel::class.java)
         viewModel.isLoading.observe(this, Observer {
-            if (it){
+            if (it) {
                 progressDialog.show()
-            }
-            else{
+            } else {
                 if (progressDialog.isShowing) progressDialog.dismiss()
             }
         })
         viewModel.errorMessage.observe(this, Observer {
-            if(it.isNotEmpty()){
+            if (it.isNotEmpty()) {
                 toast(it)
             }
         })
         viewModel.user.observe(this, Observer {
-            if(it != null){
+            if (it != null) {
                 navigateToMain()
             }
         })
         tv_burner_verif.text = intent.getStringExtra(PHONE_NUMBER_CODE)
 
         pin_entry.setOnKeyListener { _, keyCode, _ ->
-            if(keyCode == KeyEvent.KEYCODE_ENTER){
+            if (keyCode == KeyEvent.KEYCODE_ENTER) {
                 viewModel.manualSignIn(pin_entry.text.toString())
                 true
-            }else false
+            } else false
         }
     }
 
     private fun navigateToMain() {
-        startActivity(Intent(this, MainActivity::class.java))
+        startActivity(Intent(this@VerificationActivity, MainActivity::class.java))
     }
 }
